@@ -1,0 +1,11 @@
+{
+  "mcpServers": {
+    "onehorizon": {
+      "command": "npx",
+      "args": [
+        "mcp-remote@latest",
+        "https://mcp.onehorizon.ai/mcp"
+      ]
+    }
+  }
+}
