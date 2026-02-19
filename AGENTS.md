@@ -61,6 +61,7 @@ Step-by-step instructions for the agent to follow when this skill is invoked.
 After editing anything in `shared/skills/`:
 
 ```bash
+cd plugins/one-horizon
 bash ./scripts/sync-skills.sh
 ```
 
@@ -69,6 +70,7 @@ This copies skills into both `cursor/skills/` and `claude/skills/`. Don't edit t
 ### Validating packages
 
 ```bash
+cd plugins/one-horizon
 node ./scripts/validate.mjs
 ```
 

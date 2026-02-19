@@ -9,5 +9,5 @@
   "homepage": "https://onehorizon.ai",
   "repository": "https://github.com/onehorizon/agent-skills",
   "license": "MIT",
-  "icon": "assets/one-horizon-large.svg"
+  "logo": "assets/one-horizon-large.svg"
 }
