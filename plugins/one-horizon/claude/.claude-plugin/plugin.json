@@ -3,11 +3,10 @@
   "description": "One Horizon work intelligence for Claude. Log completed work, view planned tasks, surface blockers, and get standup-ready with your team's context.",
   "version": "1.0.0",
   "author": {
-    "name": "One Horizon",
-    "url": "https://onehorizon.ai"
+    "name": "One Horizon"
   },
   "homepage": "https://onehorizon.ai",
   "repository": "https://github.com/onehorizon/agent-skills",
   "license": "MIT",
-  "icon": "assets/one-horizon-large.svg"
+  "keywords": ["standup", "productivity", "work-log", "tasks", "blockers", "team"]
 }

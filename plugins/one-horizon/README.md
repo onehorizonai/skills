@@ -47,21 +47,21 @@ Get a plain-language summary of your work, formatted for whoever's reading it.
 
 ## Skills
 
-| Skill | What it does | Example trigger |
-|---|---|---|
-| `list-planned-work` | Show upcoming and in-progress tasks | "What's on my plate?" |
-| `list-completed-work` | Show finished work by timeframe | "What did I ship last week?" |
-| `list-blockers` | Surface blocked items for you or your team | "What's blocking me?" |
-| `create-my-task` | Log new work | "Create a task for the auth fix I just shipped" |
-| `update-my-task` | Change task status or details | "Mark that as done" |
-| `my-work-recap` | Combined view of completed + planned + blockers | "Give me my work recap" |
-| `team-work-recap` | Same view across the whole team | "What did the team ship this sprint?" |
-| `list-my-teams` | List your workspaces, teams, and members | "What teams am I on?" |
-| `find-team-member` | Look up a person by name | "Find Sarah's user ID" |
-| `work-summarizer` | Plain-language work summary | "Summarize my week for my manager" |
-| `personal-standup-prep` | Your personal standup update | "Prep my standup" |
-| `team-standup-prep` | Full team standup summary | "Team standup summary for this morning" |
-| `handoff-notes` | Handoff doc for vacation or transitions | "Write handoff notes, I'm off next week" |
+| Skill                   | What it does                                    | Example trigger                                 |
+| ----------------------- | ----------------------------------------------- | ----------------------------------------------- |
+| `list-planned-work`     | Show upcoming and in-progress tasks             | "What's on my plate?"                           |
+| `list-completed-work`   | Show finished work by timeframe                 | "What did I ship last week?"                    |
+| `list-blockers`         | Surface blocked items for you or your team      | "What's blocking me?"                           |
+| `create-my-task`        | Log new work                                    | "Create a task for the auth fix I just shipped" |
+| `update-my-task`        | Change task status or details                   | "Mark that as done"                             |
+| `my-work-recap`         | Combined view of completed + planned + blockers | "Give me my work recap"                         |
+| `team-work-recap`       | Same view across the whole team                 | "What did the team ship this sprint?"           |
+| `list-my-teams`         | List your workspaces, teams, and members        | "What teams am I on?"                           |
+| `find-team-member`      | Look up a person by name                        | "Find Sarah's user ID"                          |
+| `work-summarizer`       | Plain-language work summary                     | "Summarize my week for my manager"              |
+| `personal-standup-prep` | Your personal standup update                    | "Prep my standup"                               |
+| `team-standup-prep`     | Full team standup summary                       | "Team standup summary for this morning"         |
+| `handoff-notes`         | Handoff doc for vacation or transitions         | "Write handoff notes, I'm off next week"        |
 
 ---
 
@@ -85,13 +85,7 @@ Use the install link from [onehorizon.ai/integrations/cursor](https://onehorizon
 
 Install from the [Cursor Marketplace](https://cursor.com/marketplace) once listed.
 
-**Option 3: Local (for testing)**
-
-```bash
-cursor --plugin-dir ./cursor
-```
-
-**Option 4: MCP only (no skills)**
+**Option 3: MCP only (no skills)**
 
 Add to `~/.cursor/mcp.json` (all projects) or `.cursor/mcp.json` (current project):
 
@@ -114,13 +108,7 @@ Add to `~/.cursor/mcp.json` (all projects) or `.cursor/mcp.json` (current projec
 
 Install from the Claude Code plugin marketplace once listed.
 
-**Option 2: Local (for testing)**
-
-```bash
-claude --plugin-dir ./claude
-```
-
-**Option 3: MCP only (no skills)**
+**Option 2: MCP only (no skills)**
 
 Add to your MCP config:
 
@@ -161,6 +149,43 @@ Note: only works in regular chats, not Projects or Deep Research.
 
 ---
 
+## Testing locally
+
+### Claude Code
+
+1. Clone this repo and open a terminal at `plugins/one-horizon/`
+2. Load the plugin without installing it:
+
+```bash
+claude --plugin-dir ./claude
+```
+
+3. In the agent, run a skill to confirm it loads:
+
+```
+/one-horizon:list-planned-work
+```
+
+4. Run `/help` to see all skills listed under the `one-horizon` namespace.
+
+5. To verify the MCP connection, trigger any skill — a browser window will open for OAuth on first use.
+
+After editing skills in `shared/skills/`, re-sync and restart Claude Code to pick up changes:
+
+```bash
+bash ./scripts/sync-skills.sh
+```
+
+### Validate before shipping
+
+```bash
+node ./scripts/validate.mjs
+```
+
+Checks skill parity, frontmatter, and manifest fields across both packages.
+
+---
+
 ## Repository structure
 
 ```
@@ -180,18 +205,4 @@ plugins/one-horizon/
     └── skills/
 ```
 
-### Keeping packages in sync
-
-Edit skills in `shared/skills/`, then run:
-
-```bash
-bash ./scripts/sync-skills.sh
-```
-
-### Validating packages
-
-```bash
-node ./scripts/validate.mjs
-```
-
-Checks that both packages contain the same skill set and required manifests.
+Edit skills in `shared/skills/`, then run `bash ./scripts/sync-skills.sh` to sync to both platform packages, and `node ./scripts/validate.mjs` to confirm everything is in order.

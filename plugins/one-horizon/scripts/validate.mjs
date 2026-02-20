@@ -3,7 +3,7 @@
  * Validate that both Cursor and Claude plugin packages are complete and in sync.
  */
 
-import { readdirSync, existsSync } from 'fs'
+import { readdirSync, existsSync, readFileSync } from 'fs'
 import { join, dirname } from 'path'
 import { fileURLToPath } from 'url'
 
@@ -25,6 +25,21 @@ function check(condition, passMsg, failMsg) {
   condition ? pass(passMsg) : fail(failMsg)
 }
 
+function parseFrontmatter(filePath) {
+  const content = readFileSync(filePath, 'utf8')
+  const match = content.match(/^---\r?\n([\s\S]*?)\r?\n---/)
+  if (!match) return {}
+  const result = {}
+  for (const line of match[1].split('\n')) {
+    const colonIdx = line.indexOf(':')
+    if (colonIdx === -1) continue
+    const key = line.slice(0, colonIdx).trim()
+    const value = line.slice(colonIdx + 1).trim()
+    if (key) result[key] = value
+  }
+  return result
+}
+
 // ── Shared skills ────────────────────────────────────────────────────────────
 console.log('\nChecking shared skills...')
 const sharedSkillsDir = join(root, 'shared', 'skills')
@@ -34,7 +49,14 @@ const sharedSkills = readdirSync(sharedSkillsDir).filter(
 
 for (const skill of sharedSkills) {
   const skillMd = join(sharedSkillsDir, skill, 'SKILL.md')
-  check(existsSync(skillMd), `shared/${skill}/SKILL.md exists`, `shared/${skill}/SKILL.md is missing`)
+  if (!existsSync(skillMd)) {
+    fail(`shared/${skill}/SKILL.md is missing`)
+    continue
+  }
+  pass(`shared/${skill}/SKILL.md exists`)
+  const fm = parseFrontmatter(skillMd)
+  check(fm.name === skill, `shared/${skill}: name matches folder`, `shared/${skill}: name "${fm.name}" does not match folder "${skill}"`)
+  check(!!fm.description, `shared/${skill}: description present`, `shared/${skill}: description is missing`)
 }
 
 // ── Package checks ───────────────────────────────────────────────────────────
@@ -48,7 +70,19 @@ for (const pkg of packages) {
 
   // Manifest
   const manifestPath = join(pkg.dir, pkg.manifest)
-  check(existsSync(manifestPath), `${pkg.manifest} exists`, `${pkg.manifest} is missing`)
+  if (!existsSync(manifestPath)) {
+    fail(`${pkg.manifest} is missing`)
+    continue
+  }
+  pass(`${pkg.manifest} exists`)
+
+  // Validate manifest fields
+  const manifest = JSON.parse(readFileSync(manifestPath, 'utf8'))
+  check(!!manifest.name, 'manifest: name present', 'manifest: name is missing')
+  check(!!manifest.description, 'manifest: description present', 'manifest: description is missing')
+  check(!!manifest.keywords?.length, 'manifest: keywords present', 'manifest: keywords missing (helps discoverability)')
+  if (manifest.author?.url) fail('manifest: author.url is not a valid field (use email or top-level homepage)')
+  if (manifest.icon) fail('manifest: "icon" is not a valid field (not in plugin spec)')
 
   // MCP config
   const mcpPath = join(pkg.dir, '.mcp.json')
@@ -76,10 +110,17 @@ for (const pkg of packages) {
     for (const s of extraInPkg) fail(`Extra skill not in shared: ${s} (run sync-skills.sh)`)
   }
 
-  // Each skill has SKILL.md
+  // Each skill has SKILL.md with valid frontmatter
   for (const skill of pkgSkills) {
     const skillMd = join(pkgSkillsDir, skill, 'SKILL.md')
-    check(existsSync(skillMd), `skills/${skill}/SKILL.md exists`, `skills/${skill}/SKILL.md is missing`)
+    if (!existsSync(skillMd)) {
+      fail(`skills/${skill}/SKILL.md is missing`)
+      continue
+    }
+    pass(`skills/${skill}/SKILL.md exists`)
+    const fm = parseFrontmatter(skillMd)
+    check(fm.name === skill, `skills/${skill}: name matches folder`, `skills/${skill}: name "${fm.name}" does not match folder "${skill}"`)
+    check(!!fm.description, `skills/${skill}: description present`, `skills/${skill}: description is missing`)
   }
 }
 
