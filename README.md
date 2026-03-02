@@ -15,10 +15,30 @@ Tasks include initiatives, bugs, feature requests, and TODOs, plus standup/recap
 ## Example prompts
 
 - "What do I have planned?"
-- "Create an Asana integration"
+- "Implement HubSpot lead sync"
 - "I found a bug in checkout, fix and log it"
 - "Write this work back and link it to initiative X"
 - "Save a `.journal` entry for this change"
+
+## MCP server setup (manual)
+
+Use this MCP server config in clients that support `mcp.json`:
+
+```json
+{
+  "mcpServers": {
+    "onehorizon": {
+      "command": "npx",
+      "args": [
+        "mcp-remote@latest",
+        "https://mcp.onehorizon.ai/mcp"
+      ]
+    }
+  }
+}
+```
+
+For plugin-specific install paths (Cursor, Claude Code, Claude Desktop, ChatGPT), see [`plugins/one-horizon/README.md`](plugins/one-horizon/README.md).
 
 ## Structure
 

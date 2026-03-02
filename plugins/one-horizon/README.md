@@ -95,6 +95,24 @@ No extra setup is required. MCP config is bundled with the plugin.
 
 ## Installation
 
+### MCP server config (manual)
+
+Use this config if you want to connect the One Horizon MCP server directly:
+
+```json
+{
+  "mcpServers": {
+    "onehorizon": {
+      "command": "npx",
+      "args": [
+        "mcp-remote@latest",
+        "https://mcp.onehorizon.ai/mcp"
+      ]
+    }
+  }
+}
+```
+
 ### Cursor
 
 **Option 1: Install link (recommended)**
