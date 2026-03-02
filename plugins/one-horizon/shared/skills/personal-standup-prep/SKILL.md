@@ -1,46 +1,23 @@
 ---
 name: personal-standup-prep
-description: Generate personal standup talking points from One Horizon work data. Use when asked to "prep my standup", "get me ready for standup", "what should I say in standup", or "standup update". Requires One Horizon MCP.
+description: Generate personal standup talking points from One Horizon task data, including completed/planned tasks, initiatives, and blockers. Use when asked to "prep my standup", "what should I say", or "give me my standup update". Requires One Horizon MCP.
 ---
 
 # Personal Standup Prep
 
-Generate concise standup talking points from your One Horizon work data: what you completed, what you're working on, and any blockers.
-
-## When to Use
-
-- "Get me ready for standup"
-- "What should I say in standup?"
-- "Prep my standup notes"
-- "Give me my standup update for today"
+Generate concise personal standup updates.
 
 ## Instructions
 
-**Step 1:** Fetch work data using `my-work-recap` (recommended — gets completed + planned + blockers in one call).
+1. Fetch data with `my-work-recap`.
+2. Call `personal-standup-prep`:
 
-**Step 2:** Call the `personal-standup-prep` MCP prompt:
-
-```
+```json
 personal-standup-prep({
-  completedTasks: JSON.stringify(completedActivities),
-  plannedTasks: JSON.stringify(plannedActivities),
-  timeframe: "since last standup"  // optional
+  "completedTasks": "<json-array>",
+  "plannedTasks": "<json-array>",
+  "initiatives": "<json-array>",
+  "blockers": "<json-array>",
+  "timeframe": "since last standup"
 })
 ```
-
-## Arguments
-
-| Argument | Type | Required | Description |
-|---|---|---|---|
-| `completedTasks` | string | **Yes** | JSON array of completed task objects |
-| `plannedTasks` | string | **Yes** | JSON array of planned task objects |
-| `timeframe` | string | No | e.g. `"yesterday"`, `"since last standup"`, `"this week"` |
-
-## Output Format
-
-Three sections:
-1. **What I completed** — finished work that moved things forward
-2. **What I'm working on** — current priorities and next steps
-3. **Blockers** — issues preventing progress, or "None"
-
-Conversational tone, 1–2 sentences per point, specific about what was accomplished.

@@ -1,75 +1,95 @@
 # One Horizon for Cursor and Claude Code
 
-[One Horizon](https://onehorizon.ai) connects your task data to Cursor and Claude Code. Ask about your work in plain English — what you shipped, what's on your plate, what's blocking your team — without opening another tab.
+[One Horizon](https://onehorizon.ai) connects your task data to Cursor and Claude Code. Ask about planned tasks, ship changes, and write updates back without leaving your editor.
 
-These skills connect the One Horizon MCP server to your agent so it can read and update your tasks alongside your code.
+These skills connect the One Horizon MCP server to your agent so it can fetch and update initiatives, bugs, feature requests, and TODO tasks while you code.
 
 ---
 
 ## What you can do
 
-**Before standup:**
+**Run the full delivery loop:**
 
-> "Prep my standup update for today"
-> "Generate the team standup summary"
+> "What do I have planned?"
+> "Pick up this initiative and implement it"
+> "Write this work back and link it to initiative X"
+> "Save a `.journal` entry for this change"
 
-The agent pulls your completed and planned tasks from One Horizon and formats them into ready-to-paste standup notes — yours or your whole team's.
+Use `work-item-delivery-loop` to fetch context, classify task type, implement, write back to One Horizon, and save local markdown notes.
 
-**When you need to know what's going on:**
+**Handle unplanned fixes quickly:**
 
-> "What's on my plate this week?"
-> "What did the platform team ship last sprint?"
-> "What's blocking Sarah right now?"
+> "I found a bug in checkout, fix and log it"
+> "Fix all bugs assigned to me"
 
-Get a live view of planned work, completed work, and blockers — for yourself or any team member.
+Create or update bug tasks, link to initiatives, and keep a complete execution trail.
 
-**When you ship something:**
+**Inspect full task context when list output is terse:**
 
-> "Log this work — I just fixed the auth bug"
-> "Mark that task as done"
+> "Show details for task abc123"
 
-Create and update tasks directly from the conversation.
+Use `get-task-details` to retrieve full descriptions and metadata for a specific task.
 
-**Before you go on vacation:**
+**Implement an initiative from a short prompt:**
 
-> "Write handoff notes for my time off"
+> "Implement asana"
 
-The agent generates a handoff doc — current status, in-progress work, upcoming priorities, key contacts — from your actual task data.
+The workflow resolves matching initiatives, confirms the target, pulls full task details, implements code, and writes back a completed linked TODO task.
 
-**For weekly reports or summaries:**
+**Prepare summaries and standups:**
 
-> "Summarize what I accomplished this week"
-> "Write a work report for my manager"
-
-Get a plain-language summary of your work, formatted for whoever's reading it.
+> "Prep my standup"
+> "Generate team standup summary"
+> "Prepare bug triage"
 
 ---
 
 ## Skills
 
-| Skill                   | What it does                                    | Example trigger                                 |
-| ----------------------- | ----------------------------------------------- | ----------------------------------------------- |
-| `list-planned-work`     | Show upcoming and in-progress tasks             | "What's on my plate?"                           |
-| `list-completed-work`   | Show finished work by timeframe                 | "What did I ship last week?"                    |
-| `list-blockers`         | Surface blocked items for you or your team      | "What's blocking me?"                           |
-| `create-my-task`        | Log new work                                    | "Create a task for the auth fix I just shipped" |
-| `update-my-task`        | Change task status or details                   | "Mark that as done"                             |
-| `my-work-recap`         | Combined view of completed + planned + blockers | "Give me my work recap"                         |
-| `team-work-recap`       | Same view across the whole team                 | "What did the team ship this sprint?"           |
-| `list-my-teams`         | List your workspaces, teams, and members        | "What teams am I on?"                           |
-| `find-team-member`      | Look up a person by name                        | "Find Sarah's user ID"                          |
-| `work-summarizer`       | Plain-language work summary                     | "Summarize my week for my manager"              |
-| `personal-standup-prep` | Your personal standup update                    | "Prep my standup"                               |
-| `team-standup-prep`     | Full team standup summary                       | "Team standup summary for this morning"         |
-| `handoff-notes`         | Handoff doc for vacation or transitions         | "Write handoff notes, I'm off next week"        |
+| Skill | What it does | Example trigger |
+|---|---|---|
+| `work-item-delivery-loop` | End-to-end task execution loop with write-back and `.journal` logging | "Pick this up and implement it" |
+| `list-planned-work` | Show planned/in-progress tasks across initiatives, bugs, TODOs, and related sources | "What do I have planned?" |
+| `list-completed-work` | Show completed tasks over a period | "What did we finish last sprint?" |
+| `list-blockers` | Show blocked initiatives, bugs, TODOs, and related blockers | "What is blocking us?" |
+| `my-work-recap` | Personal recap of completed/planned/blocked tasks | "Give me my recap" |
+| `team-work-recap` | Team-level recap across members | "Team status update" |
+| `get-task-details` | Get full details for one task (TODO, INITIATIVE, BUG) | "Show details for this task" |
+| `create-todo` | Create a TODO task, optionally linked to an initiative | "Log this as a todo" |
+| `update-todo` | Update an existing TODO task | "Mark this todo done" |
+| `list-initiatives` | List initiatives with optional hierarchy and statuses | "Find the right initiative for this" |
+| `create-initiative` | Create a new initiative task | "Create an initiative for Asana integration" |
+| `update-initiative` | Update status/ownership/labels/parent for an initiative | "Move this initiative to In Progress" |
+| `list-bugs` | List bug tasks with default active statuses | "Show active bugs" |
+| `report-bug` | Report a bug intake task | "Log this defect" |
+| `update-bug` | Update bug status, ownership, and details | "Reassign this bug to platform" |
+| `report-feature-request` | Report feature-request intake task | "Track this enhancement request" |
+| `update-feature-request` | Update feature-request details and state | "Update this feature request" |
+| `list-taxonomy` | List taxonomy labels for initiative tagging/filtering | "Show product and component labels" |
+| `list-my-teams` | List workspaces, teams, and members | "What teams am I on?" |
+| `find-team-member` | Resolve person name to user/team IDs | "Find Sarah in One Horizon" |
+| `work-summarizer` | Generate concise status summaries | "Write a weekly report" |
+| `initiative-summary` | Generate initiative status summaries | "Summarize these initiatives" |
+| `bug-triage-prep` | Generate bug triage notes | "Prepare bug triage" |
+| `personal-standup-prep` | Generate personal standup talking points | "Prep my standup" |
+| `team-standup-prep` | Generate team standup summary | "Standup summary for the team" |
+| `handoff-notes` | Generate handoff docs from task data | "Write handoff notes for next week" |
+
+---
+
+## Notes on task descriptions
+
+List and recap tools may omit long task descriptions by default.
+
+Use `get-task-details` when you need full context for a specific task.
 
 ---
 
 ## How it works
 
-All skills talk to the One Horizon MCP server at `https://mcp.onehorizon.ai/mcp`. Sign in via OAuth the first time a tool runs — a browser window will open to authenticate.
+All skills talk to the One Horizon MCP server at `https://mcp.onehorizon.ai/mcp`. Sign in via OAuth the first time a tool runs.
 
-No other configuration needed. The MCP connection is bundled with the plugin.
+No extra setup is required. MCP config is bundled with the plugin.
 
 ---
 
@@ -127,25 +147,20 @@ Add to your MCP config:
 
 ### Claude Desktop / Claude.ai
 
-1. Open **Settings → Connectors**
+1. Open **Settings -> Connectors**
 2. Add a custom connector
 3. Paste: `https://mcp.onehorizon.ai/mcp`
 4. Authenticate via the browser window that opens
-
-> Connectors require an eligible Claude plan.
 
 ---
 
 ### ChatGPT
 
-ChatGPT connects via Developer Mode rather than a plugin package.
-
-1. Open **Settings → Apps → Advanced Settings** and toggle Developer Mode on
-   - Requires a browser and ChatGPT Plus or higher
-2. Go to **Settings → Apps → Create App**
+1. Open **Settings -> Apps -> Advanced Settings** and enable Developer Mode
+2. Go to **Settings -> Apps -> Create App**
 3. Set **Name** to `One Horizon`, **MCP Endpoint** to `https://mcp.onehorizon.ai/mcp`, and **Authentication** to OAuth
 
-Note: only works in regular chats, not Projects or Deep Research.
+Note: works in regular chats, not Projects or Deep Research.
 
 ---
 
@@ -153,24 +168,20 @@ Note: only works in regular chats, not Projects or Deep Research.
 
 ### Claude Code
 
-1. Clone this repo and open a terminal at `plugins/one-horizon/`
-2. Load the plugin without installing it:
+1. Open a terminal at `plugins/one-horizon/`
+2. Load the plugin:
 
 ```bash
 claude --plugin-dir ./claude
 ```
 
-3. In the agent, run a skill to confirm it loads:
+3. Trigger a skill:
 
-```
+```text
 /one-horizon:list-planned-work
 ```
 
-4. Run `/help` to see all skills listed under the `one-horizon` namespace.
-
-5. To verify the MCP connection, trigger any skill — a browser window will open for OAuth on first use.
-
-After editing skills in `shared/skills/`, re-sync and restart Claude Code to pick up changes:
+After editing `shared/skills/`, sync and restart Claude Code:
 
 ```bash
 bash ./scripts/sync-skills.sh
@@ -182,13 +193,11 @@ bash ./scripts/sync-skills.sh
 node ./scripts/validate.mjs
 ```
 
-Checks skill parity, frontmatter, and manifest fields across both packages.
-
 ---
 
 ## Repository structure
 
-```
+```text
 plugins/one-horizon/
 ├── README.md
 ├── shared/
@@ -205,4 +214,4 @@ plugins/one-horizon/
     └── skills/
 ```
 
-Edit skills in `shared/skills/`, then run `bash ./scripts/sync-skills.sh` to sync to both platform packages, and `node ./scripts/validate.mjs` to confirm everything is in order.
+Edit skills in `shared/skills/`, then run `bash ./scripts/sync-skills.sh` and `node ./scripts/validate.mjs`.
