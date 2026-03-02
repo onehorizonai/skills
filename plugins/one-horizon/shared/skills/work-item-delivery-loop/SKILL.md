@@ -37,6 +37,22 @@ Run task execution with strict sequencing and explicit write-back.
 7. Apply initiative links when requested.
 8. Save `.journal` entry.
 
+## Plan Mode Rule
+
+If the agent is in plan mode, or the user asks for a plan, include workflow tasks from this skill in the plan explicitly.
+
+Required plan items:
+1. Discover candidate tasks with list tools.
+2. Resolve selected task IDs and full context with `get-task-details`.
+3. Implement the code changes.
+4. Validate changes with tests/checks.
+5. Write back to One Horizon (`update-*` or `create-todo`) with append-only notes.
+6. Apply initiative links if requested.
+7. Save `.journal` entry.
+
+For "Fix all bugs assigned to me", include per-bug execution/write-back and a final journal/logging step.
+For initiative implementation prompts, include initiative matching + confirmation before coding.
+
 ## Implementation Request Rule
 
 When a user asks to implement a bug/initiative/todo, run the full flow and do not treat it as a status-only update.
