@@ -13,7 +13,12 @@ Run task execution with strict sequencing and explicit write-back.
 - Never mark a task complete without validation evidence.
 - If initiative matching is ambiguous, ask for confirmation.
 - A run is incomplete until MCP write-back and `.journal` logging are done.
-- Status-only updates are not enough. Include a structured markdown summary in `description` for every `update-*` call.
+- Append updates to existing task descriptions; do not prepend.
+- Use `Changes/Why` only when real delivery happened (bug fix, completed TODO, completed initiative work).
+- For research/planning/triage-only updates, append a short `Update` summary instead.
+- For prompts like "implement this bug" or "work on this initiative", use every relevant One Horizon tool and companion skill before writing back.
+- Always follow skill/tool rules end-to-end: context fetch, detailed task lookup, implementation, validation, append-only write-back, initiative linking, and `.journal` logging.
+- If implementation work was requested, do not post a status-only write-back; include what changed and why.
 
 ## Task Type Heuristic
 
@@ -28,9 +33,25 @@ Run task execution with strict sequencing and explicit write-back.
 3. Resolve exact task IDs with `get-task-details`.
 4. Implement code changes.
 5. Run validation/tests.
-6. Write MCP updates (`update-*` or `create-todo`).
+6. Write MCP updates (`update-*` or `create-todo`) using append-only descriptions.
 7. Apply initiative links when requested.
 8. Save `.journal` entry.
+
+## Implementation Request Rule
+
+When a user asks to implement a bug/initiative/todo, run the full flow and do not treat it as a status-only update.
+
+Required sequence:
+1. Use discovery/list tools to find targets (`list-bugs`, `list-initiatives`, `list-planned-work`).
+2. Use `get-task-details` for each selected task before implementation.
+3. Use related companion skills where relevant (`bug-triage-prep`, `initiative-summary`, recap/summarizer skills) before coding or writing updates.
+4. Implement and validate code changes.
+5. Apply append-only task write-back using `update-*` or `create-todo`.
+6. Apply requested initiative links.
+7. Save `.journal` entry.
+
+If any required step is skipped, the run is incomplete.
+If implementation happened, the write-back must include a `## Changes` block with both "What changed" and "Why".
 
 ## Workflow Rule: "Fix all bugs assigned to me"
 
@@ -93,12 +114,31 @@ When reporting progress back to the user, use this structure:
 3. `Write-back`: which MCP tool was called and what was updated
 4. `Links`: initiative IDs connected
 
-Use this write-back `description` template when calling `update-*` tools:
+Use append-only description blocks when calling `update-*` tools.
+
+Delivery update (code shipped / fix completed / task completed):
 
 ```markdown
 ## Changes
 - What changed: <short summary>
 - Why: <root cause or goal>
+```
+
+Research or planning update (no external implementation delivered):
+
+```markdown
+## Update
+- Summary: <what was researched/decided/triaged>
+```
+
+Append format:
+
+```markdown
+<existing description>
+
+---
+
+<new block>
 ```
 
 ## Failure Handling

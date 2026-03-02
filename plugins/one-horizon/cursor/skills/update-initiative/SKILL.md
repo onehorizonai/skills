@@ -11,12 +11,29 @@ Update an existing initiative task.
 
 Call `update-initiative`.
 
+Always append to the existing description. Do not prepend or replace existing notes.
+
+Delivery update example (implementation completed):
+
 ```json
 update-initiative({
   "initiativeId": "<initiativeId>",
   "workspaceId": "<workspaceId>",
   "status": "In Progress",
-  "description": "## Changes\n- What changed: Implemented Asana OAuth callback and token persistence\n- Why: Enable first end-to-end auth handshake for integration",
+  "description": "<existingDescription>\\n\\n---\\n\\n## Changes\\n- What changed: Implemented Asana OAuth callback and token persistence\\n- Why: Enable first end-to-end auth handshake for integration",
+  "assigneeIds": ["<userId>"],
+  "teamIds": ["<teamId>"]
+})
+```
+
+Research/planning update example (no external delivery yet):
+
+```json
+update-initiative({
+  "initiativeId": "<initiativeId>",
+  "workspaceId": "<workspaceId>",
+  "status": "In Review",
+  "description": "<existingDescription>\\n\\n---\\n\\n## Update\\n- Summary: Researched Asana scope, risks, and implementation approach",
   "assigneeIds": ["<userId>"],
   "teamIds": ["<teamId>"],
   "parentInitiativeId": "<parentInitiativeId>",
@@ -26,6 +43,5 @@ update-initiative({
 
 Resolve initiative IDs with `list-initiatives` first when needed.
 
-Do not send status-only updates. Always include a markdown `description` summary with:
-- what changed
-- why
+Use `Changes/Why` only when real implementation work was delivered.
+For research/planning-only updates, append `## Update` with a concise summary.

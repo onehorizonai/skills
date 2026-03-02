@@ -11,6 +11,10 @@ Update an existing bug task.
 
 Call `update-bug`.
 
+Append to existing description; do not prepend.
+
+Fix delivered example:
+
 ```json
 update-bug({
   "taskId": "<taskId>",
@@ -18,7 +22,18 @@ update-bug({
   "status": "In Progress",
   "assigneeIds": ["<userId>"],
   "teamIds": ["<teamId>"],
-  "description": "## Changes\n- What changed: Fixed stale cache key invalidation in checkout totals\n- Why: Totals were computed with outdated cache entries"
+  "description": "<existingDescription>\\n\\n---\\n\\n## Changes\\n- What changed: Fixed stale cache key invalidation in checkout totals\\n- Why: Totals were computed with outdated cache entries"
+})
+```
+
+Triage/research-only example:
+
+```json
+update-bug({
+  "taskId": "<taskId>",
+  "workspaceId": "<workspaceId>",
+  "status": "In Review",
+  "description": "<existingDescription>\\n\\n---\\n\\n## Update\\n- Summary: Investigated repro path and identified likely cache invalidation issue"
 })
 ```
 
@@ -28,3 +43,5 @@ When writing back a fix, ensure the bug update includes:
 - root cause
 - concrete code changes
 - why the change was needed
+
+Use `Changes/Why` for actual fixes only. Use `Update` summary for non-fix progress.

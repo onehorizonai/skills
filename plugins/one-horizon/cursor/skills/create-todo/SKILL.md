@@ -34,3 +34,5 @@ create-todo({
   "initiativeId": "<initiativeId>"
 })
 ```
+
+Use `Changes/Why` in new TODO descriptions only when the TODO represents completed external implementation work.
