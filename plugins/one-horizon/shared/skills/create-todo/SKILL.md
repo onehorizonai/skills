@@ -13,7 +13,7 @@ Call `create-todo`.
 
 ```json
 create-todo({
-  "title": "Implement Asana OAuth callback handler",
+  "title": "Implement HubSpot OAuth callback handler",
   "description": "Handle auth code exchange and token persistence",
   "status": "Planned",
   "workspaceId": "<workspaceId>",
@@ -27,8 +27,8 @@ For implementation write-back, prefer a completed task linked to the initiative:
 
 ```json
 create-todo({
-  "title": "Implemented Asana integration auth + sync",
-  "description": "## Changes\n- What changed: Built OAuth callback flow, sync worker, and retry handling\n- Why: Enable stable end-to-end Asana integration flow",
+  "title": "Implemented HubSpot lead sync auth + sync",
+  "description": "## Changes\n- What changed: Built OAuth callback flow, sync worker, and retry handling\n- Why: Enable stable end-to-end HubSpot lead sync flow",
   "status": "Completed",
   "workspaceId": "<workspaceId>",
   "initiativeId": "<initiativeId>"

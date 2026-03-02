@@ -20,7 +20,7 @@ update-initiative({
   "initiativeId": "<initiativeId>",
   "workspaceId": "<workspaceId>",
   "status": "In Progress",
-  "description": "<existingDescription>\\n\\n---\\n\\n## Changes\\n- What changed: Implemented Asana OAuth callback and token persistence\\n- Why: Enable first end-to-end auth handshake for integration",
+  "description": "<existingDescription>\\n\\n---\\n\\n## Changes\\n- What changed: Implemented HubSpot OAuth callback and token persistence\\n- Why: Enable first end-to-end auth handshake for lead sync",
   "assigneeIds": ["<userId>"],
   "teamIds": ["<teamId>"]
 })
@@ -33,7 +33,7 @@ update-initiative({
   "initiativeId": "<initiativeId>",
   "workspaceId": "<workspaceId>",
   "status": "In Review",
-  "description": "<existingDescription>\\n\\n---\\n\\n## Update\\n- Summary: Researched Asana scope, risks, and implementation approach",
+  "description": "<existingDescription>\\n\\n---\\n\\n## Update\\n- Summary: Researched HubSpot scope, risks, and implementation approach",
   "assigneeIds": ["<userId>"],
   "teamIds": ["<teamId>"],
   "parentInitiativeId": "<parentInitiativeId>",

@@ -20,7 +20,7 @@ update-todo({
   "taskId": "<taskId>",
   "workspaceId": "<workspaceId>",
   "status": "Completed",
-  "title": "Finalize Asana webhook retries",
+  "title": "Finalize HubSpot webhook retries",
   "description": "<existingDescription>\\n\\n---\\n\\n## Changes\\n- What changed: Added retry backoff and idempotency guard for webhook handler\\n- Why: Prevent duplicate processing on transient failures"
 })
 ```

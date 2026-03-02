@@ -32,7 +32,7 @@ Use `get-task-details` to retrieve full descriptions and metadata for a specific
 
 **Implement an initiative from a short prompt:**
 
-> "Implement asana"
+> "Implement HubSpot lead sync"
 
 The workflow resolves matching initiatives, confirms the target, pulls full task details, implements code, and writes back a completed linked TODO task.
 
@@ -58,7 +58,7 @@ The workflow resolves matching initiatives, confirms the target, pulls full task
 | `create-todo` | Create a TODO task, optionally linked to an initiative | "Log this as a todo" |
 | `update-todo` | Update an existing TODO task | "Mark this todo done" |
 | `list-initiatives` | List initiatives with optional hierarchy and statuses | "Find the right initiative for this" |
-| `create-initiative` | Create a new initiative task | "Create an initiative for Asana integration" |
+| `create-initiative` | Create a new initiative task | "Create an initiative for HubSpot lead sync" |
 | `update-initiative` | Update status/ownership/labels/parent for an initiative | "Move this initiative to In Progress" |
 | `list-bugs` | List bug tasks with default active statuses | "Show active bugs" |
 | `report-bug` | Report a bug intake task | "Log this defect" |

@@ -13,7 +13,7 @@ Call `report-feature-request`.
 
 ```json
 report-feature-request({
-  "title": "Allow per-project Asana sync toggles",
+  "title": "Allow per-pipeline HubSpot sync toggles",
   "description": "Enterprise admins need workspace-level control",
   "workspaceId": "<workspaceId>",
   "teamIds": ["<teamId>"],

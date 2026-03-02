@@ -1,6 +1,6 @@
 ---
 name: work-item-delivery-loop
-description: Execute an end-to-end One Horizon task workflow with deterministic steps: discover tasks, select target, fetch full details, implement code, write updates back, link initiatives, and save a local .journal record. Use for prompts like "what do I have planned", "pick this up and implement it", "I found a problem", "fix all bugs assigned to me", "implement asana", and "write this back to One Horizon". Requires One Horizon MCP.
+description: Execute an end-to-end One Horizon task workflow with deterministic steps: discover tasks, select target, fetch full details, implement code, write updates back, link initiatives, and save a local .journal record. Use for prompts like "what do I have planned", "pick this up and implement it", "I found a problem", "fix all bugs assigned to me", "implement HubSpot lead sync", and "write this back to One Horizon". Requires One Horizon MCP.
 ---
 
 # Work Item Delivery Loop
@@ -72,7 +72,7 @@ Required `update-bug` content:
 - code changes made
 - current status
 
-## Workflow Rule: "Implement <initiative keyword>" (example: "Implement asana")
+## Workflow Rule: "Implement <initiative keyword>" (example: "Implement HubSpot lead sync")
 
 Use this exact sequence:
 
@@ -89,7 +89,7 @@ Use this exact sequence:
 
 ```json
 create-todo({
-  "title": "Implemented Asana integration",
+  "title": "Implemented HubSpot lead sync integration",
   "description": "Added OAuth flow, sync job, and mapping logic. Validated with integration tests.",
   "status": "Completed",
   "initiativeId": "<initiativeId>",

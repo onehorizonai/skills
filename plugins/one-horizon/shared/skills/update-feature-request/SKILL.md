@@ -23,7 +23,7 @@ update-feature-request({
   "description": "<existingDescription>\\n\\n---\\n\\n## Update\\n- Summary: Scoped implementation approach and acceptance criteria",
   "assigneeIds": ["<userId>"],
   "teamIds": ["<teamId>"],
-  "title": "Asana integration: configurable sync cadence"
+  "title": "HubSpot lead sync: configurable sync cadence"
 })
 ```
 

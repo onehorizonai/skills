@@ -13,7 +13,7 @@ Call `create-initiative`.
 
 ```json
 create-initiative({
-  "title": "Build Asana integration",
+  "title": "Build HubSpot lead sync integration",
   "description": "OAuth, sync jobs, task mapping, and observability",
   "status": "Planned",
   "workspaceId": "<workspaceId>",
