@@ -18,7 +18,7 @@ update-bug({
   "status": "In Progress",
   "assigneeIds": ["<userId>"],
   "teamIds": ["<teamId>"],
-  "description": "Root cause isolated to stale cache key in checkout totals"
+  "description": "## Changes\n- What changed: Fixed stale cache key invalidation in checkout totals\n- Why: Totals were computed with outdated cache entries"
 })
 ```
 
@@ -27,4 +27,4 @@ Use `get-task-details` if you need full prior context before modifying.
 When writing back a fix, ensure the bug update includes:
 - root cause
 - concrete code changes
-- validation performed
+- why the change was needed

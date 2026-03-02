@@ -16,8 +16,11 @@ update-feature-request({
   "taskId": "<taskId>",
   "workspaceId": "<workspaceId>",
   "status": "Planned",
+  "description": "## Changes\n- What changed: Scoped implementation approach and acceptance criteria\n- Why: Clarify delivery path before scheduling",
   "assigneeIds": ["<userId>"],
   "teamIds": ["<teamId>"],
   "title": "Asana integration: configurable sync cadence"
 })
 ```
+
+When updating feature requests, include a markdown `description` summary, not only status/title changes.

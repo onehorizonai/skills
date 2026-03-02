@@ -28,7 +28,7 @@ Create or update bug tasks, link to initiatives, and keep a complete execution t
 
 > "Show details for task abc123"
 
-Use `get-task-details` to retrieve full descriptions and metadata for a specific task.
+Use `get-task-details` to retrieve full descriptions and metadata for a specific task, including label sections like `Goals` and `Products` (`Products` may represent product names, feature areas, or service names).
 
 **Implement an initiative from a short prompt:**
 
@@ -77,11 +77,11 @@ The workflow resolves matching initiatives, confirms the target, pulls full task
 
 ---
 
-## Notes on task descriptions
+## Notes on task details
 
 List and recap tools may omit long task descriptions by default.
 
-Use `get-task-details` when you need full context for a specific task.
+Use `get-task-details` when you need full context for a specific task. It now includes typed label output and structured label metadata (`labelsByType`, `goals`).
 
 ---
 

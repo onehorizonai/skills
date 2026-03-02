@@ -13,6 +13,7 @@ Run task execution with strict sequencing and explicit write-back.
 - Never mark a task complete without validation evidence.
 - If initiative matching is ambiguous, ask for confirmation.
 - A run is incomplete until MCP write-back and `.journal` logging are done.
+- Status-only updates are not enough. Include a structured markdown summary in `description` for every `update-*` call.
 
 ## Task Type Heuristic
 
@@ -48,7 +49,6 @@ Use this exact sequence:
 Required `update-bug` content:
 - root cause
 - code changes made
-- validation performed
 - current status
 
 ## Workflow Rule: "Implement <initiative keyword>" (example: "Implement asana")
@@ -58,9 +58,9 @@ Use this exact sequence:
 1. Call `list-initiatives` with active statuses.
 2. Rank candidates by title match, then taxonomy/team match.
 3. Present top matches and confirm selected initiative.
-4. Call `get-task-details` for selected initiative.
+4. Call `get-task-details` for selected initiative, then use `Goals`, `Products`, and `labelsByType` to verify fit.
 5. Implement requested code.
-6. Create execution record with `create-todo` using `status: "Completed"` and `initiativeId`.
+6. Create implementation record with `create-todo` using `status: "Completed"` and `initiativeId`.
 7. Call `update-initiative` if status/progress should advance.
 8. Save `.journal` entry including initiative ID and created TODO ID.
 
@@ -84,19 +84,27 @@ create-todo({
 4. If creating a TODO, set primary `initiativeId` and add extra links with relation tooling.
 5. Record all linked initiative IDs in `.journal`.
 
-## Prompting Pattern for Execution Updates
+## Prompting Pattern for Changes
 
 When reporting progress back to the user, use this structure:
 
 1. `Target`: which task/initiative/bug is being processed
 2. `Action`: what was changed
-3. `Validation`: what checks passed/failed
-4. `Write-back`: which MCP tool was called and what was updated
-5. `Links`: initiative IDs connected
+3. `Write-back`: which MCP tool was called and what was updated
+4. `Links`: initiative IDs connected
+
+Use this write-back `description` template when calling `update-*` tools:
+
+```markdown
+## Changes
+- What changed: <short summary>
+- Why: <root cause or goal>
+```
 
 ## Failure Handling
 
 - Missing task details: call `get-task-details` before proceeding.
+- Missing label context: use `get-task-details` output (`Goals`, `Products`, `labelsByType`) before deciding initiative linkage.
 - No bug match for assignee: report none found and stop.
 - Multiple initiative matches: require confirmation before coding.
 - Validation fails: do not mark complete; write back current status + blocker.
@@ -120,6 +128,4 @@ Required sections:
 2. Selected task(s) and IDs
 3. Why this approach
 4. What changed
-5. Validation done
-6. One Horizon updates (tool calls, IDs, initiative links)
-7. Follow-ups
+5. One Horizon updates (tool calls, IDs, initiative links)

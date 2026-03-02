@@ -5,7 +5,7 @@ description: List workspaces, teams, and members in One Horizon. Use when asked 
 
 # List My Teams
 
-Fetch team structure and IDs for follow-up calls.
+Fetch team structure and IDs for subsequent calls.
 
 ## Instructions
 

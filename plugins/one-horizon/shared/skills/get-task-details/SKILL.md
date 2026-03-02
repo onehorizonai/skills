@@ -22,3 +22,18 @@ Notes:
 - `taskId` is required.
 - `workspaceId` is optional.
 - Supports task type mapping: `TODO | INITIATIVE | BUG`.
+
+## Output Notes
+
+`get-task-details` always includes typed label formatting in text output:
+- `Goals: ...`
+- `Products: ...`
+- `Labels: (none)` when no labels exist
+
+Interpret `Products` broadly as product lines, feature areas, or service names.
+
+Structured metadata includes:
+- `labelsByType`
+- `goals`
+
+Use these fields when matching initiative context, validating scope, or preparing summaries.

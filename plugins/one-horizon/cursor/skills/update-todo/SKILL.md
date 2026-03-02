@@ -16,8 +16,11 @@ update-todo({
   "taskId": "<taskId>",
   "workspaceId": "<workspaceId>",
   "status": "Completed",
-  "title": "Finalize Asana webhook retries"
+  "title": "Finalize Asana webhook retries",
+  "description": "## Changes\n- What changed: Added retry backoff and idempotency guard for webhook handler\n- Why: Prevent duplicate processing on transient failures"
 })
 ```
 
 If only a task title is available, resolve IDs with `list-planned-work` first, then call `get-task-details` when description context is needed.
+
+Do not mark TODOs complete with status-only updates. Include a markdown `description` summary.

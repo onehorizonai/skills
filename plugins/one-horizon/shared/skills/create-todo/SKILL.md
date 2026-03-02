@@ -28,7 +28,7 @@ For implementation write-back, prefer a completed task linked to the initiative:
 ```json
 create-todo({
   "title": "Implemented Asana integration auth + sync",
-  "description": "Built OAuth callback flow, sync worker, and retry handling. Added tests and verified locally.",
+  "description": "## Changes\n- What changed: Built OAuth callback flow, sync worker, and retry handling\n- Why: Enable stable end-to-end Asana integration flow",
   "status": "Completed",
   "workspaceId": "<workspaceId>",
   "initiativeId": "<initiativeId>"
