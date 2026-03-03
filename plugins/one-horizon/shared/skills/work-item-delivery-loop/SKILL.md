@@ -19,6 +19,8 @@ Run task execution with strict sequencing and explicit write-back.
 - For prompts like "implement this bug" or "work on this initiative", use every relevant One Horizon tool and companion skill before writing back.
 - Always follow skill/tool rules end-to-end: context fetch, detailed task lookup, implementation, validation, append-only write-back, initiative linking, and `.journal` logging.
 - If implementation work was requested, do not post a status-only write-back; include what changed and why.
+- Stop before marking work complete: every completed bug, TODO, or initiative must have a corresponding MCP write-back update in the same run.
+- Continuous write-back: after each completed delivery chunk (not only at the end), update the related bug/TODO/initiative immediately.
 
 ## Task Type Heuristic
 
@@ -62,7 +64,7 @@ Required sequence:
 2. Use `get-task-details` for each selected task before implementation.
 3. Use related companion skills where relevant (`bug-triage-prep`, `initiative-summary`, recap/summarizer skills) before coding or writing updates.
 4. Implement and validate code changes.
-5. Apply append-only task write-back using `update-*` or `create-todo`.
+5. Apply append-only task write-back using `update-*` or `create-todo` after each completed chunk.
 6. Apply requested initiative links.
 7. Save `.journal` entry.
 
@@ -79,7 +81,7 @@ Use this exact sequence:
    - Call `get-task-details`.
    - Implement fix.
    - Validate fix with relevant tests/checks.
-   - Call `update-bug` with latest status and fix notes.
+   - Call `update-bug` immediately with latest status and fix notes.
 4. If a bug is not fixed, still call `update-bug` with blocker details.
 5. Save `.journal` entry per bug (or batch entry listing all processed bug IDs).
 
@@ -97,7 +99,7 @@ Use this exact sequence:
 3. Present top matches and confirm selected initiative.
 4. Call `get-task-details` for selected initiative, then use `Goals`, `Products`, and `labelsByType` to verify fit.
 5. Implement requested code.
-6. Create implementation record with `create-todo` using `status: "Completed"` and `initiativeId`.
+6. Create implementation record with `create-todo` using `status: "Completed"` and `initiativeId` as soon as implementation is done.
 7. Call `update-initiative` if status/progress should advance.
 8. Save `.journal` entry including initiative ID and created TODO ID.
 
@@ -165,12 +167,22 @@ Append format:
 - Multiple initiative matches: require confirmation before coding.
 - Validation fails: do not mark complete; write back current status + blocker.
 
+## Stop Before Complete Check
+
+Before declaring completion to the user, verify all completed work items were updated in One Horizon:
+
+1. Completed bug -> `update-bug` called with final status and `## Changes`.
+2. Completed TODO -> `update-todo` called with final status and `## Changes`, or `create-todo` created as `Completed`.
+3. Completed initiative work -> `update-initiative` called with progress/status update and append block.
+
+If any completed item is missing write-back, stop and perform the update first.
+
 ## Completion Gate
 
 A run is complete only when all are true:
 
 1. Code changes implemented, or explicitly marked blocked.
-2. MCP updates written back.
+2. MCP updates written back for every completed bug/TODO/initiative.
 3. Initiative links applied if requested.
 4. `.journal` entry saved with task IDs and validation notes.
 
