@@ -38,4 +38,5 @@ update-todo({
 
 If only a task title is available, resolve IDs with `list-planned-work` first, then call `get-task-details` when description context is needed.
 
-Do not mark TODOs complete with status-only updates. Use `Changes/Why` only for completed external work; otherwise append `Update` summary.
+If setting TODO status to `Completed`, append a `## Changes` block. Do not send status-only completion updates.
+Use `Changes/Why` only for completed external work; otherwise append `Update` summary.

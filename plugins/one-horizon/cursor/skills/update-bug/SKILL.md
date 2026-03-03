@@ -39,6 +39,8 @@ update-bug({
 
 Use `get-task-details` if you need full prior context before modifying.
 
+If setting bug status to `Completed`, append a `## Changes` block. Do not send status-only completion updates.
+
 When writing back a fix, ensure the bug update includes:
 - root cause
 - concrete code changes

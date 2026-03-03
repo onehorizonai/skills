@@ -43,5 +43,7 @@ update-initiative({
 
 Resolve initiative IDs with `list-initiatives` first when needed.
 
+If setting initiative status to `Completed`, append a `## Changes` block. Do not send status-only completion updates.
+
 Use `Changes/Why` only when real implementation work was delivered.
 For research/planning-only updates, append `## Update` with a concise summary.
