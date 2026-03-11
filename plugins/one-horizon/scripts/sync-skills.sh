@@ -29,8 +29,9 @@ for pkg in cursor claude; do
   # Copy/update skills from shared
   for dir in "$SHARED_SKILLS"/*/; do
     name=$(basename "$dir")
+    rm -rf "$PKG_SKILLS/$name"
     mkdir -p "$PKG_SKILLS/$name"
-    cp "$dir/SKILL.md" "$PKG_SKILLS/$name/SKILL.md"
+    cp -R "$dir"/. "$PKG_SKILLS/$name"/
     echo "  ✓ skills/$name → $pkg/skills/$name"
   done
 

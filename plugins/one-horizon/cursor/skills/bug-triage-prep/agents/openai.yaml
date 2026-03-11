@@ -1,0 +1,6 @@
+interface:
+  display_name: "Bug Triage Prep"
+  short_description: "One Horizon Bug Triage Prep skill"
+  icon_small: "./assets/logo.svg"
+  icon_large: "./assets/logo.svg"
+  default_prompt: "Use $bug-triage-prep to handle this One Horizon task."

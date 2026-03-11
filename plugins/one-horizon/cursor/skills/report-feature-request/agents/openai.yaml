@@ -1,0 +1,6 @@
+interface:
+  display_name: "Report Feature Request"
+  short_description: "One Horizon Report Feature Request skill"
+  icon_small: "./assets/logo.svg"
+  icon_large: "./assets/logo.svg"
+  default_prompt: "Use $report-feature-request to handle this One Horizon task."

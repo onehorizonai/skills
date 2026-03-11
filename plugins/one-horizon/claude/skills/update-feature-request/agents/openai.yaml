@@ -1,0 +1,6 @@
+interface:
+  display_name: "Update Feature Request"
+  short_description: "One Horizon Update Feature Request skill"
+  icon_small: "./assets/logo.svg"
+  icon_large: "./assets/logo.svg"
+  default_prompt: "Use $update-feature-request to handle this One Horizon task."

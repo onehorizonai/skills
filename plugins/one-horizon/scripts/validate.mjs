@@ -40,6 +40,11 @@ function parseFrontmatter(filePath) {
   return result
 }
 
+function hasOpenAIIcons(filePath) {
+  const content = readFileSync(filePath, 'utf8')
+  return /(^|\n)\s*icon_small:\s*["']?/.test(content) && /(^|\n)\s*icon_large:\s*["']?/.test(content)
+}
+
 // ── Shared skills ────────────────────────────────────────────────────────────
 console.log('\nChecking shared skills...')
 const sharedSkillsDir = join(root, 'shared', 'skills')
@@ -49,6 +54,7 @@ const sharedSkills = readdirSync(sharedSkillsDir).filter(
 
 for (const skill of sharedSkills) {
   const skillMd = join(sharedSkillsDir, skill, 'SKILL.md')
+  const openaiYaml = join(sharedSkillsDir, skill, 'agents', 'openai.yaml')
   if (!existsSync(skillMd)) {
     fail(`shared/${skill}/SKILL.md is missing`)
     continue
@@ -57,6 +63,10 @@ for (const skill of sharedSkills) {
   const fm = parseFrontmatter(skillMd)
   check(fm.name === skill, `shared/${skill}: name matches folder`, `shared/${skill}: name "${fm.name}" does not match folder "${skill}"`)
   check(!!fm.description, `shared/${skill}: description present`, `shared/${skill}: description is missing`)
+  check(existsSync(openaiYaml), `shared/${skill}/agents/openai.yaml exists`, `shared/${skill}/agents/openai.yaml is missing`)
+  if (existsSync(openaiYaml)) {
+    check(hasOpenAIIcons(openaiYaml), `shared/${skill}/agents/openai.yaml has icon_small/icon_large`, `shared/${skill}/agents/openai.yaml missing icon_small and/or icon_large`)
+  }
 }
 
 // ── Package checks ───────────────────────────────────────────────────────────
@@ -113,6 +123,7 @@ for (const pkg of packages) {
   // Each skill has SKILL.md with valid frontmatter
   for (const skill of pkgSkills) {
     const skillMd = join(pkgSkillsDir, skill, 'SKILL.md')
+    const openaiYaml = join(pkgSkillsDir, skill, 'agents', 'openai.yaml')
     if (!existsSync(skillMd)) {
       fail(`skills/${skill}/SKILL.md is missing`)
       continue
@@ -121,6 +132,10 @@ for (const pkg of packages) {
     const fm = parseFrontmatter(skillMd)
     check(fm.name === skill, `skills/${skill}: name matches folder`, `skills/${skill}: name "${fm.name}" does not match folder "${skill}"`)
     check(!!fm.description, `skills/${skill}: description present`, `skills/${skill}: description is missing`)
+    check(existsSync(openaiYaml), `skills/${skill}/agents/openai.yaml exists`, `skills/${skill}/agents/openai.yaml is missing`)
+    if (existsSync(openaiYaml)) {
+      check(hasOpenAIIcons(openaiYaml), `skills/${skill}/agents/openai.yaml has icon_small/icon_large`, `skills/${skill}/agents/openai.yaml missing icon_small and/or icon_large`)
+    }
   }
 }
 

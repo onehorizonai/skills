@@ -1,0 +1,6 @@
+interface:
+  display_name: "Work Summarizer"
+  short_description: "One Horizon Work Summarizer skill"
+  icon_small: "./assets/logo.svg"
+  icon_large: "./assets/logo.svg"
+  default_prompt: "Use $work-summarizer to handle this One Horizon task."

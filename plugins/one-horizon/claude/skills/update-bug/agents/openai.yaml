@@ -1,0 +1,6 @@
+interface:
+  display_name: "Update Bug"
+  short_description: "One Horizon Update Bug skill"
+  icon_small: "./assets/logo.svg"
+  icon_large: "./assets/logo.svg"
+  default_prompt: "Use $update-bug to handle this One Horizon task."

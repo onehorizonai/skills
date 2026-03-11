@@ -1,0 +1,6 @@
+interface:
+  display_name: "Personal Standup Prep"
+  short_description: "One Horizon Personal Standup Prep skill"
+  icon_small: "./assets/logo.svg"
+  icon_large: "./assets/logo.svg"
+  default_prompt: "Use $personal-standup-prep to handle this One Horizon task."
