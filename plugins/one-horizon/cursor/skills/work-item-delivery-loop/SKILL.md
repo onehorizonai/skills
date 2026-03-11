@@ -1,6 +1,6 @@
 ---
 name: work-item-delivery-loop
-description: Execute an end-to-end One Horizon task workflow with deterministic steps: discover tasks, select target, fetch full details, implement code, write updates back, link initiatives, and save a local .journal record. Use for prompts like "what do I have planned", "pick this up and implement it", "I found a problem", "fix all bugs assigned to me", "implement HubSpot lead sync", and "write this back to One Horizon". Requires One Horizon MCP.
+description: Execute an end-to-end One Horizon task workflow with deterministic steps: discover tasks, select target, fetch full details, implement code, write updates back, and link initiatives. Use for prompts like "what do I have planned", "pick this up and implement it", "I found a problem", "fix all bugs assigned to me", "implement HubSpot lead sync", and "write this back to One Horizon". Requires One Horizon MCP.
 ---
 
 # Work Item Delivery Loop
@@ -12,12 +12,12 @@ Run task execution with strict sequencing and explicit write-back.
 - Always fetch before editing: list -> details -> implement -> write-back.
 - Never mark a task complete without validation evidence.
 - If initiative matching is ambiguous, ask for confirmation.
-- A run is incomplete until MCP write-back and `.journal` logging are done.
+- A run is incomplete until MCP write-back is done.
 - Append updates to existing task descriptions; do not prepend.
 - Use `Changes/Why` only when real delivery happened (bug fix, completed TODO, completed initiative work).
 - For research/planning/triage-only updates, append a short `Update` summary instead.
 - For prompts like "implement this bug" or "work on this initiative", use every relevant One Horizon tool and companion skill before writing back.
-- Always follow skill/tool rules end-to-end: context fetch, detailed task lookup, implementation, validation, append-only write-back, initiative linking, and `.journal` logging.
+- Always follow skill/tool rules end-to-end: context fetch, detailed task lookup, implementation, validation, append-only write-back, and initiative linking.
 - If implementation work was requested, do not post a status-only write-back; include what changed and why.
 - Stop before marking work complete: every completed bug, TODO, or initiative must have a corresponding MCP write-back update in the same run.
 - Continuous write-back: after each completed delivery chunk (not only at the end), update the related bug/TODO/initiative immediately.
@@ -37,7 +37,6 @@ Run task execution with strict sequencing and explicit write-back.
 5. Run validation/tests.
 6. Write MCP updates (`update-*` or `create-todo`) using append-only descriptions.
 7. Apply initiative links when requested.
-8. Save `.journal` entry.
 
 ## Plan Mode Rule
 
@@ -50,9 +49,8 @@ Required plan items:
 4. Validate changes with tests/checks.
 5. Write back to One Horizon (`update-*` or `create-todo`) with append-only notes.
 6. Apply initiative links if requested.
-7. Save `.journal` entry.
 
-For "Fix all bugs assigned to me", include per-bug execution/write-back and a final journal/logging step.
+For "Fix all bugs assigned to me", include per-bug execution/write-back steps.
 For initiative implementation prompts, include initiative matching + confirmation before coding.
 
 ## Implementation Request Rule
@@ -66,7 +64,6 @@ Required sequence:
 4. Implement and validate code changes.
 5. Apply append-only task write-back using `update-*` or `create-todo` after each completed chunk.
 6. Apply requested initiative links.
-7. Save `.journal` entry.
 
 If any required step is skipped, the run is incomplete.
 If implementation happened, the write-back must include a `## Changes` block with both "What changed" and "Why".
@@ -83,7 +80,6 @@ Use this exact sequence:
    - Validate fix with relevant tests/checks.
    - Call `update-bug` immediately with latest status and fix notes.
 4. If a bug is not fixed, still call `update-bug` with blocker details.
-5. Save `.journal` entry per bug (or batch entry listing all processed bug IDs).
 
 Required `update-bug` content:
 - root cause
@@ -101,7 +97,6 @@ Use this exact sequence:
 5. Implement requested code.
 6. Create implementation record with `create-todo` using `status: "Completed"` and `initiativeId` as soon as implementation is done.
 7. Call `update-initiative` if status/progress should advance.
-8. Save `.journal` entry including initiative ID and created TODO ID.
 
 `create-todo` write-back shape:
 
@@ -121,7 +116,6 @@ create-todo({
 2. Confirm ambiguous matches.
 3. Apply links using relation-capable tooling.
 4. If creating a TODO, set primary `initiativeId` and add extra links with relation tooling.
-5. Record all linked initiative IDs in `.journal`.
 
 ## Prompting Pattern for Changes
 
@@ -184,16 +178,3 @@ A run is complete only when all are true:
 1. Code changes implemented, or explicitly marked blocked.
 2. MCP updates written back for every completed bug/TODO/initiative.
 3. Initiative links applied if requested.
-4. `.journal` entry saved with task IDs and validation notes.
-
-## Local Journal Contract
-
-Default folder: `.journal`
-Default file: `.journal/YYYY-MM-DD-<task-slug>.md`
-
-Required sections:
-1. User request
-2. Selected task(s) and IDs
-3. Why this approach
-4. What changed
-5. One Horizon updates (tool calls, IDs, initiative links)

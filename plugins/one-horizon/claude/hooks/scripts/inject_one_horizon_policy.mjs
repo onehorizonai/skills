@@ -19,7 +19,7 @@ function getPromptText(payload) {
 function isOneHorizonRelevant(text) {
   if (!text) return false;
   const re =
-    /\b(one\s*horizon|initiative|initiatives|bug|bugs|feature request|todo|planned work|blocker|standup|work recap|implement|fix|ship|write back|journal)\b/i;
+    /\b(one\s*horizon|initiative|initiatives|bug|bugs|feature request|todo|planned work|blocker|standup|work recap|implement|fix|ship|write back)\b/i;
   return re.test(text);
 }
 
@@ -40,7 +40,7 @@ function main() {
     "2) done chunk -> write-back now (`update-bug`/`update-todo`/`update-initiative` or completed `create-todo`).",
     "3) delivered work -> append `## Changes`: `What changed` + `Why`.",
     "4) req initiative links -> apply before final.",
-    "5) plan mode -> include: discover, details, implement, validate, write-back, link, `.journal`."
+    "5) plan mode -> include: discover, details, implement, validate, write-back, link."
   ].join("\n");
 
   process.stdout.write(
