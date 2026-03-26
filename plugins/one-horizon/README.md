@@ -13,7 +13,6 @@ These skills connect the One Horizon MCP server to your agent so it can fetch an
 > "What do I have planned?"
 > "Pick up this initiative and implement it"
 > "Write this work back and link it to initiative X"
-> "Save a `.journal` entry for this change"
 
 Use `work-item-delivery-loop` to fetch context, classify task type, implement, write back to One Horizon, and save local markdown notes.
 
@@ -49,30 +48,18 @@ The workflow resolves matching initiatives, confirms the target, pulls full task
 | Skill | What it does | Example trigger |
 |---|---|---|
 | `work-item-delivery-loop` | End-to-end task execution loop with write-back and `.journal` logging | "Pick this up and implement it" |
-| `list-planned-work` | Show planned/in-progress tasks across initiatives, bugs, TODOs, and related sources | "What do I have planned?" |
-| `list-completed-work` | Show completed tasks over a period | "What did we finish last sprint?" |
-| `list-blockers` | Show blocked initiatives, bugs, TODOs, and related blockers | "What is blocking us?" |
-| `my-work-recap` | Personal recap of completed/planned/blocked tasks | "Give me my recap" |
-| `team-work-recap` | Team-level recap across members | "Team status update" |
+| `list-work` | Show planned, completed, blocked, initiative, or bug tasks | "What do I have planned?" / "Show active bugs" |
 | `get-task-details` | Get full details for one task (TODO, INITIATIVE, BUG) | "Show details for this task" |
-| `create-todo` | Create a TODO task, optionally linked to an initiative | "Log this as a todo" |
-| `update-todo` | Update an existing TODO task | "Mark this todo done" |
-| `list-initiatives` | List initiatives with optional hierarchy and statuses | "Find the right initiative for this" |
-| `create-initiative` | Create a new initiative task | "Create an initiative for HubSpot lead sync" |
-| `update-initiative` | Update status/ownership/labels/parent for an initiative | "Move this initiative to In Progress" |
-| `list-bugs` | List bug tasks with default active statuses | "Show active bugs" |
-| `report-bug` | Report a bug intake task | "Log this defect" |
-| `update-bug` | Update bug status, ownership, and details | "Reassign this bug to platform" |
-| `report-feature-request` | Report feature-request intake task | "Track this enhancement request" |
-| `update-feature-request` | Update feature-request details and state | "Update this feature request" |
+| `create-task` | Create a TODO or initiative, optionally linked to a parent | "Log this as a todo" / "Create an initiative" |
+| `update-task` | Update any task type, add comments, or react to comments | "Mark this done" / "Add a comment on that task" |
+| `report-issue` | Report a bug or feature request | "I found a bug" / "Log this feature request" |
+| `find-team` | List teams/members and resolve IDs | "What teams am I on?" / "Find Sarah" |
 | `list-taxonomy` | List taxonomy labels for initiative tagging/filtering | "Show product and component labels" |
-| `list-my-teams` | List workspaces, teams, and members | "What teams am I on?" |
-| `find-team-member` | Resolve person name to user/team IDs | "Find Sarah in One Horizon" |
+| `work-recap` | Personal or team recap of completed/planned/blocked tasks | "Give me my recap" / "Team status" |
+| `standup-prep` | Generate personal or team standup talking points | "Prep my standup" / "Team standup summary" |
 | `work-summarizer` | Generate concise status summaries | "Write a weekly report" |
 | `initiative-summary` | Generate initiative status summaries | "Summarize these initiatives" |
 | `bug-triage-prep` | Generate bug triage notes | "Prepare bug triage" |
-| `personal-standup-prep` | Generate personal standup talking points | "Prep my standup" |
-| `team-standup-prep` | Generate team standup summary | "Standup summary for the team" |
 | `handoff-notes` | Generate handoff docs from task data | "Write handoff notes for next week" |
 
 ---
@@ -196,7 +183,7 @@ claude --plugin-dir ./claude
 3. Trigger a skill:
 
 ```text
-/one-horizon:list-planned-work
+/one-horizon:list-work
 ```
 
 After editing `shared/skills/`, sync and restart Claude Code:
