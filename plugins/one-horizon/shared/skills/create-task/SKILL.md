@@ -23,19 +23,23 @@ create-todo({
 })
 ```
 
-For completed implementation write-back:
+For completed implementation write-back, create the TODO then add a comment with what changed:
 
 ```json
 create-todo({
   "title": "Implemented HubSpot lead sync auth + sync",
-  "description": "## Changes\n- What changed: Built OAuth callback flow, sync worker, and retry handling\n- Why: Enable stable end-to-end HubSpot lead sync flow",
   "status": "Completed",
   "workspaceId": "<workspaceId>",
   "initiativeId": "<initiativeId>"
 })
 ```
 
-Use `Changes/Why` only when the TODO represents completed external implementation work.
+```json
+add-task-comment({
+  "taskId": "<newTaskId>",
+  "comment": "**Changes**\n- What changed: Built OAuth callback flow, sync worker, and retry handling\n- Why: Enable stable end-to-end HubSpot lead sync flow"
+})
+```
 
 ### Initiative
 

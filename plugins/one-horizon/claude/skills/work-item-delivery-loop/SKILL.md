@@ -13,12 +13,12 @@ Run task execution with strict sequencing and explicit write-back.
 - Never mark a task complete without validation evidence.
 - If initiative matching is ambiguous, ask for confirmation.
 - A run is incomplete until MCP write-back is done.
-- Append updates to existing task descriptions; do not prepend.
-- Use `Changes/Why` only when real delivery happened (bug fix, completed TODO, completed initiative work).
-- For research/planning/triage-only updates, append a short `Update` summary instead.
+- Never modify task descriptions to record progress. Use `add-task-comment` instead.
+- Use `Changes/Why` comments only when real delivery happened (bug fix, completed TODO, completed initiative work).
+- For research/planning/triage-only updates, add an `Update` comment instead.
 - For prompts like "implement this bug" or "work on this initiative", use every relevant One Horizon tool and companion skill before writing back.
-- Always follow skill/tool rules end-to-end: context fetch, detailed task lookup, implementation, validation, append-only write-back, and initiative linking.
-- If implementation work was requested, do not post a status-only write-back; include what changed and why.
+- Always follow skill/tool rules end-to-end: context fetch, detailed task lookup, implementation, validation, write-back, and initiative linking.
+- If implementation work was requested, do not post a status-only write-back; add a comment with what changed and why.
 - Stop before marking work complete: every completed bug, TODO, or initiative must have a corresponding MCP write-back update in the same run.
 - Continuous write-back: after each completed delivery chunk (not only at the end), update the related bug/TODO/initiative immediately.
 
@@ -35,7 +35,7 @@ Run task execution with strict sequencing and explicit write-back.
 3. Resolve exact task IDs with `get-task-details`.
 4. Implement code changes.
 5. Run validation/tests.
-6. Write MCP updates (`update-*` or `create-todo`) using append-only descriptions.
+6. Write MCP updates (`update-*` or `create-todo`) and add comments via `add-task-comment`.
 7. Apply initiative links when requested.
 
 ## Plan Mode Rule
@@ -47,7 +47,7 @@ Required plan items:
 2. Resolve selected task IDs and full context with `get-task-details`.
 3. Implement the code changes.
 4. Validate changes with tests/checks.
-5. Write back to One Horizon (`update-*` or `create-todo`) with append-only notes.
+5. Write back to One Horizon (`update-*` or `create-todo`) and add a comment with progress notes.
 6. Apply initiative links if requested.
 
 For "Fix all bugs assigned to me", include per-bug execution/write-back steps.
@@ -62,11 +62,11 @@ Required sequence:
 2. Use `get-task-details` for each selected task before implementation.
 3. Use related companion skills where relevant (`bug-triage-prep`, `initiative-summary`, recap/summarizer skills) before coding or writing updates.
 4. Implement and validate code changes.
-5. Apply append-only task write-back using `update-*` or `create-todo` after each completed chunk.
+5. Update task status via `update-*` or `create-todo`, then add a comment via `add-task-comment` after each completed chunk.
 6. Apply requested initiative links.
 
 If any required step is skipped, the run is incomplete.
-If implementation happened, the write-back must include a `## Changes` block with both "What changed" and "Why".
+If implementation happened, the write-back must include a `**Changes**` block with both "What changed" and "Why".
 
 ## Workflow Rule: "Fix all bugs assigned to me"
 
@@ -78,10 +78,10 @@ Use this exact sequence:
    - Call `get-task-details`.
    - Implement fix.
    - Validate fix with relevant tests/checks.
-   - Call `update-bug` immediately with latest status and fix notes.
-4. If a bug is not fixed, still call `update-bug` with blocker details.
+   - Call `update-bug` with latest status, then `add-task-comment` with fix notes.
+4. If a bug is not fixed, still call `update-bug` with status and `add-task-comment` with blocker details.
 
-Required `update-bug` content:
+Required `add-task-comment` content after `update-bug`:
 - root cause
 - code changes made
 - current status
@@ -126,31 +126,21 @@ When reporting progress back to the user, use this structure:
 3. `Write-back`: which MCP tool was called and what was updated
 4. `Links`: initiative IDs connected
 
-Use append-only description blocks when calling `update-*` tools.
+Use `add-task-comment` for all progress notes. Never modify task descriptions.
 
-Delivery update (code shipped / fix completed / task completed):
+Delivery comment (code shipped / fix completed / task completed):
 
 ```markdown
-## Changes
+**Changes**
 - What changed: <short summary>
 - Why: <root cause or goal>
 ```
 
-Research or planning update (no external implementation delivered):
+Research or planning comment (no external implementation delivered):
 
 ```markdown
 ## Update
 - Summary: <what was researched/decided/triaged>
-```
-
-Append format:
-
-```markdown
-<existing description>
-
----
-
-<new block>
 ```
 
 ## Failure Handling
@@ -165,9 +155,9 @@ Append format:
 
 Before declaring completion to the user, verify all completed work items were updated in One Horizon:
 
-1. Completed bug -> `update-bug` called with final status and `## Changes`.
-2. Completed TODO -> `update-todo` called with final status and `## Changes`, or `create-todo` created as `Completed`.
-3. Completed initiative work -> `update-initiative` called with progress/status update and append block.
+1. Completed bug -> `update-bug` called with final status + `add-task-comment` with `**Changes**`.
+2. Completed TODO -> `update-todo` called with final status + `add-task-comment` with `**Changes**`, or `create-todo` created as `Completed` + comment.
+3. Completed initiative work -> `update-initiative` called with status + `add-task-comment` with progress notes.
 
 If any completed item is missing write-back, stop and perform the update first.
 

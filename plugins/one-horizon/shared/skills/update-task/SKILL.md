@@ -9,10 +9,8 @@ Update an existing task or interact with its comments. Pick the right MCP tool b
 
 ## Shared rules
 
-- Always append to existing description; never prepend or replace.
-- If setting status to `Completed`, append a `## Changes` block with root cause / code changes / why. Never send status-only completion updates.
-- Use `## Changes` + `Why` only when real implementation work was delivered.
-- For research/planning-only progress, append `## Update` with a concise summary.
+- Never modify task descriptions to record progress. Use comments instead.
+- When changing status (e.g. to `Completed`), add a comment explaining what changed and why.
 - Resolve IDs first with `list-work` or `get-task-details` when needed.
 
 ## By task type
@@ -25,9 +23,16 @@ Call `update-todo`:
 update-todo({
   "taskId": "<taskId>",
   "workspaceId": "<workspaceId>",
-  "status": "Completed",
-  "title": "Finalize HubSpot webhook retries",
-  "description": "<existingDescription>\\n\\n---\\n\\n## Changes\\n- What changed: Added retry backoff and idempotency guard\\n- Why: Prevent duplicate processing on transient failures"
+  "status": "Completed"
+})
+```
+
+Then add a comment with what changed:
+
+```json
+add-task-comment({
+  "taskId": "<taskId>",
+  "comment": "**Changes**\n- What changed: Added retry backoff and idempotency guard\n- Why: Prevent duplicate processing on transient failures"
 })
 ```
 
@@ -40,15 +45,23 @@ update-initiative({
   "initiativeId": "<initiativeId>",
   "workspaceId": "<workspaceId>",
   "status": "In Progress",
-  "description": "<existingDescription>\\n\\n---\\n\\n## Changes\\n- What changed: Implemented OAuth callback and token persistence\\n- Why: Enable first end-to-end auth handshake",
   "assigneeIds": ["<userId>"],
   "teamIds": ["<teamId>"]
 })
 ```
 
+Then add a comment:
+
+```json
+add-task-comment({
+  "taskId": "<initiativeId>",
+  "comment": "**Changes**\n- What changed: Implemented OAuth callback and token persistence\n- Why: Enable first end-to-end auth handshake"
+})
+```
+
 ### Bug
 
-Call `update-bug`. When writing back a fix, include root cause, concrete code changes, and why:
+Call `update-bug`. When writing back a fix, add root cause, code changes, and why as a comment:
 
 ```json
 update-bug({
@@ -56,8 +69,14 @@ update-bug({
   "workspaceId": "<workspaceId>",
   "status": "In Progress",
   "assigneeIds": ["<userId>"],
-  "teamIds": ["<teamId>"],
-  "description": "<existingDescription>\\n\\n---\\n\\n## Changes\\n- What changed: Fixed stale cache key invalidation\\n- Why: Totals were computed with outdated cache entries"
+  "teamIds": ["<teamId>"]
+})
+```
+
+```json
+add-task-comment({
+  "taskId": "<taskId>",
+  "comment": "**Changes**\n- What changed: Fixed stale cache key invalidation\n- Why: Totals were computed with outdated cache entries"
 })
 ```
 
@@ -70,32 +89,42 @@ update-feature-request({
   "taskId": "<taskId>",
   "workspaceId": "<workspaceId>",
   "status": "Planned",
-  "description": "<existingDescription>\\n\\n---\\n\\n## Update\\n- Summary: Scoped implementation approach and acceptance criteria",
   "assigneeIds": ["<userId>"],
   "teamIds": ["<teamId>"]
 })
 ```
 
-## Comments
+```json
+add-task-comment({
+  "taskId": "<taskId>",
+  "comment": "## Update\n- Summary: Scoped implementation approach and acceptance criteria"
+})
+```
 
-Use comments to share findings, note deviations, or document decisions without modifying the task description.
+## Comment formats
 
-### List comments
+Delivery update (code shipped / fix completed):
+
+```markdown
+**Changes**
+- What changed: <short summary>
+- Why: <root cause or goal>
+```
+
+Research or planning update (no implementation delivered):
+
+```markdown
+## Update
+- Summary: <what was researched/decided/triaged>
+```
+
+## List comments
 
 ```json
 list-task-comments({ "taskId": "<taskId>" })
 ```
 
-### Add a comment
-
-```json
-add-task-comment({
-  "taskId": "<taskId>",
-  "comment": "Auth flow changed — now uses PKCE instead of implicit grant"
-})
-```
-
-### React to a comment
+## React to a comment
 
 Toggles an emoji reaction (adds if missing, removes if already present):
 
@@ -104,3 +133,4 @@ toggle-comment-reaction({
   "commentId": "<commentId>",
   "emoji": "👍"
 })
+```

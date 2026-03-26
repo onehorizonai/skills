@@ -38,7 +38,7 @@ function main() {
     "OH rules:",
     "1) list+details -> implement.",
     "2) done chunk -> write-back now (`update-bug`/`update-todo`/`update-initiative` or completed `create-todo`).",
-    "3) delivered work -> append `## Changes`: `What changed` + `Why`.",
+    "3) delivered work -> append `**Changes**`: `What changed` + `Why`.",
     "4) req initiative links -> apply before final.",
     "5) plan mode -> include: discover, details, implement, validate, write-back, link."
   ].join("\n");
