@@ -1,11 +1,11 @@
 ---
 name: update-task
-description: Update any task in One Horizon (TODO, initiative, bug, or feature request). Use when asked "mark this done", "update this task", "reassign", "change status", "update initiative", "update bug", or "update feature request". Requires One Horizon MCP.
+description: Update any task in One Horizon (TODO, initiative, bug, or feature request), add comments, or react to comments. Use when asked "mark this done", "update this task", "reassign", "change status", "add a comment", "comment on this task", "react to that comment", or "show comments". Requires One Horizon MCP.
 ---
 
 # Update Task
 
-Update an existing task. Pick the right MCP tool based on task type.
+Update an existing task or interact with its comments. Pick the right MCP tool based on task type and action.
 
 ## Shared rules
 
@@ -75,3 +75,32 @@ update-feature-request({
   "teamIds": ["<teamId>"]
 })
 ```
+
+## Comments
+
+Use comments to share findings, note deviations, or document decisions without modifying the task description.
+
+### List comments
+
+```json
+list-task-comments({ "taskId": "<taskId>" })
+```
+
+### Add a comment
+
+```json
+add-task-comment({
+  "taskId": "<taskId>",
+  "comment": "Auth flow changed — now uses PKCE instead of implicit grant"
+})
+```
+
+### React to a comment
+
+Toggles an emoji reaction (adds if missing, removes if already present):
+
+```json
+toggle-comment-reaction({
+  "commentId": "<commentId>",
+  "emoji": "👍"
+})
