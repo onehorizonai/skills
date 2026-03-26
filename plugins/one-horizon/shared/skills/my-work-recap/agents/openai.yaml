@@ -1,6 +1,0 @@
-interface:
-  display_name: "My Work Recap"
-  short_description: "One Horizon My Work Recap skill"
-  icon_small: "./assets/logo.svg"
-  icon_large: "./assets/logo.svg"
-  default_prompt: "Use $my-work-recap to handle this One Horizon task."

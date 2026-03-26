@@ -1,6 +1,0 @@
-interface:
-  display_name: "Team Work Recap"
-  short_description: "One Horizon Team Work Recap skill"
-  icon_small: "./assets/logo.svg"
-  icon_large: "./assets/logo.svg"
-  default_prompt: "Use $team-work-recap to handle this One Horizon task."

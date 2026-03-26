@@ -1,6 +1,0 @@
-interface:
-  display_name: "Update Initiative"
-  short_description: "One Horizon Update Initiative skill"
-  icon_small: "./assets/logo.svg"
-  icon_large: "./assets/logo.svg"
-  default_prompt: "Use $update-initiative to handle this One Horizon task."

@@ -1,6 +1,0 @@
-interface:
-  display_name: "List Initiatives"
-  short_description: "One Horizon List Initiatives skill"
-  icon_small: "./assets/logo.svg"
-  icon_large: "./assets/logo.svg"
-  default_prompt: "Use $list-initiatives to handle this One Horizon task."

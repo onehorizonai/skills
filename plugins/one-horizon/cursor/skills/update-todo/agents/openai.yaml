@@ -1,6 +1,0 @@
-interface:
-  display_name: "Update Todo"
-  short_description: "One Horizon Update Todo skill"
-  icon_small: "./assets/logo.svg"
-  icon_large: "./assets/logo.svg"
-  default_prompt: "Use $update-todo to handle this One Horizon task."

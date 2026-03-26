@@ -1,6 +1,0 @@
-interface:
-  display_name: "List Bugs"
-  short_description: "One Horizon List Bugs skill"
-  icon_small: "./assets/logo.svg"
-  icon_large: "./assets/logo.svg"
-  default_prompt: "Use $list-bugs to handle this One Horizon task."

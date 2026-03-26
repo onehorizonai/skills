@@ -1,0 +1,6 @@
+interface:
+  display_name: "List Work"
+  short_description: "One Horizon List Work skill"
+  icon_small: "./assets/logo.svg"
+  icon_large: "./assets/logo.svg"
+  default_prompt: "Use $list-work to handle this One Horizon task."
