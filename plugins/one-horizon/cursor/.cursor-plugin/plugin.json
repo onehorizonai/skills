@@ -1,7 +1,7 @@
 {
   "name": "one",
   "description": "One Horizon work intelligence for Cursor. Log completed work, view planned tasks, surface blockers, and get standup-ready with your team's context — directly in the editor.",
-  "version": "2.0.4",
+  "version": "2.1.0",
   "author": {
     "name": "One Horizon"
   },
