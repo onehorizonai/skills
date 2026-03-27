@@ -27,7 +27,7 @@
       "I found a bug in checkout, fix and log it."
     ],
     "brandColor": "#101011",
-    "composerIcon": "./assets/one-horizon-large.svg",
-    "logo": "./assets/one-horizon-large.svg"
+    "composerIcon": "./assets/one-horizon-codex.svg",
+    "logo": "./assets/one-horizon-codex.svg"
   }
 }

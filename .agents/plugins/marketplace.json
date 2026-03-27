@@ -1,0 +1,20 @@
+{
+  "name": "local-dev",
+  "interface": {
+    "displayName": "Local Dev"
+  },
+  "plugins": [
+    {
+      "name": "one-horizon",
+      "source": {
+        "source": "local",
+        "path": "./plugins/one-horizon/codex"
+      },
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
+      "category": "Productivity"
+    }
+  ]
+}
