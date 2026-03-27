@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 /**
- * Validate that both Cursor and Claude plugin packages are complete and in sync.
+ * Validate that all plugin packages are complete and in sync.
  */
 
 import { readdirSync, existsSync, readFileSync } from 'fs'
@@ -73,6 +73,7 @@ for (const skill of sharedSkills) {
 const packages = [
   { name: 'Cursor', dir: join(root, 'cursor'), manifest: '.cursor-plugin/plugin.json' },
   { name: 'Claude', dir: join(root, 'claude'), manifest: '.claude-plugin/plugin.json' },
+  { name: 'Codex', dir: join(root, 'codex'), manifest: '.codex-plugin/plugin.json' },
 ]
 
 for (const pkg of packages) {
@@ -93,6 +94,12 @@ for (const pkg of packages) {
   check(!!manifest.keywords?.length, 'manifest: keywords present', 'manifest: keywords missing (helps discoverability)')
   if (manifest.author?.url) fail('manifest: author.url is not a valid field (use email or top-level homepage)')
   if (manifest.icon) fail('manifest: "icon" is not a valid field (not in plugin spec)')
+  if (pkg.name === 'Codex') {
+    check(manifest.skills === './skills/', 'manifest: skills path present', 'manifest: skills should point to "./skills/"')
+    check(manifest.mcpServers === './.mcp.json', 'manifest: mcpServers path present', 'manifest: mcpServers should point to "./.mcp.json"')
+    check(!!manifest.interface?.displayName, 'manifest: interface.displayName present', 'manifest: interface.displayName is missing')
+    check(!!manifest.interface?.logo, 'manifest: interface.logo present', 'manifest: interface.logo is missing')
+  }
 
   // MCP config
   const mcpPath = join(pkg.dir, '.mcp.json')

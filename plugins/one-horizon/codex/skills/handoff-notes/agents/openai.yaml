@@ -1,0 +1,6 @@
+interface:
+  display_name: "Handoff Notes"
+  short_description: "One Horizon Handoff Notes skill"
+  icon_small: "./assets/logo.svg"
+  icon_large: "./assets/logo.svg"
+  default_prompt: "Use $handoff-notes to handle this One Horizon task."

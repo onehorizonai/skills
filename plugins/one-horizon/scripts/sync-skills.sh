@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# Sync shared skills and assets into Cursor and Claude plugin packages.
+# Sync shared skills and assets into Cursor, Claude, and Codex plugin packages.
 # Run from the plugins/one-horizon/ directory.
 
 set -e
@@ -10,7 +10,7 @@ SHARED_ASSETS="$ROOT/shared/assets"
 
 echo "Syncing shared skills..."
 
-for pkg in cursor claude; do
+for pkg in cursor claude codex; do
   PKG_SKILLS="$ROOT/$pkg/skills"
   PKG_ASSETS="$ROOT/$pkg/assets"
 
@@ -44,4 +44,4 @@ for pkg in cursor claude; do
 done
 
 echo ""
-echo "Done. Both packages are in sync with shared/."
+echo "Done. All platform packages are in sync with shared/."

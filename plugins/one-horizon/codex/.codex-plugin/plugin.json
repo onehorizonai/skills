@@ -1,0 +1,33 @@
+{
+  "name": "one-horizon",
+  "version": "2.1.2",
+  "description": "One Horizon work intelligence for Codex. Log completed work, view planned tasks, surface blockers, and get standup-ready with your team's context.",
+  "author": {
+    "name": "One Horizon"
+  },
+  "homepage": "https://onehorizon.ai",
+  "repository": "https://github.com/onehorizon/agent-skills",
+  "license": "MIT",
+  "keywords": ["standup", "productivity", "work-log", "tasks", "blockers", "team"],
+  "skills": "./skills/",
+  "mcpServers": "./.mcp.json",
+  "interface": {
+    "displayName": "One Horizon",
+    "shortDescription": "Work intelligence for planned tasks, blockers, and standups.",
+    "longDescription": "Connect One Horizon to Codex to inspect planned work, update tasks, capture bugs and feature requests, and run recap workflows without leaving the editor.",
+    "developerName": "One Horizon",
+    "category": "Productivity",
+    "capabilities": ["Interactive", "Write"],
+    "websiteURL": "https://onehorizon.ai",
+    "privacyPolicyURL": "https://onehorizon.ai/privacy",
+    "termsOfServiceURL": "https://onehorizon.ai/terms",
+    "defaultPrompt": [
+      "What do I have planned?",
+      "Prep my standup.",
+      "I found a bug in checkout, fix and log it."
+    ],
+    "brandColor": "#101011",
+    "composerIcon": "./assets/one-horizon-large.svg",
+    "logo": "./assets/one-horizon-large.svg"
+  }
+}

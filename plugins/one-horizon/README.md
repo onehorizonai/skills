@@ -1,6 +1,6 @@
-# One Horizon for Cursor and Claude Code
+# One Horizon for Cursor, Claude Code, and Codex
 
-[One Horizon](https://onehorizon.ai) connects your task data to Cursor and Claude Code. Ask about planned tasks, ship changes, and write updates back without leaving your editor.
+[One Horizon](https://onehorizon.ai) connects your task data to Cursor, Claude Code, and Codex. Ask about planned tasks, ship changes, and write updates back without leaving your editor.
 
 These skills connect the One Horizon MCP server to your agent so it can fetch and update initiatives, bugs, feature requests, and TODO tasks while you code.
 
@@ -150,6 +150,12 @@ Add to your MCP config:
 
 ---
 
+### Codex
+
+Use [`plugins/one-horizon/codex`](/Users/gijs/Sites/skills/plugins/one-horizon/codex) as the Codex plugin root. It contains the Codex manifest at [`plugins/one-horizon/codex/.codex-plugin/plugin.json`](/Users/gijs/Sites/skills/plugins/one-horizon/codex/.codex-plugin/plugin.json), the MCP config at [`plugins/one-horizon/codex/.mcp.json`](/Users/gijs/Sites/skills/plugins/one-horizon/codex/.mcp.json), and a synced copy of the shared skills.
+
+---
+
 ### Claude Desktop / Claude.ai
 
 1. Open **Settings -> Connectors**
@@ -212,8 +218,13 @@ plugins/one-horizon/
 │   │   └── plugin.json
 │   ├── .mcp.json
 │   └── skills/
-└── claude/              # Claude Code plugin package
-    ├── .claude-plugin/
+├── claude/              # Claude Code plugin package
+│   ├── .claude-plugin/
+│   │   └── plugin.json
+│   ├── .mcp.json
+│   └── skills/
+└── codex/               # Codex plugin package
+    ├── .codex-plugin/
     │   └── plugin.json
     ├── .mcp.json
     └── skills/

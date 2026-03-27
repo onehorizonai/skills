@@ -1,6 +1,6 @@
 # One Horizon Agent Plugins
 
-Plugins for [One Horizon](https://onehorizon.ai) that help agents work with One Horizon tasks directly from Cursor or Claude Code.
+Plugins for [One Horizon](https://onehorizon.ai) that help agents work with One Horizon tasks directly from Cursor, Claude Code, or Codex.
 
 Tasks include initiatives, bugs, feature requests, and TODOs, plus standup/recap workflows.
 
@@ -10,7 +10,7 @@ Tasks include initiatives, bugs, feature requests, and TODOs, plus standup/recap
 
 | Plugin | Description |
 |---|---|
-| [`plugins/one-horizon`](plugins/one-horizon/README.md) | 14 skills for Cursor and Claude Code covering task management, delivery loops, bug/feature intake, standups, recaps, triage prep, and handoff notes |
+| [`plugins/one-horizon`](plugins/one-horizon/README.md) | 14 skills for Cursor, Claude Code, and Codex covering task management, delivery loops, bug/feature intake, standups, recaps, triage prep, and handoff notes |
 
 ## Example prompts
 
@@ -37,7 +37,7 @@ Use this MCP server config in clients that support `mcp.json`:
 }
 ```
 
-For plugin-specific install paths (Cursor, Claude Code, Claude Desktop, ChatGPT), see [`plugins/one-horizon/README.md`](plugins/one-horizon/README.md).
+For plugin-specific install paths and package layout details, see [`plugins/one-horizon/README.md`](plugins/one-horizon/README.md).
 
 ## Structure
 
@@ -47,5 +47,6 @@ plugins/
     shared/skills/     # Source of truth for skill definitions
     cursor/            # Cursor plugin package
     claude/            # Claude Code plugin package
+    codex/             # Codex plugin package
     scripts/           # Build and sync utilities
 ```
