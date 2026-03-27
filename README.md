@@ -10,7 +10,7 @@ Tasks include initiatives, bugs, feature requests, and TODOs, plus standup/recap
 
 | Plugin | Description |
 |---|---|
-| [`plugins/one-horizon`](plugins/one-horizon/README.md) | 14 skills for Cursor, Claude Code, and Codex covering task management, delivery loops, bug/feature intake, standups, recaps, triage prep, and handoff notes |
+| [`plugins/one-horizon`](plugins/one-horizon/README.md) | 15 skills for Cursor, Claude Code, and Codex covering task management, delivery loops, task search, bug/feature intake, standups, recaps, triage prep, and handoff notes |
 
 ## Example prompts
 

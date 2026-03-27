@@ -29,6 +29,13 @@ Create or update bug tasks, link to initiatives, and keep a complete execution t
 
 Use `get-task-details` to retrieve full descriptions and metadata for a specific task, including label sections like `Goals` and `Products` (`Products` may represent product names, feature areas, or service names).
 
+**Search for tasks by keyword across a workspace:**
+
+> "Find tasks about HubSpot"
+> "Search tasks for onboarding copy"
+
+Use `search-tasks` to retrieve ranked summary matches by title or indexed task content, then `get-task-details` for any relevant hit.
+
 **Implement an initiative from a short prompt:**
 
 > "Implement HubSpot lead sync"
@@ -49,6 +56,7 @@ The workflow resolves matching initiatives, confirms the target, pulls full task
 |---|---|---|
 | `work-item-delivery-loop` | End-to-end task execution loop with write-back and `.journal` logging | "Pick this up and implement it" |
 | `list-work` | Show planned, completed, blocked, initiative, or bug tasks | "What do I have planned?" / "Show active bugs" |
+| `search-tasks` | Search tasks by text and return ranked summary hits | "Find tasks about HubSpot" / "Search tasks for onboarding" |
 | `get-task-details` | Get full details for one task (TODO, INITIATIVE, BUG) | "Show details for this task" |
 | `create-task` | Create a TODO or initiative, optionally linked to a parent | "Log this as a todo" / "Create an initiative" |
 | `update-task` | Update any task type, add comments, or react to comments | "Mark this done" / "Add a comment on that task" |
