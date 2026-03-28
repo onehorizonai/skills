@@ -1,8 +1,8 @@
 # One Horizon for Cursor, Claude Code, and Codex
 
-[One Horizon](https://onehorizon.ai) connects your task data to Cursor, Claude Code, and Codex. Ask about planned tasks, ship changes, and write updates back without leaving your editor.
+[One Horizon](https://onehorizon.ai) lets your coding agent read planned work, bugs, task search results, write-backs, and standup context without leaving the editor.
 
-These skills connect the One Horizon MCP server to your agent so it can fetch and update initiatives, bugs, feature requests, and TODO tasks while you code.
+Use it to pull task context before you code, find the right work item, and update One Horizon as you ship.
 
 ---
 
@@ -139,7 +139,29 @@ Add to `~/.cursor/mcp.json` (all projects) or `.cursor/mcp.json` (current projec
 
 **Option 1: Marketplace**
 
-Install from the Claude Code plugin marketplace once listed.
+Install from this repository in two commands:
+
+```text
+/plugin marketplace add onehorizonai/skills
+```
+
+```text
+/plugin install one-horizon@onehorizonai-skills
+```
+
+Then reload plugins:
+
+```text
+/reload-plugins
+```
+
+After that, you can ask Claude:
+
+- "What do I have planned?"
+- "Find tasks about HubSpot"
+- "Show details for task abc123"
+- "Prep my standup"
+- "I found a bug in checkout, fix and log it"
 
 **Option 2: MCP only (no skills)**
 
