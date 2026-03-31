@@ -37,6 +37,7 @@ create-todo({
 ```json
 add-task-comment({
   "taskId": "<newTaskId>",
+  "source": "skill",
   "comment": "**Changes**\n- What changed: Built OAuth callback flow, sync worker, and retry handling\n- Why: Enable stable end-to-end HubSpot lead sync flow"
 })
 ```
