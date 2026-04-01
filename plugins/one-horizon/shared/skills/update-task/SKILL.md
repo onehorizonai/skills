@@ -32,6 +32,7 @@ Then add a comment with what changed:
 ```json
 add-task-comment({
   "taskId": "<taskId>",
+  "source": "skill",
   "comment": "**Changes**\n- What changed: Added retry backoff and idempotency guard\n- Why: Prevent duplicate processing on transient failures"
 })
 ```
@@ -55,6 +56,7 @@ Then add a comment:
 ```json
 add-task-comment({
   "taskId": "<initiativeId>",
+  "source": "skill",
   "comment": "**Changes**\n- What changed: Implemented OAuth callback and token persistence\n- Why: Enable first end-to-end auth handshake"
 })
 ```
@@ -76,6 +78,7 @@ update-bug({
 ```json
 add-task-comment({
   "taskId": "<taskId>",
+  "source": "skill",
   "comment": "**Changes**\n- What changed: Fixed stale cache key invalidation\n- Why: Totals were computed with outdated cache entries"
 })
 ```
@@ -97,6 +100,7 @@ update-feature-request({
 ```json
 add-task-comment({
   "taskId": "<taskId>",
+  "source": "skill",
   "comment": "## Update\n- Summary: Scoped implementation approach and acceptance criteria"
 })
 ```

@@ -14,6 +14,7 @@ Run task execution with strict sequencing and explicit write-back.
 - If initiative matching is ambiguous, ask for confirmation.
 - A run is incomplete until MCP write-back is done.
 - Never modify task descriptions to record progress. Use `add-task-comment` instead.
+- Always pass `"source": "skill"` when calling `add-task-comment` so comments are tagged with their origin.
 - Use `Changes/Why` comments only when real delivery happened (bug fix, completed TODO, completed initiative work).
 - For research/planning/triage-only updates, add an `Update` comment instead.
 - For prompts like "implement this bug" or "work on this initiative", use every relevant One Horizon tool and companion skill before writing back.
