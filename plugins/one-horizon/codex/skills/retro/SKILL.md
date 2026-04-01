@@ -14,8 +14,12 @@ Generate a personal or team engineering retrospective from One Horizon.
 - Default to the last `7d`.
 - Accept `24h`, `7d`, `14d`, and `30d`.
 - Accept `compare` to compare the current window against the immediately prior same-length window.
-- If the user asks about "team", "engineering", "sprint", or "what did we ship", prefer team scope.
-- If scope is ambiguous, use personal scope unless `list-my-teams` returns exactly one obvious team.
+- Default to team scope.
+- If the user asks about "team", "engineering", "sprint", or "what did we ship", use team scope.
+- If the user explicitly asks for a personal retro, use personal scope.
+- If team scope is needed and the team is not explicit, resolve it from `list-my-teams`.
+- If `list-my-teams` returns exactly one team, use it.
+- If multiple teams are available and the request does not identify one, ask the user which team the retro should cover before continuing.
 - Always report exact start and end dates in the user's local timezone.
 
 ### 2. Gather source data from One Horizon
