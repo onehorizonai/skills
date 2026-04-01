@@ -1,0 +1,6 @@
+interface:
+  display_name: "Retro"
+  short_description: "One Horizon engineering retrospective skill"
+  icon_small: "./assets/logo.svg"
+  icon_large: "./assets/logo.svg"
+  default_prompt: "Use $retro to prepare a weekly engineering retrospective from One Horizon."

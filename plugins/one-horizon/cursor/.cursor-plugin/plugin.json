@@ -1,13 +1,13 @@
 {
   "name": "one",
-  "description": "One Horizon work intelligence for Cursor. Log completed work, view planned tasks, surface blockers, and get standup-ready with your team's context — directly in the editor.",
-  "version": "2.1.3",
+  "description": "One Horizon work intelligence for Cursor. Log completed work, view planned tasks, surface blockers, and run standups or retros with your team's context — directly in the editor.",
+  "version": "2.2.0",
   "author": {
     "name": "One Horizon"
   },
   "homepage": "https://onehorizon.ai",
   "repository": "https://github.com/onehorizon/agent-skills",
   "license": "MIT",
-  "keywords": ["standup", "productivity", "work-log", "tasks", "blockers", "team"],
+  "keywords": ["standup", "retro", "productivity", "work-log", "tasks", "blockers", "team"],
   "logo": "assets/logo.svg"
 }

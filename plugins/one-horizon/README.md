@@ -1,6 +1,6 @@
 # One Horizon for Cursor, Claude Code, and Codex
 
-[One Horizon](https://onehorizon.ai) lets your coding agent read planned work, bugs, task search results, write-backs, and standup context without leaving the editor.
+[One Horizon](https://onehorizon.ai) lets your coding agent read planned work, bugs, write-backs, and standup or retrospective context without leaving the editor.
 
 Use it to pull task context before you code, find the right work item, and update One Horizon as you ship.
 
@@ -42,10 +42,11 @@ Use `search-tasks` to retrieve ranked summary matches by title or indexed task c
 
 The workflow resolves matching initiatives, confirms the target, pulls full task details, implements code, and writes back a completed linked TODO task.
 
-**Prepare summaries and standups:**
+**Prepare summaries, retros, and standups:**
 
 > "Prep my standup"
 > "Generate team standup summary"
+> "Run a weekly engineering retrospective"
 > "Prepare bug triage"
 
 ---
@@ -64,6 +65,7 @@ The workflow resolves matching initiatives, confirms the target, pulls full task
 | `find-team` | List teams/members and resolve IDs | "What teams am I on?" / "Find Sarah" |
 | `list-taxonomy` | List taxonomy labels for initiative tagging/filtering | "Show product and component labels" |
 | `work-recap` | Personal or team recap of completed/planned/blocked tasks | "Give me my recap" / "Team status" |
+| `retro` | Weekly engineering retrospective with trend tracking and team breakdowns | "Weekly retro" / "What did we ship?" |
 | `standup-prep` | Generate personal or team standup talking points | "Prep my standup" / "Team standup summary" |
 | `work-summarizer` | Generate concise status summaries | "Write a weekly report" |
 | `initiative-summary` | Generate initiative status summaries | "Summarize these initiatives" |
