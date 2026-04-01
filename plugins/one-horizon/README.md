@@ -2,7 +2,7 @@
 
 [One Horizon](https://onehorizon.ai) lets your coding agent read planned work, bugs, write-backs, and standup or retrospective context without leaving the editor.
 
-These skills connect the One Horizon MCP server to your agent so it can fetch and update initiatives, bugs, feature requests, and TODO tasks while you code.
+Use it to pull task context before you code, find the right work item, and update One Horizon as you ship.
 
 ---
 
@@ -29,6 +29,13 @@ Create or update bug tasks, link to initiatives, and keep a complete execution t
 
 Use `get-task-details` to retrieve full descriptions and metadata for a specific task, including label sections like `Goals` and `Products` (`Products` may represent product names, feature areas, or service names).
 
+**Search for tasks by keyword across a workspace:**
+
+> "Find tasks about HubSpot"
+> "Search tasks for onboarding copy"
+
+Use `search-tasks` to retrieve ranked summary matches by title or indexed task content, then `get-task-details` for any relevant hit.
+
 **Implement an initiative from a short prompt:**
 
 > "Implement HubSpot lead sync"
@@ -50,6 +57,7 @@ The workflow resolves matching initiatives, confirms the target, pulls full task
 |---|---|---|
 | `work-item-delivery-loop` | End-to-end task execution loop with write-back and `.journal` logging | "Pick this up and implement it" |
 | `list-work` | Show planned, completed, blocked, initiative, or bug tasks | "What do I have planned?" / "Show active bugs" |
+| `search-tasks` | Search tasks by text and return ranked summary hits | "Find tasks about HubSpot" / "Search tasks for onboarding" |
 | `get-task-details` | Get full details for one task (TODO, INITIATIVE, BUG) | "Show details for this task" |
 | `create-task` | Create a TODO or initiative, optionally linked to a parent | "Log this as a todo" / "Create an initiative" |
 | `update-task` | Update any task type, add comments, or react to comments | "Mark this done" / "Add a comment on that task" |
@@ -133,7 +141,29 @@ Add to `~/.cursor/mcp.json` (all projects) or `.cursor/mcp.json` (current projec
 
 **Option 1: Marketplace**
 
-Install from the Claude Code plugin marketplace once listed.
+Install from this repository in two commands:
+
+```text
+/plugin marketplace add onehorizonai/skills
+```
+
+```text
+/plugin install one-horizon@onehorizonai-skills
+```
+
+Then reload plugins:
+
+```text
+/reload-plugins
+```
+
+After that, you can ask Claude:
+
+- "What do I have planned?"
+- "Find tasks about HubSpot"
+- "Show details for task abc123"
+- "Prep my standup"
+- "I found a bug in checkout, fix and log it"
 
 **Option 2: MCP only (no skills)**
 

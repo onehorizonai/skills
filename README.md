@@ -1,6 +1,6 @@
 # One Horizon Agent Plugins
 
-Plugins for [One Horizon](https://onehorizon.ai) that help agents work with One Horizon tasks directly from Cursor, Claude Code, or Codex.
+Install One Horizon in Claude Code, Cursor, or Codex so your agent can see planned work, search tasks, update tasks, and write progress back while you code.
 
 Tasks include initiatives, bugs, feature requests, TODOs, standups, recaps, retrospectives, and handoffs.
 
@@ -10,7 +10,7 @@ Tasks include initiatives, bugs, feature requests, TODOs, standups, recaps, retr
 
 | Plugin | Description |
 |---|---|
-| [`plugins/one-horizon`](plugins/one-horizon/README.md) | 15 skills for Cursor, Claude Code, and Codex covering task management, delivery loops, bug/feature intake, standups, recaps, retrospectives, triage prep, and handoff notes |
+| [`plugins/one-horizon`](plugins/one-horizon/README.md) | 16 skills for Cursor, Claude Code, and Codex covering task management, delivery loops, bug/feature intake, standups, recaps, retrospectives, triage prep, and handoff notes |
 
 ## Install In Claude Code
 

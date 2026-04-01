@@ -1,0 +1,25 @@
+{
+  "name": "onehorizonai-skills",
+  "owner": {
+    "name": "One Horizon"
+  },
+  "metadata": {
+    "description": "One Horizon plugins for Claude Code",
+    "version": "1.0.0"
+  },
+  "plugins": [
+    {
+      "name": "one-horizon",
+      "source": "./plugins/one-horizon/claude",
+      "description": "One Horizon work intelligence for Claude. Log completed work, view planned tasks, surface blockers, and get standup-ready with your team's context.",
+      "version": "2.1.3",
+      "author": {
+        "name": "One Horizon"
+      },
+      "homepage": "https://onehorizon.ai",
+      "repository": "https://github.com/onehorizonai/skills",
+      "license": "MIT",
+      "keywords": ["standup", "productivity", "work-log", "tasks", "blockers", "team"]
+    }
+  ]
+}
