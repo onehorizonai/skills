@@ -33,6 +33,7 @@ Handle messy operational requests over One Horizon tasks by choosing the right l
 
 - The user wants a retro, standup update, handoff notes, bug triage notes, or stakeholder summary.
 - The main job is narrative output rather than task operations.
+- The user wants help drafting or refining a structured initiative brief before creating roadmap work. Use `initiative-brief`.
 
 ## Operating rules
 
@@ -104,6 +105,7 @@ Handle messy operational requests over One Horizon tasks by choosing the right l
 - The work is planned and should map back to the roadmap.
 - The user is describing a spec, project, integration, feature area, or multi-step delivery.
 - The work should be visible in rollups, reporting, or strategic planning.
+- If the initiative is still fuzzy and the user needs help writing it well, use `initiative-brief` before creating it.
 
 ### Choose bug when
 
