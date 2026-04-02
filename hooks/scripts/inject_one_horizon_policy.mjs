@@ -19,7 +19,7 @@ function getPromptText(payload) {
 function isOneHorizonRelevant(text) {
   if (!text) return false;
   const re =
-    /\b(one\s*horizon|initiative|initiatives|bug|bugs|feature request|todo|planned work|blocker|standup|work recap|implement|fix|ship|write back)\b/i;
+    /\b(one\s*horizon|initiative|initiatives|bug|bugs|feature request|todo|personal task|planned work|blocker|standup|work recap|implement|fix|ship|write back)\b/i;
   return re.test(text);
 }
 

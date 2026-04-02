@@ -1,6 +1,6 @@
 ---
 name: search-tasks
-description: Search One Horizon tasks by text to find the right initiative, bug, ongoing item, or todo. Use when asked "find tasks about X", "search tasks for Y", "look up work mentioning Z", or "which task mentions this". Returns ranked summary hits, not full task details. Requires One Horizon MCP.
+description: Run a literal text search over One Horizon tasks when the user explicitly asks to search by title or indexed content. Prefer task-management when search is only one step in a larger operational request. Returns ranked summary hits, not full task details. Requires One Horizon MCP.
 ---
 
 # Search Tasks

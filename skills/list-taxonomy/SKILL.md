@@ -1,6 +1,6 @@
 ---
 name: list-taxonomy
-description: Look up the labels that tie work back to goals, products, releases, and components. Use when asked "show taxonomy", "find label IDs", or "tag this initiative". Requires One Horizon MCP.
+description: Look up One Horizon taxonomy labels when the user explicitly asks for label IDs or available goals, products, releases, or components. Prefer task-management when taxonomy lookup is only one step in a larger operational request. Requires One Horizon MCP.
 ---
 
 # List Taxonomy

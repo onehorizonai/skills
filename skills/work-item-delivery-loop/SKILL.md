@@ -15,20 +15,21 @@ Run work execution with strict sequencing and explicit write-back.
 - A run is incomplete until MCP write-back is done.
 - Never modify task descriptions to record progress. Use `add-task-comment` instead.
 - Always pass `"source": "skill"` when calling `add-task-comment` so comments are tagged with their origin.
-- Use `Changes/Why` comments only when real delivery happened (bug fix, completed personal TODO, completed initiative work).
+- Use `Changes/Why` comments only when real delivery happened (bug fix, completed personal task, completed initiative work).
 - For research/planning/triage-only updates, add an `Update` comment instead.
 - For prompts like "implement this bug" or "work on this initiative", use every relevant One Horizon tool and companion skill before writing back.
 - Always follow skill/tool rules end-to-end: context fetch, detailed task lookup, implementation, validation, write-back, and initiative linking.
 - If implementation work was requested, do not post a status-only write-back; add a comment with what changed and why.
-- Stop before marking work complete: every completed bug, personal TODO, or initiative must have a corresponding MCP write-back update in the same run.
-- Continuous write-back: after each completed delivery chunk (not only at the end), update the related bug, personal TODO, or initiative immediately.
+- Stop before marking work complete: every completed bug, personal task, or initiative must have a corresponding MCP write-back update in the same run.
+- Continuous write-back: after each completed delivery chunk (not only at the end), update the related bug, personal task, or initiative immediately.
 
 ## Work Type Heuristic
 
-- Multi-day planned work -> initiative
-- Recurring, owner-driven work without a defined end date -> ongoing work when the workspace uses it
+- Multi-day or roadmap-relevant planned work -> initiative
+- Recurring, owner-driven work without a defined end date, such as code reviews -> ongoing work when the workspace uses it
 - Unplanned defect fix -> bug
-- Small personal follow-up -> TODO
+- Small personal or private follow-up -> personal task
+- Completed implementation slice tied to an initiative -> completed personal task linked to the initiative is valid write-back
 
 ## Standard Flow
 
@@ -57,7 +58,7 @@ For initiative implementation prompts, include initiative matching + confirmatio
 
 ## Implementation Request Rule
 
-When a user asks to implement a bug, initiative, or personal TODO, run the full flow and do not treat it as a status-only update.
+When a user asks to implement a bug, initiative, or personal task, run the full flow and do not treat it as a status-only update.
 
 Required sequence:
 1. Use discovery/list tools to find targets (`list-bugs`, `list-initiatives`, `list-planned-work`).
@@ -117,7 +118,7 @@ create-todo({
 1. Resolve each initiative via `list-initiatives`.
 2. Confirm ambiguous matches.
 3. Apply links using relation-capable tooling.
-4. If creating a personal TODO, set primary `initiativeId` and add extra links with relation tooling.
+4. If creating a personal task, set primary `initiativeId` and add extra links with relation tooling.
 
 ## Prompting Pattern for Changes
 
@@ -158,7 +159,7 @@ Research or planning comment (no external implementation delivered):
 Before declaring completion to the user, verify all completed tasks were updated in One Horizon:
 
 1. Completed bug -> `update-bug` called with final status + `add-task-comment` with `**Changes**`.
-2. Completed personal TODO -> `update-todo` called with final status + `add-task-comment` with `**Changes**`, or `create-todo` created as `Completed` + comment.
+2. Completed personal task -> `update-todo` called with final status + `add-task-comment` with `**Changes**`, or `create-todo` created as `Completed` + comment.
 3. Completed initiative work -> `update-initiative` called with status + `add-task-comment` with progress notes.
 
 If any completed item is missing write-back, stop and perform the update first.
@@ -168,5 +169,5 @@ If any completed item is missing write-back, stop and perform the update first.
 A run is complete only when all are true:
 
 1. Code changes implemented, or explicitly marked blocked.
-2. MCP updates written back for every completed bug, personal TODO, or initiative.
+2. MCP updates written back for every completed bug, personal task, or initiative.
 3. Initiative links applied if requested.

@@ -1,6 +1,6 @@
 ---
 name: find-team
-description: Find the right team, teammate, or ID before doing anything else in One Horizon. Use when asked "what teams am I on", "who is on this team", or when you need teamId/userId before running other tools. Requires One Horizon MCP.
+description: Resolve One Horizon team and member IDs when the user explicitly asks who is on a team or needs exact IDs. Prefer task-management when team lookup is only one step in a larger operational request. Requires One Horizon MCP.
 ---
 
 # Find Team

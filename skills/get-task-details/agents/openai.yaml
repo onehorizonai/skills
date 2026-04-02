@@ -3,4 +3,4 @@ interface:
   short_description: "One Horizon Get Task Details skill"
   icon_small: "./assets/logo.svg"
   icon_large: "./assets/logo.svg"
-  default_prompt: "Use $get-task-details to fetch the full details for a One Horizon task."
+  default_prompt: "Use $get-task-details only when a One Horizon task ID is already known and full details are needed."

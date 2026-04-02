@@ -46,6 +46,6 @@ team-work-recap({
 })
 ```
 
-Recap order prioritizes roadmap work first, then bugs, then personal TODOs.
+Recap order prioritizes roadmap work first, then bugs, then personal tasks.
 
 Recap/list output may omit descriptions; call `get-task-details` for any task that needs deeper context.
