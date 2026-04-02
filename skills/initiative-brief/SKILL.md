@@ -13,11 +13,13 @@ Turn a rough roadmap idea into a sharp initiative brief, then create the initiat
 - Produce a design doc, not code.
 - Write the brief in markdown. Use tables and Mermaid diagrams when they make the design clearer.
 - Stay focused on what the initiative should do from a product perspective, not how a developer should implement it.
+- Default to feature-level scoping unless the user clearly describes a broader product or company initiative.
+- Treat business goals as supporting context, not the backbone of the brief.
 
 ## Use when
 
 - The user is shaping roadmap-first planned work.
-- The initiative is still fuzzy and needs better problem, outcome, scope, risk, or rollout clarity.
+- The initiative is still fuzzy and needs better background, user story, scope, non-goals, risk, or rollout clarity.
 - The user needs a brief others can review, align on, and execute from.
 
 ## Do not use when
@@ -40,6 +42,8 @@ Turn a rough roadmap idea into a sharp initiative brief, then create the initiat
 - Also apply other relevant taxonomy such as goals, releases, components, and company/customer labels when the workspace supports them and the match is clear.
 - If this initiative clearly belongs under an existing roadmap effort, set `parentInitiativeId`.
 - Do not guess taxonomy or parentage from weak signals. Resolve them first.
+- Keep owner and parent linkage in structured initiative metadata. Do not add `Owner:` or `Related initiative:` lines to the markdown brief unless the user explicitly wants them in the document.
+- If related initiatives, bugs, or other work items are mentioned in the brief or surfaced during discovery, reference them as URLs or markdown links, not plain text labels.
 
 ## Conversation rules
 
@@ -54,8 +58,13 @@ Turn a rough roadmap idea into a sharp initiative brief, then create the initiat
 
 - The final deliverable is a markdown initiative brief.
 - Use plain prose for narrative sections.
+- Do not use an H1 in the generated brief.
+- Start with a single-paragraph TLDR before any section headings.
+- Prefer `###` for major sections and `####` for sub-sections.
+- Avoid heavy heading nesting and avoid overusing `##`.
 - Use tables when comparing product tradeoffs, owners, phases, or success metrics.
 - Use Mermaid diagrams when a flow, system relationship, rollout sequence, or decision path is easier to understand visually than in prose.
+- When referencing related initiatives, bugs, or other work items, use a URL or markdown link.
 - Do not force tables or diagrams into every brief. Use them only when they improve clarity.
 - If Mermaid is used, keep the syntax simple and readable.
 
@@ -74,17 +83,21 @@ Turn a rough roadmap idea into a sharp initiative brief, then create the initiat
 
 1. Load currently planned initiatives with `list-initiatives` using active statuses.
 2. Load recently completed work for the relevant team or workspace with `list-completed-work`.
-3. Ask this first: `What's your goal with this?`
+3. Ask this first: `What user story or workflow are we trying to improve?`
 4. Assess product stage explicitly:
    - pre-product
    - has users
    - has paying customers
-5. Ask only the missing generative questions, one at a time:
-   - What's the coolest version of this?
-   - Who would you show this to?
-   - What's the fastest path to something you can actually use or share?
-   - What existing thing is closest to this, and how is yours different?
-   - What would you add if you had unlimited time?
+5. Ask for a short background only when it is still unclear:
+   - Why does this matter right now?
+   - What is happening today that is not good enough?
+6. Ask only the missing scoping questions, one at a time:
+   - Who is this for in this phase?
+   - What should they be able to do after this ships?
+   - What is definitely in scope for this phase?
+   - What is explicitly out of scope?
+   - What is the smallest version that is still useful?
+   - Is there a business reason or goal we should capture in one short note?
 
 ## Phase 2: Related initiative discovery
 
@@ -92,7 +105,7 @@ Turn a rough roadmap idea into a sharp initiative brief, then create the initiat
 2. Search existing initiatives with `search-tasks` using `categories: ["initiative"]`.
 3. For relevant hits, call `get-task-details`.
 4. If strong overlap exists, surface it:
-   - `FYI: Related initiative found — "{title}". Key overlap: {one-line relevance}.`
+   - `FYI: Related initiative found — [{title}](<url>). Key overlap: {one-line relevance}.`
 5. Ask whether to build on the prior design or start fresh.
 6. If no relevant match exists, proceed silently.
 7. If one initiative is clearly the parent roadmap effort, propose linking the new initiative under it.
@@ -118,7 +131,9 @@ Check:
 - Is this the right problem?
 - What happens if we do nothing?
 - What existing workflows, habits, or product patterns already partially solve this today?
-- What should stay true for the user, customer, or business if this initiative succeeds?
+- Is the user story clear enough to scope this as a feature or phase rather than a full product?
+- Are the in-scope and out-of-scope boundaries crisp enough to avoid ambiguity?
+- What should stay true for the user if this initiative succeeds?
 - If the product stage includes users or paying customers, does the evidence support this direction?
 
 Present premises like this and get agreement before moving on:
@@ -141,41 +156,39 @@ Add supporting structure when useful:
 - A Mermaid diagram for workflow, system flow, rollout sequence, or ownership handoff
 
 ```markdown
-# Initiative Brief
+Short TLDR paragraph:
+In 2-4 sentences, summarize what this initiative is, which user or workflow it improves, what this phase includes, and the main boundary or constraint. Write this like a fast orientation for a reviewer.
 
-## Initiative
-- What is the initiative called?
-- In one sentence, what are we doing?
-- Who owns the outcome?
+### Background
+- In one short paragraph: what is changing, why now, and what happens if we do nothing?
+- If there is a business reason, keep it brief and secondary.
 
-## Why this matters
-- What problem or opportunity does this address?
-- Why is this worth doing now?
-- What happens if we do nothing?
+### Feature / use case sections
+- Break the initiative into concrete feature or use case sections when that makes the scope clearer.
+- Use descriptive section titles such as `### Add Login with Google` or `### Migrate admin-only login flow`.
+- Under each section, write a short paragraph covering who it is for, what changes, and why it matters to that workflow.
+- If helpful, include a brief user-story sentence in the paragraph, but do not use a literal `### User story` heading.
 
-## Intended outcome
-- What business outcome do we want?
-- What user or customer outcome do we want?
-- What should be true when this succeeds?
-
-## Scope
+### In scope
 - What are we committing to in this phase?
+- Which behaviors, surfaces, or flows are included?
+- What constraints matter for this phase?
+
+### Out of scope
 - What is explicitly not included?
+- What related ideas should not get pulled into this initiative?
 
-## Who it affects
-- Who is this primarily for?
-- Which teams or functions does it touch?
-
-## Success
+### Success
 - How will we know this worked?
-- What metrics or signals should move?
+- What user signals, adoption signals, or qualitative outcomes should improve?
+- Only include business metrics if they are clearly relevant.
 
-## Assumptions, risks, and open questions
+### Assumptions, risks, and open questions
 - What are we assuming?
 - What could block or weaken this?
 - What still needs a decision?
 
-## Rollout / handoff
+### Rollout / handoff
 - Is this a pilot, first release, or full rollout?
 - Who needs to be informed or enabled?
 - Who owns it after launch?
@@ -189,7 +202,8 @@ After the user reviews and approves the brief:
 2. Use `find-team` for owner/team resolution.
 3. Use `list-taxonomy` to resolve product and other relevant taxonomy labels before creation.
 4. If the new initiative belongs under an existing initiative, resolve and set `parentInitiativeId`.
-5. Create the initiative with the brief markdown as the description.
+5. Keep the brief body focused on background, feature or use case scope, boundaries, risks, and rollout.
+6. Create the initiative with the brief markdown as the description.
 
 ```json
 create-initiative({
