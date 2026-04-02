@@ -13,6 +13,7 @@ Create a new personal task or roadmap initiative.
 - Personal task: use for simple personal follow-up that only the owner needs to track.
 - Do not use this skill to guess between initiative, bug, ongoing work, and personal task from a vague request. Use `task-management` for that.
 - Do not use personal tasks as a substitute for roadmap work.
+- If the user needs help writing or structuring the initiative first, use `initiative-brief`.
 
 ## Instructions
 
@@ -57,7 +58,7 @@ Call `create-initiative` for planned product work that belongs on the roadmap. S
 create-initiative({
   "title": "Build HubSpot lead sync integration",
   "description": "OAuth, sync jobs, task mapping, and observability",
-  "status": "Planned",
+  "status": "Open",
   "workspaceId": "<workspaceId>",
   "assigneeIds": ["<userId>"],
   "teamIds": ["<teamId>"],
