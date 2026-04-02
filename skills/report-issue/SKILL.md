@@ -1,11 +1,18 @@
 ---
 name: report-issue
-description: Capture a bug or feature request in One Horizon while the context is still fresh. Use when asked "I found a bug", "track this issue", "log this defect", "log this feature request", "capture this product ask", or "track this enhancement". Requires One Horizon MCP.
+description: Create a One Horizon bug or feature request when the user explicitly wants to log new issue intake and the record type is already clear. Prefer task-management for mixed or ambiguous operational requests. Requires One Horizon MCP.
 ---
 
 # Report Issue
 
 Create a bug or feature-request intake record.
+
+## Work type boundary
+
+- Bug: use for broken, failing, regressed, or incorrect behavior that needs a fix.
+- Feature request: use for a new capability or product ask.
+- Do not use this skill for planned roadmap work that should be an initiative.
+- Do not use this skill for small private follow-up that should be a personal task.
 
 ## Instructions
 

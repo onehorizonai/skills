@@ -3,4 +3,4 @@ interface:
   short_description: "One Horizon Update Task skill"
   icon_small: "./assets/logo.svg"
   icon_large: "./assets/logo.svg"
-  default_prompt: "Use $update-task to update a One Horizon todo, initiative, bug, or feature request."
+  default_prompt: "Use $update-task only for a direct update to a known One Horizon task."

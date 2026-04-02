@@ -1,6 +1,6 @@
 ---
 name: get-task-details
-description: Pull the full spec for a single One Horizon task when the list view is too thin. Use when list/recap output is not enough and you need description, full metadata, or exact task context. Requires One Horizon MCP.
+description: Fetch the full details for one known One Horizon task when the task ID is already available and the user needs exact task context. Prefer task-management when details are only one step in a larger operational request. Requires One Horizon MCP.
 ---
 
 # Get Task Details
@@ -21,7 +21,7 @@ get-task-details({
 Notes:
 - `taskId` is required.
 - `workspaceId` is optional.
-- Supports task type mapping for personal TODOs, initiatives, and bugs.
+- Supports task type mapping for personal tasks, initiatives, and bugs.
 
 ## Output Notes
 

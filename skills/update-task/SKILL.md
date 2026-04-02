@@ -1,6 +1,6 @@
 ---
 name: update-task
-description: Keep the record current by updating status, adding comments, or reacting on any One Horizon task. Use when asked "mark this done", "update this task", "reassign", "change status", "add a comment", "comment on this task", "react to that comment", or "show comments". Requires One Horizon MCP.
+description: Apply a direct update to a known One Horizon task when the target and action are already clear, such as changing status, reassigning, adding a comment, or reacting to a comment. Prefer task-management for ambiguous or multi-step operational requests. Requires One Horizon MCP.
 ---
 
 # Update Task
@@ -15,7 +15,7 @@ Update an existing task or interact with its comments. Pick the right MCP tool b
 
 ## By work type
 
-### Personal TODO
+### Personal task
 
 Call `update-todo`:
 

@@ -1,17 +1,24 @@
 ---
 name: create-task
-description: Capture follow-up work in One Horizon as a personal TODO or roadmap initiative. Use when asked "log this task", "create a todo", "track this small task", "create an initiative", "plan this project", or "start a roadmap initiative". For bugs or feature requests, use report-issue instead. Requires One Horizon MCP.
+description: Create a One Horizon personal task or roadmap initiative when the user explicitly asks for that exact record type and the scope is already clear. Prefer task-management for ambiguous or multi-step operational requests. For bugs or feature requests, use report-issue instead. Requires One Horizon MCP.
 ---
 
 # Create Task
 
-Create a new personal TODO or roadmap initiative.
+Create a new personal task or roadmap initiative.
+
+## Work type boundary
+
+- Initiative: use for roadmap-first planned work that should tie back to product goals, releases, components, or team progress.
+- Personal task: use for simple personal follow-up that only the owner needs to track.
+- Do not use this skill to guess between initiative, bug, ongoing work, and personal task from a vague request. Use `task-management` for that.
+- Do not use personal tasks as a substitute for roadmap work.
 
 ## Instructions
 
-### Personal TODO
+### Personal task
 
-Call `create-todo` for personal follow-up work. Use `initiativeId` to link it back to a roadmap initiative via `PART_OF` relation:
+Call `create-todo` for personal follow-up work. Use `initiativeId` to link it back to a roadmap initiative via `PART_OF` relation when the personal task represents a delivered slice of initiative work:
 
 ```json
 create-todo({
@@ -23,7 +30,7 @@ create-todo({
 })
 ```
 
-For completed implementation write-back, create the TODO then add a comment with what changed:
+For completed implementation write-back, create the personal task then add a comment with what changed:
 
 ```json
 create-todo({
@@ -44,7 +51,7 @@ add-task-comment({
 
 ### Roadmap initiative
 
-Call `create-initiative`. Supports `parentInitiativeId` and `taxonomyLabelIds`:
+Call `create-initiative` for planned product work that belongs on the roadmap. Supports `parentInitiativeId` and `taxonomyLabelIds`:
 
 ```json
 create-initiative({

@@ -3,4 +3,4 @@ interface:
   short_description: "One Horizon Create Task skill"
   icon_small: "./assets/logo.svg"
   icon_large: "./assets/logo.svg"
-  default_prompt: "Use $create-task to create a One Horizon todo or initiative."
+  default_prompt: "Use $create-task only for a direct One Horizon personal task or initiative create request with clear scope."
