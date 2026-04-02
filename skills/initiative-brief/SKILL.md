@@ -12,6 +12,7 @@ Turn a rough roadmap idea into a sharp initiative brief, then create the initiat
 - Understand the problem before proposing solutions.
 - Produce a design doc, not code.
 - Write the brief in markdown. Use tables and Mermaid diagrams when they make the design clearer.
+- Stay focused on what the initiative should do from a product perspective, not how a developer should implement it.
 
 ## Use when
 
@@ -47,13 +48,13 @@ Turn a rough roadmap idea into a sharp initiative brief, then create the initiat
 - If the user says "just do it", shows impatience, or already has a fully formed plan, fast-track the discovery questions. Still do premise challenge, alternatives, and the brief.
 - If the conversation shifts from builder mode to company mode because the user mentions customers, revenue, fundraising, or go-to-market pressure, raise the bar and ask harder evidence-driven questions.
 - During the diagnostic phases, take a position. Do not hedge with filler like "that could work" or "you might want to consider".
-- End with concrete build direction, not generic validation homework.
+- Do not drift into recommended implementation direction, engineering tasks, or effort estimates.
 
 ## Output guidance
 
 - The final deliverable is a markdown initiative brief.
 - Use plain prose for narrative sections.
-- Use tables when comparing approaches, tradeoffs, owners, phases, or success metrics.
+- Use tables when comparing product tradeoffs, owners, phases, or success metrics.
 - Use Mermaid diagrams when a flow, system relationship, rollout sequence, or decision path is easier to understand visually than in prose.
 - Do not force tables or diagrams into every brief. Use them only when they improve clarity.
 - If Mermaid is used, keep the syntax simple and readable.
@@ -116,8 +117,8 @@ Before proposing solutions, force agreement on the key premises.
 Check:
 - Is this the right problem?
 - What happens if we do nothing?
-- What existing patterns, code, workflows, or tools already partially solve this?
-- If the initiative likely produces a new artifact, how will users actually get it? Include distribution or explicitly defer it.
+- What existing workflows, habits, or product patterns already partially solve this today?
+- What should stay true for the user, customer, or business if this initiative succeeds?
 - If the product stage includes users or paying customers, does the evidence support this direction?
 
 Present premises like this and get agreement before moving on:
@@ -131,42 +132,12 @@ PREMISES:
 
 If the user disagrees, revise the understanding and loop before continuing.
 
-## Phase 5: Alternatives generation
-
-Produce at least 2 approaches, 3 when the design is non-trivial.
-
-Required shape:
-
-```text
-APPROACH A: <name>
-Summary: <1-2 sentences>
-Effort: <S/M/L/XL>
-Risk: <Low/Med/High>
-Pros:
-- ...
-- ...
-Cons:
-- ...
-- ...
-Reuses:
-- ...
-
-APPROACH B: <name>
-...
-```
-
-Rules:
-- One approach must be the minimal viable path.
-- One approach must be the ideal long-term architecture.
-- One approach can be creative or lateral if it is genuinely different.
-- A comparison table is preferred when it helps the user evaluate the approaches quickly.
-
-## Phase 6: Write the initiative brief
+## Phase 5: Write the initiative brief
 
 Keep one canonical markdown brief updated as the session progresses.
 
 Add supporting structure when useful:
-- A comparison table for alternatives, scope boundaries, rollout phases, or success metrics
+- A comparison table for product tradeoffs, scope boundaries, rollout phases, or success metrics
 - A Mermaid diagram for workflow, system flow, rollout sequence, or ownership handoff
 
 ```markdown
