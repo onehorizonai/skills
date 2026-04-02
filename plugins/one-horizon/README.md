@@ -184,7 +184,7 @@ Add to your MCP config:
 
 ### Codex
 
-Use [`plugins/one-horizon/codex`](/Users/gijs/Sites/skills/plugins/one-horizon/codex) as the Codex plugin root. It contains the Codex manifest at [`plugins/one-horizon/codex/.codex-plugin/plugin.json`](/Users/gijs/Sites/skills/plugins/one-horizon/codex/.codex-plugin/plugin.json), the MCP config at [`plugins/one-horizon/codex/.mcp.json`](/Users/gijs/Sites/skills/plugins/one-horizon/codex/.mcp.json), and a synced copy of the shared skills.
+Use [`plugins/one-horizon/codex`](./codex) as the Codex plugin root. It contains the Codex manifest at [`plugins/one-horizon/codex/.codex-plugin/plugin.json`](./codex/.codex-plugin/plugin.json), the MCP config at [`plugins/one-horizon/codex/.mcp.json`](./codex/.mcp.json), and a synced copy of the shared skills.
 
 ---
 
