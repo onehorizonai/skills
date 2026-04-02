@@ -1,0 +1,46 @@
+{
+  "name": "one-horizon",
+  "description": "Roadmap-first AI development for product teams. Send tasks, bugs, and initiatives to your coding agent, and keep every task, commit, and PR tied back to the roadmap.",
+  "version": "2.2.0",
+  "author": {
+    "name": "One Horizon"
+  },
+  "homepage": "https://onehorizon.ai",
+  "repository": "https://github.com/onehorizonai/skills",
+  "license": "MIT",
+  "keywords": [
+    "one-horizon",
+    "tasks",
+    "productivity",
+    "work-log",
+    "blockers",
+    "standup",
+    "retro",
+    "team"
+  ],
+  "skills": "./skills/",
+  "mcpServers": "./.mcp.json",
+  "interface": {
+    "displayName": "One Horizon",
+    "shortDescription": "Plan from the roadmap. Let AI agents build it.",
+    "longDescription": "Turn tasks, bugs, and initiatives into agent-ready specs. One Horizon pulls planned work into Codex, writes progress back as you ship, and keeps every task, commit, and PR tied back to the roadmap.",
+    "developerName": "One Horizon",
+    "category": "Productivity",
+    "capabilities": [
+      "Interactive",
+      "Write"
+    ],
+    "websiteURL": "https://onehorizon.ai",
+    "privacyPolicyURL": "https://onehorizon.ai/docs/legal/privacy-policy",
+    "termsOfServiceURL": "https://onehorizon.ai/docs/legal/terms-of-use",
+    "defaultPrompt": [
+      "What do I have planned?",
+      "Prep my standup.",
+      "Run a weekly retro.",
+      "I found a bug in checkout, fix and log it."
+    ],
+    "brandColor": "#101011",
+    "composerIcon": "./assets/one-horizon-codex.svg",
+    "logo": "./assets/one-horizon-codex.svg"
+  }
+}

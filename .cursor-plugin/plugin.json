@@ -1,0 +1,25 @@
+{
+  "name": "one-horizon",
+  "description": "Roadmap-first AI development for product teams. Send tasks, bugs, and initiatives to your coding agent, and keep every task, commit, and PR tied back to the roadmap.",
+  "version": "2.2.0",
+  "author": {
+    "name": "One Horizon"
+  },
+  "homepage": "https://onehorizon.ai",
+  "repository": "https://github.com/onehorizonai/skills",
+  "license": "MIT",
+  "keywords": [
+    "one-horizon",
+    "tasks",
+    "productivity",
+    "work-log",
+    "blockers",
+    "standup",
+    "retro",
+    "team"
+  ],
+  "skills": "./skills/",
+  "mcpServers": "./.mcp.json",
+  "hooks": "./copilot-hooks.json",
+  "logo": "./assets/logo.svg"
+}

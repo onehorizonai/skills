@@ -1,6 +1,0 @@
-interface:
-  display_name: "Find Team"
-  short_description: "One Horizon Find Team skill"
-  icon_small: "./assets/logo.svg"
-  icon_large: "./assets/logo.svg"
-  default_prompt: "Use $find-team to handle this One Horizon task."
