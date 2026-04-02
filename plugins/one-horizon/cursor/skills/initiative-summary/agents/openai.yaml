@@ -1,6 +1,0 @@
-interface:
-  display_name: "Initiative Summary"
-  short_description: "One Horizon Initiative Summary skill"
-  icon_small: "./assets/logo.svg"
-  icon_large: "./assets/logo.svg"
-  default_prompt: "Use $initiative-summary to handle this One Horizon task."

@@ -1,74 +1,74 @@
-# One Horizon Agent Plugins
+# One Horizon Agent Skills
 
-Install One Horizon in Claude Code, Cursor, or Codex so your agent can see planned work, search tasks, update tasks, and write progress back while you code.
+One Horizon lets Claude Code, Cursor, and Codex read planned work, bugs, blockers, and write-back context without leaving the editor.
 
-Tasks include initiatives, bugs, feature requests, TODOs, standups, recaps, retrospectives, and handoffs.
+Edit skills once. Generate the app-specific files around them:
+- `skills/` contains every skill
+- `plugin.json` is the canonical manifest
+- app-specific manifests and marketplace files are generated around that root
 
-> You'll need a One Horizon account to use these plugins. [Create one here](https://onehorizon.ai/app).
+There is no per-app copied `skills/` tree.
 
-## Plugins
+> You'll need a One Horizon account to use the plugin. [Create one here](https://onehorizon.ai/app).
 
-| Plugin | Description |
-|---|---|
-| [`plugins/one-horizon`](plugins/one-horizon/README.md) | 16 skills for Cursor, Claude Code, and Codex covering task management, delivery loops, bug/feature intake, standups, recaps, retrospectives, triage prep, and handoff notes |
+## Structure
 
-## Install In Claude Code
+```text
+.agents/plugins/marketplace.json   # Local Codex marketplace
+.claude-plugin/marketplace.json    # Claude Code marketplace
+.codex-plugin/plugin.json          # Generated Codex manifest
+.cursor-plugin/plugin.json         # Generated Cursor manifest
+.github/plugin/marketplace.json    # GitHub/Copilot-style marketplace
+assets/                            # Shared plugin assets
+hooks/                             # Hook scripts
+skills/                            # Source of truth for all skills
+scripts/                           # Build and validation scripts
+.mcp.json                          # Shared MCP config
+copilot-hooks.json                 # Shared hook manifest
+plugin.json                        # Canonical plugin manifest
+```
 
-Add this repository as a Claude Code marketplace:
+## Install
+
+### Claude Code
 
 ```text
 /plugin marketplace add onehorizonai/skills
-```
-
-Then install the One Horizon plugin:
-
-```text
 /plugin install one-horizon@onehorizonai-skills
+/reload-plugins
 ```
 
-Run `/reload-plugins`.
+### Codex
 
-Then you can ask Claude things like:
-- "What do I have planned?"
-- "Find tasks about onboarding"
-- "Prep my standup"
-- "I found a bug in checkout, fix and log it"
+Use the repository root as the plugin root. The local development marketplace in [`./.agents/plugins/marketplace.json`](./.agents/plugins/marketplace.json) points at `.`.
 
-## Example prompts
+### Cursor
+
+This repo now exposes a root plugin with a generated Cursor manifest at [`./.cursor-plugin/plugin.json`](./.cursor-plugin/plugin.json).
+
+## Example Prompts
 
 - "What do I have planned?"
 - "Implement HubSpot lead sync"
 - "I found a bug in checkout, fix and log it"
 - "Write this work back and link it to initiative X"
 
-## MCP server setup (manual)
+## Development
 
-Use this MCP server config in clients that support `mcp.json`:
+After editing `plugin.json`, rebuild generated manifests:
 
-```json
-{
-  "mcpServers": {
-    "onehorizon": {
-      "command": "npx",
-      "args": [
-        "mcp-remote@latest",
-        "https://mcp.onehorizon.ai/mcp"
-      ]
-    }
-  }
-}
+```bash
+node ./scripts/build-manifests.mjs
 ```
 
-For plugin-specific install paths and package layout details, see [`plugins/one-horizon/README.md`](plugins/one-horizon/README.md).
+Validate manifests and skills:
 
-## Structure
+```bash
+node ./scripts/validate.mjs
+```
 
-```text
-plugins/
-  {plugin-name}/
-    shared/skills/     # Source of truth for skill definitions
-    cursor/            # Cursor plugin package
-    claude/            # Claude Code plugin package
-    codex/             # Codex plugin package
-    scripts/           # Build and sync utilities
+Validate local refs and external URLs:
+
+```bash
+node ./scripts/validate-links.mjs
 ```

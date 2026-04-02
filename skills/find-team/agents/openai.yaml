@@ -1,0 +1,6 @@
+interface:
+  display_name: "Find Team"
+  short_description: "One Horizon Find Team skill"
+  icon_small: "./assets/logo.svg"
+  icon_large: "./assets/logo.svg"
+  default_prompt: "Use $find-team to resolve One Horizon team and member IDs."

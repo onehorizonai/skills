@@ -1,6 +1,0 @@
-interface:
-  display_name: "Get Task Details"
-  short_description: "One Horizon Get Task Details skill"
-  icon_small: "./assets/logo.svg"
-  icon_large: "./assets/logo.svg"
-  default_prompt: "Use $get-task-details to handle this One Horizon task."

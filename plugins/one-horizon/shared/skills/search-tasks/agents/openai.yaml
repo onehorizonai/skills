@@ -1,6 +1,0 @@
-interface:
-  display_name: "Search Tasks"
-  short_description: "One Horizon Search Tasks skill"
-  icon_small: "./assets/logo.svg"
-  icon_large: "./assets/logo.svg"
-  default_prompt: "Use $search-tasks to handle this One Horizon task."

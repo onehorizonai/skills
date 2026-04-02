@@ -1,0 +1,6 @@
+interface:
+  display_name: "List Taxonomy"
+  short_description: "One Horizon List Taxonomy skill"
+  icon_small: "./assets/logo.svg"
+  icon_large: "./assets/logo.svg"
+  default_prompt: "Use $list-taxonomy to look up One Horizon goals, products, releases, and components."

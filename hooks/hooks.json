@@ -1,0 +1,16 @@
+{
+  "description": "One Horizon context injection hooks for Claude Code",
+  "hooks": {
+    "UserPromptSubmit": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "node ${CLAUDE_PLUGIN_ROOT}/hooks/scripts/inject_one_horizon_policy.mjs",
+            "timeout": 15
+          }
+        ]
+      }
+    ]
+  }
+}

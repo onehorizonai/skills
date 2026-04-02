@@ -8,7 +8,7 @@
       "name": "one-horizon",
       "source": {
         "source": "local",
-        "path": "./plugins/one-horizon/codex"
+        "path": "."
       },
       "policy": {
         "installation": "AVAILABLE",
