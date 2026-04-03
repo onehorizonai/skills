@@ -37,9 +37,13 @@ Turn a rough roadmap idea into a sharp initiative brief, then create the initiat
 
 ## Initiative metadata rules
 
+- Pull taxonomy before creation when product, customer, company, release, goal, or component signals are present.
 - Apply taxonomy labels when they are clearly present in the discussion and improve routing or reporting.
 - Prefer product labels first when the initiative obviously belongs to a product or product area.
 - Also apply other relevant taxonomy such as goals, releases, components, and company/customer labels when the workspace supports them and the match is clear.
+- Use `list-taxonomy` only after the core scope is stable enough to know what should be tagged.
+- Attach labels only for exact or high-confidence matches.
+- If multiple labels are plausible for the same concept, ask a disambiguation question instead of guessing.
 - If this initiative clearly belongs under an existing roadmap effort, set `parentInitiativeId`.
 - Do not guess taxonomy or parentage from weak signals. Resolve them first.
 - Keep owner and parent linkage in structured initiative metadata. Do not add `Owner:` or `Related initiative:` lines to the markdown brief unless the user explicitly wants them in the document.
@@ -53,6 +57,35 @@ Turn a rough roadmap idea into a sharp initiative brief, then create the initiat
 - If the conversation shifts from builder mode to company mode because the user mentions customers, revenue, fundraising, or go-to-market pressure, raise the bar and ask harder evidence-driven questions.
 - During the diagnostic phases, take a position. Do not hedge with filler like "that could work" or "you might want to consider".
 - Do not drift into recommended implementation direction, engineering tasks, or effort estimates.
+
+## Execution order
+
+Follow this sequence to keep the interaction predictable:
+
+1. Confirm this is initiative-shaped work, not a bug, feature request, or personal task.
+2. Gather only the missing minimum context:
+   - user or workflow
+   - short background
+   - in scope
+   - out of scope
+   - smallest useful version
+3. Check for related initiatives and possible parent linkage.
+4. Resolve taxonomy only after the scope is stable.
+5. Draft the brief.
+6. Resolve any final metadata gaps.
+7. Create the initiative after approval.
+
+## Minimum viable brief threshold
+
+Stop asking discovery questions and draft the brief once you know:
+
+- which user or workflow this is for
+- what changes in this phase
+- what is in scope
+- what is out of scope
+- which product this belongs to, if that context exists
+
+Do not keep probing for strategy context once those fields are clear. Put remaining uncertainty in `### Open questions`.
 
 ## Output guidance
 
@@ -98,6 +131,9 @@ Turn a rough roadmap idea into a sharp initiative brief, then create the initiat
    - What is explicitly out of scope?
    - What is the smallest version that is still useful?
    - Is there a business reason or goal we should capture in one short note?
+7. If the product area or customer/account context is implied but not explicit, ask only the missing taxonomy questions:
+   - Which product or product area is this for?
+   - Is this tied to a specific customer, company, or segment we should tag?
 
 ## Phase 2: Related initiative discovery
 
@@ -200,10 +236,16 @@ After the user reviews and approves the brief:
 
 1. Resolve owner, team, taxonomy, and parent initiative metadata if needed.
 2. Use `find-team` for owner/team resolution.
-3. Use `list-taxonomy` to resolve product and other relevant taxonomy labels before creation.
+3. Use `list-taxonomy` to resolve product labels first, then attach matching customer/company and other relevant taxonomy labels when the match is clear.
 4. If the new initiative belongs under an existing initiative, resolve and set `parentInitiativeId`.
 5. Keep the brief body focused on background, feature or use case scope, boundaries, risks, and rollout.
-6. Create the initiative with the brief markdown as the description.
+6. Before creation, confirm the minimum create fields are ready:
+   - title
+   - markdown brief
+   - workspace
+   - any clear owner/team metadata
+   - any clear taxonomy labels
+7. Create the initiative with the brief markdown as the description.
 
 ```json
 create-initiative({
@@ -214,6 +256,6 @@ create-initiative({
   "assigneeIds": ["<userId>"],
   "teamIds": ["<teamId>"],
   "parentInitiativeId": "<parentInitiativeId>",
-  "taxonomyLabelIds": ["<labelId>"]
+  "taxonomyLabelIds": ["<productLabelId>", "<customerOrCompanyLabelId>"]
 })
 ```
