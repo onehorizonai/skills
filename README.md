@@ -1,15 +1,15 @@
 # One Horizon Agent Skills
 
-One Horizon lets Claude Code, Cursor, and Codex read planned work, bugs, blockers, and write-back context without leaving the editor.
+One Horizon plugs into Claude Code, Cursor, and Codex so they can read planned work, bugs, and blockers, then write updates back without leaving the editor.
 
-Edit skills once. Generate the app-specific files around them:
+This repo keeps the plugin setup in one place:
 - `skills/` contains every skill
 - `plugin.json` is the canonical manifest
-- app-specific manifests and marketplace files are generated around that root
+- app-specific manifests and marketplace files are generated from there
 
-There is no per-app copied `skills/` tree.
+There is no separate copied `skills/` tree for each app.
 
-> You'll need a One Horizon account to use the plugin. [Create one here](https://onehorizon.ai/app).
+> You need a One Horizon account to use the plugin. [Create one here](https://onehorizon.ai/app).
 
 ## Structure
 
@@ -46,9 +46,10 @@ Use the repository root as the plugin root. The local development marketplace in
 
 This repo now exposes a root plugin with a generated Cursor manifest at [`./.cursor-plugin/plugin.json`](./.cursor-plugin/plugin.json).
 
-## Example Prompts
+## Example prompts
 
 - "What do I have planned?"
+- "Review my roadmap and suggest changes"
 - "Implement HubSpot lead sync"
 - "I found a bug in checkout, fix and log it"
 - "Write this work back and link it to initiative X"

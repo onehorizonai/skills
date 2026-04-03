@@ -1,0 +1,6 @@
+interface:
+  display_name: "Roadmap Suggestions"
+  short_description: "One Horizon roadmap suggestion skill"
+  icon_small: "./assets/logo.svg"
+  icon_large: "./assets/logo.svg"
+  default_prompt: "Use $roadmap-suggestions to review a One Horizon roadmap and produce evidence-based suggestions for hierarchy, sequencing, coverage, tagging, and work-type corrections."

@@ -117,10 +117,13 @@ Do not keep probing for strategy context once those fields are clear. Put remain
 1. Load currently planned initiatives with `list-initiatives` using active statuses.
 2. Load recently completed work for the relevant team or workspace with `list-completed-work`.
 3. Ask this first: `What user story or workflow are we trying to improve?`
-4. Assess product stage explicitly:
-   - pre-product
-   - has users
-   - has paying customers
+4. Ask about product stage only when it is relevant to the initiative.
+   - Use it for product decisions where adoption stage changes scope, evidence, or rollout expectations.
+   - Skip it for clearly internal work or public-facing work such as website content where the question does not help.
+   - If needed, use:
+     - pre-product
+     - has users
+     - has paying customers
 5. Ask for a short background only when it is still unclear:
    - Why does this matter right now?
    - What is happening today that is not good enough?
@@ -170,7 +173,7 @@ Check:
 - Is the user story clear enough to scope this as a feature or phase rather than a full product?
 - Are the in-scope and out-of-scope boundaries crisp enough to avoid ambiguity?
 - What should stay true for the user if this initiative succeeds?
-- If the product stage includes users or paying customers, does the evidence support this direction?
+- If product stage is relevant and includes users or paying customers, does the evidence support this direction?
 
 Present premises like this and get agreement before moving on:
 
