@@ -200,17 +200,60 @@ If no prior retro exists, say that it is the first recorded retro for that scope
 
 Structure the response in this order:
 
-1. Tweetable summary
+1. Short TLDR paragraph
 2. `## Engineering Retro: <date range>`
 3. Summary table
 4. Trends vs last retro, if history exists
 5. Delivery mix and quality signals
 6. Work patterns
-7. Your week
-8. Team breakdown, if applicable
-9. Top 3 wins
-10. 3 things to improve
-11. 3 habits for next week
+7. Scope-aware highlights:
+   - For personal scope: `## Your week`
+   - For team scope: `## Team highlights`
+8. Wins
+9. Friction and follow-through
+10. Next-week focus
+
+Formatting rules:
+
+- Start with a short paragraph, not bullets, for the TLDR.
+- The TLDR should cover:
+  - scope and date window
+  - main delivery signal
+  - main constraint or source of drag
+  - the most important next-step theme
+- Do not force a "tweetable summary" heading.
+- Use `##` for the main sections.
+- Use bullets only when the content is naturally list-shaped.
+- Default to 2-4 bullets for `Wins`, `Friction and follow-through`, and `Next-week focus`.
+- Do not force exactly 3 items in those sections if the data does not support it.
+- Keep the section titles stable, but let the content flex to the data.
+- If one section would be thin or repetitive, merge it into the adjacent section instead of padding.
+- Do not emit empty headings.
+- Prefer short paragraphs for analysis sections and bullets for concrete examples or actions.
+
+Section intent:
+
+- `Summary table`: the compact factual snapshot.
+- `Trends vs last retro`: only include meaningful deltas, not every metric.
+- `Delivery mix and quality signals`: explain what kind of work dominated and whether the team invested in quality.
+- `Work patterns`: call out timing, clustering, carryover, or interruption patterns.
+- `Your week` or `Team highlights`: explain the concrete work that mattered most.
+- `Wins`: specific shipped outcomes, not generic praise.
+- `Friction and follow-through`: blockers, churn, carryover, or process debt that deserves attention.
+- `Next-week focus`: the 2-4 most important follow-through items or habits.
+
+Scope rules:
+
+- For personal scope, use `## Your week` and do not include a team breakdown.
+- For team scope with only one active contributor, also use `## Your week`.
+- For team scope with multiple active contributors, use `## Team highlights` and include a short per-person subsection only when it adds signal.
+- Do not force per-person writeups for inactive contributors or people with trivial activity.
+
+Thin-data rules:
+
+- If there is no prior retro, omit `Trends vs last retro` entirely and mention first-run status in the TLDR or closing line.
+- If there are no blockers, fold that into `Friction and follow-through` as a short sentence instead of a padded list.
+- If the window has very little completed work, shorten the retro and bias toward carryover, blockers, and next-step focus.
 
 For work-pattern analysis, use completion timestamps if the data includes them:
 
