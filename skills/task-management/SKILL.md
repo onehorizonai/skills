@@ -40,6 +40,11 @@ Handle messy operational requests over One Horizon tasks by choosing the right l
 - Prefer the smallest action that completes the request.
 - Resolve ambiguity before mutating data: identify workspace, task type, assignee, and team as needed.
 - Use comments for progress notes or write-back. Do not rewrite descriptions just to log status.
+- When editing an initiative description, use `patch-document` with `workspaceId`, `taskId` set to the initiative ID, and precise `ops`. The server resolves or creates the linked content document automatically.
+- Prefer precise patch operations over rewriting the entire initiative description.
+- Use `update-initiative` only for initiative metadata: `title`, `status`, `assigneeIds`, `teamIds`, `taxonomyLabelIds`, and `parentInitiativeId`.
+- If both initiative description and metadata change, do `patch-document(taskId=initiativeId, ...)` first, then `update-initiative(...)`. Call `get-task-details` after the mutations if you need the refreshed full initiative.
+- If a patch fails because the target or anchor is stale or missing, call `get-task-details`, then retry with corrected ops.
 - If list output is too thin, call `get-task-details` before acting.
 - When status changes materially, add a short comment explaining what changed and why.
 - If there are multiple plausible task types, infer from the request first and ask one concise clarifying question only when mutation would otherwise be risky.
@@ -66,7 +71,9 @@ Handle messy operational requests over One Horizon tasks by choosing the right l
 ### 3. Choose the right mutation path
 
 - Personal follow-up or small owned work: personal task via `create-todo` or `update-todo`
-- Roadmap work: `create-initiative` or `update-initiative`
+- Roadmap work create: `create-initiative`
+- Roadmap initiative metadata edits: `update-initiative`
+- Roadmap initiative description edits: `patch-document(taskId=initiativeId, ...)`
 - Defect intake or triage: `report-bug` or `update-bug`
 - Product ask: `report-feature-request` or `update-feature-request`
 - Comments or reactions: `add-task-comment`, `list-task-comments`, `toggle-task-comment-reaction`
@@ -126,7 +133,11 @@ Handle messy operational requests over One Horizon tasks by choosing the right l
 
 1. Confirm the exact target task.
 2. Apply the correct update tool for the task type.
-3. Add a comment if the change reflects progress, delivery, or a decision.
+3. For initiative description edits, use `patch-document` with the initiative `taskId`.
+4. If both initiative description and metadata change, patch first and then call `update-initiative` for metadata only.
+5. If a patch fails because the target or anchor is stale or missing, call `get-task-details` and retry with corrected ops.
+6. Call `get-task-details` after the mutations if refreshed initiative content is needed.
+7. Add a comment if the change reflects progress, delivery, or a decision.
 
 ### Tag or assign work
 

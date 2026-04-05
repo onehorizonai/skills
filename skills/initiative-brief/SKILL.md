@@ -12,6 +12,7 @@ Turn a rough roadmap idea into a sharp initiative brief, then create the initiat
 - Understand the problem before proposing solutions.
 - Produce a design doc, not code.
 - Write the brief in markdown. Use tables and Mermaid diagrams when they make the design clearer.
+- When editing an existing initiative description, use `patch-document` with the initiative `taskId`; the server will resolve or create the linked content document automatically. Use `update-initiative` only for metadata.
 - Stay focused on what the initiative should do from a product perspective, not how a developer should implement it.
 - Default to feature-level scoping unless the user clearly describes a broader product or company initiative.
 - Treat business goals as supporting context, not the backbone of the brief.
@@ -259,3 +260,9 @@ create-initiative({
   "taxonomyLabelIds": ["<productLabelId>", "<customerOrCompanyLabelId>"]
 })
 ```
+
+If the user later asks to revise the initiative description after creation:
+
+- Use `patch-document` with `workspaceId`, `taskId`, and precise `ops`.
+- Prefer `replace_text`, `insert_before`, `insert_after`, or `delete_text` over rewriting the entire description.
+- Use `update-initiative` only for metadata.

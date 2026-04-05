@@ -12,6 +12,11 @@ Update an existing task or interact with its comments. Pick the right MCP tool b
 - Never modify task descriptions to record progress. Use comments instead.
 - When changing status (e.g. to `Completed`), add a comment explaining what changed and why.
 - Resolve IDs first with `list-work` or `get-task-details` when needed.
+- When editing an initiative description, use `patch-document` with `workspaceId`, `taskId` set to the initiative ID, and precise `ops`; the server resolves or creates the linked content document automatically.
+- Prefer `replace_text`, `insert_before`, `insert_after`, and `delete_text` over rewriting the entire description.
+- Use `update-initiative` only for initiative metadata: `title`, `status`, `assigneeIds`, `teamIds`, `taxonomyLabelIds`, and `parentInitiativeId`.
+- If both description and metadata change, call `patch-document(taskId=initiativeId, ...)` first, then `update-initiative(...)`. If you need the refreshed full initiative, call `get-task-details` after the mutations.
+- If a patch fails because the target or anchor is stale or missing, call `get-task-details`, then retry with corrected ops.
 
 ## By work type
 
@@ -39,7 +44,49 @@ add-task-comment({
 
 ### Roadmap initiative
 
-Call `update-initiative`. Supports `assigneeIds`, `teamIds`, `parentInitiativeId`, and `taxonomyLabelIds`:
+Use `patch-document` for initiative description edits and `update-initiative` for metadata.
+
+Description edit only:
+
+```json
+patch-document({
+  "workspaceId": "<workspaceId>",
+  "taskId": "<initiativeId>",
+  "ops": [
+    {
+      "type": "replace_text",
+      "target": "EMEA pilot",
+      "replacement": "EU launch"
+    }
+  ]
+})
+```
+
+Description plus metadata:
+
+```json
+patch-document({
+  "workspaceId": "<workspaceId>",
+  "taskId": "tsk_123",
+  "ops": [
+    {
+      "type": "insert_after",
+      "anchor": "### Rollout",
+      "text": "\n- Roll out to two design partners first.\n"
+    }
+  ]
+})
+```
+
+```json
+update-initiative({
+  "initiativeId": "tsk_123",
+  "workspaceId": "<workspaceId>",
+  "status": "In Progress"
+})
+```
+
+Metadata only:
 
 ```json
 update-initiative({

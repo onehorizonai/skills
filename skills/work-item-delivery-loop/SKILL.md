@@ -14,6 +14,11 @@ Run work execution with strict sequencing and explicit write-back.
 - If initiative matching is ambiguous, ask for confirmation.
 - A run is incomplete until MCP write-back is done.
 - Never modify task descriptions to record progress. Use `add-task-comment` instead.
+- When editing an initiative description, use `patch-document` with `workspaceId`, `taskId` set to the initiative ID, and precise `ops`; the server resolves or creates the linked content document automatically.
+- Prefer `replace_text`, `insert_before`, `insert_after`, and `delete_text` over rewriting the entire description.
+- Use `update-initiative` only for initiative metadata: `title`, `status`, `assigneeIds`, `teamIds`, `taxonomyLabelIds`, and `parentInitiativeId`.
+- If both initiative description and metadata change, do `patch-document(taskId=initiativeId, ...)` first, then `update-initiative(...)`. If refreshed full details are needed after editing, call `get-task-details`.
+- If a patch fails because the target or anchor is stale or missing, call `get-task-details`, then retry with corrected ops.
 - Always pass `"source": "skill"` when calling `add-task-comment` so comments are tagged with their origin.
 - Use `Changes/Why` comments only when real delivery happened (bug fix, completed personal task, completed initiative work).
 - For research/planning/triage-only updates, add an `Update` comment instead.
@@ -100,6 +105,13 @@ Use this exact sequence:
 5. Implement requested code.
 6. Create implementation record with `create-todo` using `status: "Completed"` and `initiativeId` as soon as implementation is done.
 7. Call `update-initiative` if status/progress should advance.
+
+If the initiative description also needs edits:
+
+1. Call `patch-document` with `workspaceId`, `taskId`, and targeted `ops`.
+2. Call `update-initiative` only for metadata changes.
+3. If a patch fails because the target or anchor is stale or missing, call `get-task-details` and retry with corrected ops.
+4. Call `get-task-details` after the mutations if you need the refreshed initiative body.
 
 `create-todo` write-back shape:
 
