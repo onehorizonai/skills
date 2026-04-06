@@ -5,13 +5,19 @@ description: Guide writing a structured initiative brief for roadmap-first plann
 
 # Initiative Brief
 
-Turn a rough roadmap idea into a sharp initiative brief, then create the initiative in One Horizon.
+Turn a rough roadmap idea into a sharp initiative brief, then either create the initiative in One Horizon or finalize the draft on an initiative that already exists.
 
 ## Core rule
 
 - Understand the problem before proposing solutions.
 - Produce a design doc, not code.
+- Decide the mode early and keep it stable through the conversation:
+  - `new initiative`: the initiative does not exist yet, so the flow ends in create
+  - `existing initiative draft`: the initiative already exists, so the flow ends in finalize/update, not create
 - Write the brief in markdown. Use tables and Mermaid diagrams when they make the design clearer.
+- Preserve all existing media already present in the current canonical markdown, including URL-backed images, videos, and embeds.
+- Treat existing media markdown as canonical document content, including patterns such as `![alt](https://...)`, `[video](https://...#one-video=1)`, `[youtube](https://...#one-youtube=1)`, and `[figma](https://...#one-figma=1)`.
+- Preserve each existing media source URL and marker exactly. Do not remove, replace, reposition, re-host, or normalize an existing media item unless the user explicitly asks to change that specific item.
 - When editing an existing initiative description, use `patch-document` with the initiative `taskId`; the server will resolve or create the linked content document automatically. Use `update-initiative` only for metadata.
 - Stay focused on what the initiative should do from a product perspective, not how a developer should implement it.
 - Default to feature-level scoping unless the user clearly describes a broader product or company initiative.
@@ -64,17 +70,20 @@ Turn a rough roadmap idea into a sharp initiative brief, then create the initiat
 Follow this sequence to keep the interaction predictable:
 
 1. Confirm this is initiative-shaped work, not a bug, feature request, or personal task.
-2. Gather only the missing minimum context:
+2. Decide the mode before drafting:
+   - If the user references an existing initiative, task ID, or current draft, treat it as `existing initiative draft`.
+   - Otherwise treat it as `new initiative`.
+3. Gather only the missing minimum context:
    - user or workflow
    - short background
    - in scope
    - out of scope
    - smallest useful version
-3. Check for related initiatives and possible parent linkage.
-4. Resolve taxonomy only after the scope is stable.
-5. Draft the brief.
-6. Resolve any final metadata gaps.
-7. Create the initiative after approval.
+4. Check for related initiatives and possible parent linkage.
+5. Resolve taxonomy only after the scope is stable.
+6. Draft the brief.
+7. Resolve any final metadata gaps.
+8. After approval, follow the matching end state for the chosen mode.
 
 ## Minimum viable brief threshold
 
@@ -234,22 +243,30 @@ In 2-4 sentences, summarize what this initiative is, which user or workflow it i
 - Who owns it after launch?
 ```
 
-## Create step
+## Finalize step
 
 After the user reviews and approves the brief:
 
 1. Resolve owner, team, taxonomy, and parent initiative metadata if needed.
 2. Use `find-team` for owner/team resolution.
 3. Use `list-taxonomy` to resolve product labels first, then attach matching customer/company and other relevant taxonomy labels when the match is clear.
-4. If the new initiative belongs under an existing initiative, resolve and set `parentInitiativeId`.
+4. If the initiative belongs under an existing initiative, resolve and set `parentInitiativeId`.
 5. Keep the brief body focused on background, feature or use case scope, boundaries, risks, and rollout.
-6. Before creation, confirm the minimum create fields are ready:
-   - title
-   - markdown brief
-   - workspace
-   - any clear owner/team metadata
-   - any clear taxonomy labels
-7. Create the initiative with the brief markdown as the description.
+6. If the initiative does not exist yet:
+   - confirm the minimum create fields are ready:
+     - title
+     - markdown brief
+     - workspace
+     - any clear owner/team metadata
+     - any clear taxonomy labels
+   - create the initiative with the brief markdown as the description
+7. If the initiative already exists:
+   - patch the existing initiative description with `patch-document`
+   - apply metadata changes with `update-initiative` only if needed
+8. Match the closing question to the situation:
+   - new initiative: ask whether the user is ready to create it
+   - existing initiative: ask whether the user is ready to finalize or update the existing initiative draft
+9. Do not ask `Are you ready to create the initiative?` when the chosen mode is `existing initiative draft`.
 
 ```json
 create-initiative({
