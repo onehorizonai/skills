@@ -1,6 +1,6 @@
 ---
 name: task-management
-description: Handle operational One Horizon requests that need task lookup, creation, updates, assignment, or tagging. Use when asked "mark this done", "assign this", "create a bug", "log a follow-up", "find the task for X", "show comments", or "tag this initiative". Do not use for retros, standups, handoff notes, or stakeholder summaries. Requires One Horizon MCP.
+description: Handle operational One Horizon requests that need task lookup, creation, updates, assignment, tagging, or document lookup. Use when asked "mark this done", "assign this", "create a bug", "log a follow-up", "find the task for X", "find the spec for Y", "show comments", or "tag this initiative". Do not use for retros, standups, handoff notes, or stakeholder summaries. Requires One Horizon MCP.
 ---
 
 # Task Management
@@ -62,6 +62,9 @@ Handle messy operational requests over One Horizon tasks by choosing the right l
 - If the user needs team or member IDs, call `find-team`.
 - If the user needs to locate existing work by text, call `search-tasks`.
 - If the user asks for active, completed, or blocked work rather than a specific item, call `list-work`.
+- If the user needs to find a document by name or title, call `find-documents` with the `query` parameter. Combine with optional `taskId`, `types`, or `statuses` filters to narrow results.
+- If the user has multiple workspaces or `workspaceId` is ambiguous, call `list-workspaces` to identify the right one.
+- If the user's own ID is needed (e.g. for filtering by assignee or creator), call `who-am-i`.
 
 ### 2. Inspect before editing
 
@@ -97,6 +100,16 @@ Handle messy operational requests over One Horizon tasks by choosing the right l
 
 1. Use `search-tasks`, `list-work`, or `find-team` to resolve the target.
 2. Use `get-task-details` if the user needs full context.
+3. To find a document by name or title, call `find-documents` with `query` as a top-level string. Optionally add `taskId`, `types`, or `statuses` to narrow results:
+
+```json
+find-documents({
+  "workspaceId": "<workspaceId>",
+  "query": "login spec",
+  "types": ["spec"],
+  "statuses": ["Published"]
+})
+```
 
 ### Create work
 

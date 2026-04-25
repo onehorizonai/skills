@@ -1,0 +1,6 @@
+interface:
+  display_name: "Manage Documents"
+  short_description: "One Horizon Manage Documents skill"
+  icon_small: "./assets/logo.svg"
+  icon_large: "./assets/logo.svg"
+  default_prompt: "Use $manage-documents for creating, reading, updating, or deleting standalone workspace documents in One Horizon."

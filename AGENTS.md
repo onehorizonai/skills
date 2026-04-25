@@ -1,12 +1,8 @@
-# AGENTS.md
+# Agent Guide
 
-Guidance for AI coding agents working in this repository.
+This repo has one plugin. `skills/` is the only source of truth for skills. App-specific manifests live at the repo root and are built from `plugin.json`. Don't edit generated files directly.
 
-## Repository overview
-
-This is a single-plugin repository. `skills/` is the only source of truth for skills. App-specific manifests live at the repo root and are generated from `plugin.json`.
-
-## Repository structure
+## Structure
 
 ```text
 skills/
@@ -34,7 +30,7 @@ copilot-hooks.json                  # Shared hook manifest
 
 ## Working with skills
 
-Skills live in `skills/{skill-name}/SKILL.md`. Each `SKILL.md` has frontmatter and instructions for the agent.
+Each skill lives at `skills/{skill-name}/SKILL.md` with frontmatter and agent instructions.
 
 ### SKILL.md format
 
@@ -56,13 +52,13 @@ Step-by-step instructions for the agent to follow when this skill is invoked.
 ### Rules
 
 - `name` must match the folder name exactly — no plugin namespace prefix
-- The slash command (`/{plugin-name}:{skill-name}`) is formed automatically from the folder name + plugin manifest `name`
-- Keep SKILL.md short: the full file loads into context on every invocation
-- `description` determines when the agent picks up the skill — write it with trigger phrases
-- Keep skill edits in `skills/` only
-- Do not manually edit generated app manifests unless you are also updating `scripts/build-manifests.mjs`
+- The slash command is built automatically: `/{plugin-name}:{skill-name}`
+- Keep `SKILL.md` short — the full file loads into context on every invocation
+- `description` controls when the agent picks up the skill — write it with trigger phrases
+- Edit skills in `skills/` only
+- Don't edit generated app manifests unless you're also updating `scripts/build-manifests.mjs`
 
-### Building app manifests
+### Rebuild manifests
 
 After editing `plugin.json` or marketplace metadata logic:
 
@@ -70,25 +66,16 @@ After editing `plugin.json` or marketplace metadata logic:
 node ./scripts/build-manifests.mjs
 ```
 
-This regenerates `.cursor-plugin/plugin.json`, `.codex-plugin/plugin.json`, and marketplace files from the canonical root manifest.
+Regenerates `.cursor-plugin/plugin.json`, `.codex-plugin/plugin.json`, and marketplace files from the root manifest.
 
-### Validating manifests and skills
-
-```bash
-node ./scripts/validate.mjs
-```
-
-Checks manifest consistency, skill metadata, and required files.
-
-### Validating links and paths
+### Validate
 
 ```bash
-node ./scripts/validate-links.mjs
+node ./scripts/validate.mjs          # Manifest consistency, skill metadata, required files
+node ./scripts/validate-links.mjs    # Local refs and user-facing URLs
 ```
 
-Checks local references and user-facing URLs in docs and manifests.
-
-## Adding a new skill
+## Adding a skill
 
 1. Create `skills/{skill-name}/`
 2. Add `SKILL.md`
@@ -114,5 +101,4 @@ Checks local references and user-facing URLs in docs and manifests.
 }
 ```
 
-The `name` field sets the skill namespace. A skill in folder `my-skill` inside a plugin named `my-plugin` becomes `/my-plugin:my-skill`.
-`plugin.json` is canonical. Generated app manifests should stay aligned with it.
+`name` sets the skill namespace. A skill in folder `my-skill` inside plugin `my-plugin` becomes `/my-plugin:my-skill`. `plugin.json` is canonical — keep generated manifests aligned with it.
