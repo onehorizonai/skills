@@ -1,17 +1,12 @@
 # One Horizon Agent Skills
 
-One Horizon plugs into Claude Code, Cursor, and Codex so they can read planned work, bugs, and blockers, then write updates back without leaving the editor.
+Lets Claude Code, Cursor, and Codex read your planned work, bugs, and blockers from One Horizon and write updates back without leaving the editor.
 
-This repo keeps the plugin setup in one place:
-- `skills/` contains every skill
-- `plugin.json` is the canonical manifest
-- app-specific manifests and marketplace files are generated from there
-
-There is no separate copied `skills/` tree for each app.
-
-> You need a One Horizon account to use the plugin. [Create one here](https://onehorizon.ai/app).
+> Requires a One Horizon account. [Create one here](https://onehorizon.ai/app).
 
 ## Structure
+
+All app-specific manifests and marketplace files are built from `plugin.json`. Skills live in `skills/` — there's no separate tree per app.
 
 ```text
 .agents/plugins/marketplace.json   # Local Codex marketplace
@@ -40,13 +35,13 @@ plugin.json                        # Canonical plugin manifest
 
 ### Codex
 
-Use the repository root as the plugin root. The local development marketplace in [`./.agents/plugins/marketplace.json`](./.agents/plugins/marketplace.json) points at `.`.
+Use the repo root as the plugin root. The local development marketplace is at [`./.agents/plugins/marketplace.json`](./.agents/plugins/marketplace.json).
 
 ### Cursor
 
-This repo now exposes a root plugin with a generated Cursor manifest at [`./.cursor-plugin/plugin.json`](./.cursor-plugin/plugin.json).
+Generated Cursor manifest: [`./.cursor-plugin/plugin.json`](./.cursor-plugin/plugin.json).
 
-## Example prompts
+## Try these
 
 - "What do I have planned?"
 - "Review my roadmap and suggest changes"
