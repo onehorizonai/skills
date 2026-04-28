@@ -62,7 +62,7 @@ Handle messy operational requests over One Horizon tasks by choosing the right l
 - If the user needs team or member IDs, call `find-team`.
 - If the user needs to locate existing work by text, call `search-tasks`.
 - If the user asks for active, completed, or blocked work rather than a specific item, call `list-work`.
-- If the user needs to find a document by name or title, call `find-documents` with the `query` parameter. Combine with optional `taskId`, `types`, or `statuses` filters to narrow results.
+- If the user needs to find a document by name or title, call `find-documents` with the `query` parameter. Combine with optional `taskId`, `types`, or `statuses` filters to narrow results. Treat results as metadata plus `excerpt` only.
 - If the user has multiple workspaces or `workspaceId` is ambiguous, call `list-workspaces` to identify the right one.
 - If the user's own ID is needed (e.g. for filtering by assignee or creator), call `who-am-i`.
 
@@ -70,6 +70,7 @@ Handle messy operational requests over One Horizon tasks by choosing the right l
 
 - If the request mentions an existing task but the task ID is missing, search or list first.
 - If the action depends on full task context, call `get-task-details`.
+- If the action depends on a standalone workspace document body, use `find-documents` only to identify the candidate `documentId`, then call `get-document` for the full content.
 
 ### 3. Choose the right mutation path
 
@@ -100,7 +101,7 @@ Handle messy operational requests over One Horizon tasks by choosing the right l
 
 1. Use `search-tasks`, `list-work`, or `find-team` to resolve the target.
 2. Use `get-task-details` if the user needs full context.
-3. To find a document by name or title, call `find-documents` with `query` as a top-level string. Optionally add `taskId`, `types`, or `statuses` to narrow results:
+3. To find a standalone workspace document by name or title, call `find-documents` with `query` as a top-level string. Optionally add `taskId`, `types`, or `statuses` to narrow results. Results include IDs, titles, metadata, and `excerpt` only. They omit document bodies:
 
 ```json
 find-documents({
@@ -108,6 +109,15 @@ find-documents({
   "query": "login spec",
   "types": ["spec"],
   "statuses": ["Published"]
+})
+```
+
+4. If the user needs the full standalone document body, call `get-document` with the selected `documentId`:
+
+```json
+get-document({
+  "workspaceId": "<workspaceId>",
+  "documentId": "<documentId>"
 })
 ```
 

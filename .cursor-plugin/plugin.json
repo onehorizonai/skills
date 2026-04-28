@@ -1,7 +1,7 @@
 {
   "name": "one-horizon",
   "description": "Roadmap-first AI development for product teams. Send tasks, bugs, and initiatives to your coding agent, and keep every task, commit, and PR tied back to the roadmap.",
-  "version": "2.2.0",
+  "version": "2.3.1",
   "author": {
     "name": "One Horizon"
   },

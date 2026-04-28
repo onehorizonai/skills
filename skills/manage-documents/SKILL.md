@@ -22,7 +22,7 @@ Create and manage standalone workspace documents. These are distinct from initia
 | Create a new document | `create-document` |
 | Fetch a document by ID | `get-document` |
 | Replace document fields (title, content, status) | `update-document` |
-| Search or filter documents | `find-documents` |
+| Search or filter document metadata | `find-documents` |
 | Delete a document | `delete-document` |
 
 `update-document` replaces whole fields by `documentId`. It is not for initiative descriptions — use `patch-document` with `taskId` for those.
@@ -30,7 +30,9 @@ Create and manage standalone workspace documents. These are distinct from initia
 ## Rules
 
 - If `workspaceId` is unknown or the user has multiple workspaces, call `list-workspaces` first.
-- `get-document`, `update-document`, and `delete-document` all require `documentId`. Call `find-documents` first if you only have a title or filter criteria.
+- `find-documents` is a discovery/list tool. It returns document metadata plus `excerpt`, not full `content`.
+- Use `find-documents` for IDs, titles, statuses, task links, and excerpts. Use `get-document` with the selected `documentId` whenever full document content is needed.
+- `get-document`, `update-document`, and `delete-document` all require `documentId`. Call `find-documents` first if you only have a title or filter criteria, then call `get-document` before reading or summarizing the full body.
 - Do not use `update-document` for initiative description edits. Use `patch-document` with `taskId` instead.
 - Do not call `delete-document` without explicit user confirmation — deletion is not reversible.
 
@@ -72,7 +74,7 @@ update-document({
 
 ## Find documents
 
-Filter by type, status, task link, or creator:
+Filter by type, status, task link, or creator. The result is metadata plus `excerpt` only:
 
 ```json
 find-documents({
@@ -84,12 +86,21 @@ find-documents({
 })
 ```
 
-Once the find-documents listing API ships, a `query` field enables name/title search:
+Use `query` for name/title search:
 
 ```json
 find-documents({
   "workspaceId": "<workspaceId>",
   "query": "auth spec"
+})
+```
+
+If the user needs the document body after choosing a result, call:
+
+```json
+get-document({
+  "workspaceId": "<workspaceId>",
+  "documentId": "<documentId>"
 })
 ```
 

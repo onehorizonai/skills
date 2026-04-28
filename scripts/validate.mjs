@@ -54,6 +54,50 @@ function skillPath(...parts) {
   return path.join(rootDir, "skills", ...parts);
 }
 
+function skillText(skillName) {
+  return readFileSync(skillPath(skillName, "SKILL.md"), "utf8");
+}
+
+function checkDocumentMcpContract() {
+  const manageDocuments = skillText("manage-documents");
+  const taskManagement = skillText("task-management");
+  const findDocumentsFullContentAssumptions = [
+    /`?find-documents`?[^.\n]*(?:returns|includes|provides)[^.\n]*(?:full\s+(?:document\s+)?(?:content|body)|document bod(?:y|ies)|`content`)/i,
+    /(?:read|load|extract|summarize)[^.\n]*(?:full\s+)?(?:document\s+)?(?:content|body)[^.\n]*(?:from|using)\s+`?find-documents`?/i,
+    /use\s+`?find-documents`?[^.\n]*(?:to|for)[^.\n]*(?:read|load|extract|summarize)[^.\n]*(?:full\s+)?(?:document\s+)?(?:content|body)/i
+  ];
+
+  check(
+    /find-documents[\s\S]{0,120}metadata plus `excerpt`/.test(manageDocuments),
+    "manage-documents: find-documents metadata/excerpt contract documented",
+    "manage-documents: find-documents must be documented as metadata plus excerpt only"
+  );
+  check(
+    /Use `find-documents`[\s\S]{0,180}Use `get-document`[\s\S]{0,120}full document content/.test(manageDocuments),
+    "manage-documents: get-document required for full content",
+    "manage-documents: must direct agents to use get-document for full document content"
+  );
+  check(
+    /find-documents[\s\S]{0,140}metadata plus `excerpt` only/.test(taskManagement),
+    "task-management: document lookup treats find-documents as metadata/excerpt only",
+    "task-management: document lookup must treat find-documents as metadata/excerpt only"
+  );
+  check(
+    /full task context, call `get-task-details`/.test(taskManagement),
+    "task-management: get-task-details remains the full task context path",
+    "task-management: must continue recommending get-task-details for full task context"
+  );
+
+  for (const skillName of readdirSync(skillPath()).filter(name => !name.startsWith("."))) {
+    const text = skillText(skillName);
+    check(
+      !findDocumentsFullContentAssumptions.some(pattern => pattern.test(text)),
+      `skills/${skillName}: no full-content assumption for find-documents`,
+      `skills/${skillName}: remove instructions that imply find-documents returns full content`
+    );
+  }
+}
+
 console.log("\nChecking root files...");
 for (const required of [
   "plugin.json",
@@ -137,6 +181,9 @@ for (const skillName of skillDirs) {
     );
   }
 }
+
+console.log("\nChecking document MCP contract...");
+checkDocumentMcpContract();
 
 console.log("");
 if (errors > 0) {
