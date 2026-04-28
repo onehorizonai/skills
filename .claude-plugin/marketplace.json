@@ -5,14 +5,14 @@
   },
   "metadata": {
     "description": "Roadmap-first AI development starts here.",
-    "version": "2.3.0"
+    "version": "2.3.1"
   },
   "plugins": [
     {
       "name": "one-horizon",
       "source": ".",
       "description": "Plan what matters, send tasks and initiatives to AI agents, and keep every task, commit, and PR tied back to the roadmap automatically.",
-      "version": "2.3.0",
+      "version": "2.3.1",
       "author": {
         "name": "One Horizon"
       },
