@@ -44,10 +44,10 @@ Turn a rough roadmap idea into a sharp initiative brief, then either create the 
 
 ## Initiative metadata rules
 
-- Pull taxonomy before creation when product, customer, company, release, goal, or component signals are present.
+- Pull taxonomy before creation when product, customer, company, goal, or component signals are present.
 - Apply taxonomy labels when they are clearly present in the discussion and improve routing or reporting.
 - Prefer product labels first when the initiative obviously belongs to a product or product area.
-- Also apply other relevant taxonomy such as goals, releases, components, and company/customer labels when the workspace supports them and the match is clear.
+- Also apply other relevant taxonomy such as goals, components, and company/customer labels when the workspace supports them and the match is clear.
 - Use `list-taxonomy` only after the core scope is stable enough to know what should be tagged.
 - Attach labels only for exact or high-confidence matches.
 - If multiple labels are plausible for the same concept, ask a disambiguation question instead of guessing.

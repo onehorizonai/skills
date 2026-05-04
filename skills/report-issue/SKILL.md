@@ -17,7 +17,7 @@ Turn a rough defect report or product ask into a clean bug or feature-request re
 
 ## Metadata rules
 
-- Use `list-taxonomy` before creation when the affected product, product area, customer, company, segment, release, or component is clear enough to tag.
+- Use `list-taxonomy` before creation when the affected product, product area, customer, company, segment, or component is clear enough to tag.
 - Prefer product labels first.
 - Also attach customer or company labels when the issue is clearly tied to a specific account or customer context.
 - Use `list-taxonomy` only after the issue type and core scope are clear enough to avoid premature tagging.

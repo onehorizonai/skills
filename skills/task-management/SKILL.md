@@ -9,7 +9,7 @@ Handle messy operational requests over One Horizon tasks by choosing the right l
 
 ## One Horizon work model
 
-- Initiative: roadmap-first planned work. Use for work that moves the product plan forward, usually spans multiple steps or days, and should roll up to goals, products, releases, components, or team reporting. Treat initiatives as agent-ready specs for meaningful product work.
+- Initiative: roadmap-first planned work. Use for work that moves the product plan forward, usually spans multiple steps or days, and should roll up to goals, products, companies, components, or team reporting. Treat initiatives as agent-ready specs for meaningful product work.
 - Bug: unplanned defect, regression, or broken behavior that should be tracked as issue intake and worked like a fix stream rather than planned roadmap expansion.
 - Personal task: simple personal follow-up. Use for small, private, owner-level tasks that do not need to show up as roadmap structure for the wider team. A completed implementation slice can also be written back as a personal task linked to an initiative.
 - Ongoing work: recurring owner-driven work without a defined end date, such as code reviews, routine support, or inbox maintenance, when the workspace uses that concept. This is not the same as roadmap work.
@@ -85,7 +85,7 @@ Handle messy operational requests over One Horizon tasks by choosing the right l
 
 ### Taxonomy policy
 
-- Only look up taxonomy when the user asks to tag, categorize, or align work to goals, products, releases, or components.
+- Only look up taxonomy when the user asks to tag, categorize, or align work to goals, products, companies, or components.
 - For new initiatives, use taxonomy only when it affects roadmap placement or reporting.
 - Do not add taxonomy speculatively.
 

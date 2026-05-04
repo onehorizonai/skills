@@ -9,7 +9,7 @@ Create a new personal task or roadmap initiative.
 
 ## Work type boundary
 
-- Initiative: use for roadmap-first planned work that should tie back to product goals, releases, components, or team progress.
+- Initiative: use for roadmap-first planned work that should tie back to product goals, companies, components, or team progress.
 - Personal task: use for simple personal follow-up that only the owner needs to track.
 - Do not use this skill to guess between initiative, bug, ongoing work, and personal task from a vague request. Use `task-management` for that.
 - Do not use personal tasks as a substitute for roadmap work.

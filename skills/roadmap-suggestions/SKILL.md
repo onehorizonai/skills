@@ -22,7 +22,7 @@ Review a One Horizon workspace and suggest how to improve roadmap structure, seq
 2. Call `list-planned-work` with `includeInitiatives: true`.
 3. Call `list-bugs` for active bugs when defect pressure may imply missing roadmap investment.
 4. Call `list-blockers` with `includeInitiatives: true`.
-5. Call `list-taxonomy` when the workspace uses goals, products, releases, or components, or when category-like initiatives may really be taxonomy.
+5. Call `list-taxonomy` when the workspace uses goals, products, companies, or components, or when category-like initiatives may really be taxonomy.
 6. If a recommendation depends on a specific item, call `get-task-details` before suggesting a reframe.
 7. Use `search-tasks` when you need to confirm a repeated theme across the workspace.
 
