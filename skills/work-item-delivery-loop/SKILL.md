@@ -1,6 +1,6 @@
 ---
 name: work-item-delivery-loop
-description: Run the full loop from planned work or reported bugs to shipped work and write-back in One Horizon. Use for prompts like "what do I have planned", "pick this up and implement it", "I found a problem", "fix all bugs assigned to me", "implement HubSpot lead sync", and "write this back to One Horizon". Requires One Horizon MCP.
+description: 'Run the full loop from planned work or reported bugs to shipped work and write-back in One Horizon. Use for prompts like "what do I have planned", "pick this up and implement it", "I found a problem", "fix all bugs assigned to me", "implement HubSpot lead sync", and "write this back to One Horizon". Requires One Horizon MCP.'
 ---
 
 # Work Item Delivery Loop
