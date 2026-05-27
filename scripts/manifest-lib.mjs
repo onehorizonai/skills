@@ -39,14 +39,16 @@ export function buildCodexManifest(base) {
       ],
       brandColor: "#101011",
       composerIcon: "./assets/one-horizon-codex.svg",
-      logo: "./assets/one-horizon-codex.svg"
+      logo: "./assets/one-horizon-codex.svg",
+      screenshots: ["./assets/one-horizon-large.svg"]
     }
   };
 }
 
-export function buildMarketplace(base, source) {
+export function buildMarketplace(base, source, options = {}) {
   return {
     name: "onehorizonai-skills",
+    ...(options.strict ? { strict: true } : {}),
     owner: {
       name: base.author.name
     },

@@ -16,7 +16,7 @@ const base = loadBaseManifest(rootDir);
 const files = [
   [".cursor-plugin/plugin.json", buildCursorManifest(base)],
   [".codex-plugin/plugin.json", buildCodexManifest(base)],
-  [".claude-plugin/marketplace.json", buildMarketplace(base, ".")],
+  [".claude-plugin/marketplace.json", buildMarketplace(base, ".", { strict: true })],
   [".github/plugin/marketplace.json", buildMarketplace(base, ".")],
   [".agents/plugins/marketplace.json", buildCodexLocalMarketplace(base)]
 ];

@@ -41,6 +41,9 @@
     ],
     "brandColor": "#101011",
     "composerIcon": "./assets/one-horizon-codex.svg",
-    "logo": "./assets/one-horizon-codex.svg"
+    "logo": "./assets/one-horizon-codex.svg",
+    "screenshots": [
+      "./assets/one-horizon-large.svg"
+    ]
   }
 }

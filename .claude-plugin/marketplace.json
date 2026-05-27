@@ -1,5 +1,6 @@
 {
   "name": "onehorizonai-skills",
+  "strict": true,
   "owner": {
     "name": "One Horizon"
   },
