@@ -1,6 +1,6 @@
 # Agent Guide
 
-This repo has one plugin. `skills/` is the only source of truth for skills. App-specific manifests live at the repo root and are built from `plugin.json`. Don't edit generated files directly.
+This repo contains one plugin. `skills/` is the source of truth for skill instructions. App-specific manifests live at the repo root and are generated from `plugin.json`. Do not edit generated files directly.
 
 ## Structure
 
@@ -36,13 +36,13 @@ Each skill lives at `skills/{skill-name}/SKILL.md` with frontmatter and agent in
 
 ```markdown
 ---
-name: {skill-name}          # Matches the folder name — no plugin prefix
-description: {One sentence. Include trigger phrases like "prep my standup", "list blockers".}
+name: {skill-name}          # Matches the folder name; no plugin prefix
+description: {One sentence with trigger phrases like "prep my standup" or "list blockers".}
 ---
 
 # Skill title
 
-What this skill does and when to use it.
+What this skill does, when to use it, and which nearby skill owns adjacent work.
 
 ## Instructions
 
@@ -51,10 +51,10 @@ Step-by-step instructions for the agent to follow when this skill is invoked.
 
 ### Rules
 
-- `name` must match the folder name exactly — no plugin namespace prefix
+- `name` must match the folder name exactly; do not add a plugin namespace prefix
 - The slash command is built automatically: `/{plugin-name}:{skill-name}`
-- Keep `SKILL.md` short — the full file loads into context on every invocation
-- `description` controls when the agent picks up the skill — write it with trigger phrases
+- Keep `SKILL.md` short because the full file loads into context on every invocation
+- `description` controls when the agent picks up the skill; write it with concrete trigger phrases
 - Edit skills in `skills/` only
 - Don't edit generated app manifests unless you're also updating `scripts/build-manifests.mjs`
 
@@ -66,7 +66,7 @@ After editing `plugin.json` or marketplace metadata logic:
 node ./scripts/build-manifests.mjs
 ```
 
-Regenerates `.cursor-plugin/plugin.json`, `.codex-plugin/plugin.json`, and marketplace files from the root manifest.
+This regenerates `.cursor-plugin/plugin.json`, `.codex-plugin/plugin.json`, and marketplace files from the root manifest.
 
 ### Validate
 
@@ -101,4 +101,4 @@ node ./scripts/validate-links.mjs    # Local refs and user-facing URLs
 }
 ```
 
-`name` sets the skill namespace. A skill in folder `my-skill` inside plugin `my-plugin` becomes `/my-plugin:my-skill`. `plugin.json` is canonical — keep generated manifests aligned with it.
+`name` sets the skill namespace. A skill in folder `my-skill` inside plugin `my-plugin` becomes `/my-plugin:my-skill`. `plugin.json` is canonical, so keep generated manifests aligned with it.

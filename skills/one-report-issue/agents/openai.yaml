@@ -1,0 +1,6 @@
+interface:
+  display_name: "One Horizon Report Issue"
+  short_description: "One Horizon Report Issue skill"
+  icon_small: "./assets/logo.svg"
+  icon_large: "./assets/logo.svg"
+  default_prompt: "Use $one-report-issue only to log a new One Horizon bug or feature request."
