@@ -101,8 +101,12 @@ function checkDocumentMcpContract() {
 console.log("\nChecking root files...");
 for (const required of [
   "plugin.json",
+  "LICENSE",
+  "SECURITY.md",
+  ".codexignore",
   ".mcp.json",
   "copilot-hooks.json",
+  ".github/dependabot.yml",
   ".cursor-plugin/plugin.json",
   ".codex-plugin/plugin.json",
   ".claude-plugin/marketplace.json",
@@ -131,7 +135,7 @@ console.log("\nChecking generated manifests...");
 const generated = [
   [".cursor-plugin/plugin.json", buildCursorManifest(base)],
   [".codex-plugin/plugin.json", buildCodexManifest(base)],
-  [".claude-plugin/marketplace.json", buildMarketplace(base, ".")],
+  [".claude-plugin/marketplace.json", buildMarketplace(base, ".", { strict: true })],
   [".github/plugin/marketplace.json", buildMarketplace(base, ".")],
   [".agents/plugins/marketplace.json", buildCodexLocalMarketplace(base)]
 ];

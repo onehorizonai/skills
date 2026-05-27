@@ -68,6 +68,11 @@ for (const relativePath of ["plugin.json", ".cursor-plugin/plugin.json", ".codex
   if (manifest.interface?.logo) {
     checkLocalRef(filePath, manifest.interface.logo, relative => resolveFromRoot(relative));
   }
+  const screenshots = manifest.interface?.screenshots;
+  const screenshotPaths = Array.isArray(screenshots) ? screenshots : screenshots ? [screenshots] : [];
+  for (const screenshot of screenshotPaths) {
+    checkLocalRef(filePath, screenshot, relative => resolveFromRoot(relative));
+  }
 }
 
 console.log("\nChecking marketplace sources...");

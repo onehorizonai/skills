@@ -1,0 +1,11 @@
+.git/
+.DS_Store
+.env
+.env.*
+node_modules/
+coverage/
+dist/
+.next/
+.turbo/
+.venv/
+custom-gpt-package/
