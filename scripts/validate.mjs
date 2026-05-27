@@ -59,8 +59,8 @@ function skillText(skillName) {
 }
 
 function checkDocumentMcpContract() {
-  const manageDocuments = skillText("manage-documents");
-  const taskManagement = skillText("task-management");
+  const manageDocuments = skillText("one-manage-documents");
+  const taskManagement = skillText("one-task-management");
   const findDocumentsFullContentAssumptions = [
     /`?find-documents`?[^.\n]*(?:returns|includes|provides)[^.\n]*(?:full\s+(?:document\s+)?(?:content|body)|document bod(?:y|ies)|`content`)/i,
     /(?:read|load|extract|summarize)[^.\n]*(?:full\s+)?(?:document\s+)?(?:content|body)[^.\n]*(?:from|using)\s+`?find-documents`?/i,
@@ -69,23 +69,23 @@ function checkDocumentMcpContract() {
 
   check(
     /find-documents[\s\S]{0,120}metadata plus `excerpt`/.test(manageDocuments),
-    "manage-documents: find-documents metadata/excerpt contract documented",
-    "manage-documents: find-documents must be documented as metadata plus excerpt only"
+    "one-manage-documents: find-documents metadata/excerpt contract documented",
+    "one-manage-documents: find-documents must be documented as metadata plus excerpt only"
   );
   check(
     /Use `find-documents`[\s\S]{0,180}Use `get-document`[\s\S]{0,120}full document content/.test(manageDocuments),
-    "manage-documents: get-document required for full content",
-    "manage-documents: must direct agents to use get-document for full document content"
+    "one-manage-documents: get-document required for full content",
+    "one-manage-documents: must direct agents to use get-document for full document content"
   );
   check(
     /find-documents[\s\S]{0,140}metadata plus `excerpt` only/.test(taskManagement),
-    "task-management: document lookup treats find-documents as metadata/excerpt only",
-    "task-management: document lookup must treat find-documents as metadata/excerpt only"
+    "one-task-management: document lookup treats find-documents as metadata/excerpt only",
+    "one-task-management: document lookup must treat find-documents as metadata/excerpt only"
   );
   check(
     /full task context, call `get-task-details`/.test(taskManagement),
-    "task-management: get-task-details remains the full task context path",
-    "task-management: must continue recommending get-task-details for full task context"
+    "one-task-management: get-task-details remains the full task context path",
+    "one-task-management: must continue recommending get-task-details for full task context"
   );
 
   for (const skillName of readdirSync(skillPath()).filter(name => !name.startsWith("."))) {

@@ -1,12 +1,12 @@
 # One Horizon Agent Skills
 
-Lets Claude Code, Cursor, and Codex read your planned work, bugs, and blockers from One Horizon and write updates back without leaving the editor.
+One Horizon skills let Claude Code, Cursor, and Codex read planned work, bugs, and blockers from your workspace, then write progress back after work is done.
 
 > Requires a One Horizon account. [Create one here](https://onehorizon.ai/app).
 
 ## Structure
 
-All app-specific manifests and marketplace files are built from `plugin.json`. Skills live in `skills/` — there's no separate tree per app.
+`plugin.json` is the canonical manifest. App-specific manifests and marketplace files are generated from it. Skills live in `skills/`; there is no separate tree per app.
 
 ```text
 .agents/plugins/marketplace.json   # Local Codex marketplace
@@ -41,7 +41,7 @@ Use the repo root as the plugin root. The local development marketplace is at [`
 
 Generated Cursor manifest: [`./.cursor-plugin/plugin.json`](./.cursor-plugin/plugin.json).
 
-## Try these
+## Example prompts
 
 - "What do I have planned?"
 - "Review my roadmap and suggest changes"
@@ -51,19 +51,19 @@ Generated Cursor manifest: [`./.cursor-plugin/plugin.json`](./.cursor-plugin/plu
 
 ## Development
 
-After editing `plugin.json`, rebuild generated manifests:
+After editing `plugin.json`, rebuild the generated manifests:
 
 ```bash
 node ./scripts/build-manifests.mjs
 ```
 
-Validate manifests and skills:
+Validate manifests and skill metadata:
 
 ```bash
 node ./scripts/validate.mjs
 ```
 
-Validate local refs and external URLs:
+Validate local references and external URLs:
 
 ```bash
 node ./scripts/validate-links.mjs
