@@ -1,6 +1,6 @@
 ---
 name: one-report-issue
-description: Create a One Horizon bug or feature request when the user wants new issue intake and the work type is clear. Prefer one-task-management for mixed or ambiguous operational requests. Requires One Horizon MCP.
+description: Create a One Horizon bug or feature request when the user wants new issue intake and the work type is clear. Produces structured reports with observable acceptance criteria and regression constraints optimized for human review and AI execution. Prefer one-task-management for mixed or ambiguous operational requests. Requires One Horizon MCP.
 ---
 
 # Report Issue
@@ -14,6 +14,7 @@ Turn a rough defect report or product ask into a clear bug or feature request.
 - Keep business context brief and secondary unless it materially changes priority.
 - Default feature requests to feature-level scoping, not broad roadmap planning.
 - Capture product, customer, company, or component signals in the markdown description when they matter.
+- For each out-of-scope item, include a brief reason so the boundary holds when read without context.
 
 ## Metadata rules
 
@@ -60,12 +61,14 @@ For bugs:
 - where it happens
 - expected vs actual behavior
 - enough repro detail to make the report actionable, or a clear note that repro is still unclear
+- at least one way to verify the fix works (the repro steps should pass after fix)
 
 For feature requests:
 - which user or workflow this improves
 - what should change
 - what is in scope
 - what is out of scope
+- at least one observable success condition the user can verify
 
 Do not keep asking for business context once the issue is actionable. Put remaining uncertainty in `### Open questions`.
 
@@ -89,7 +92,10 @@ Ask only the missing questions, one at a time:
 - What should happen?
 - What actually happens?
 - How do we reproduce it?
+- Is this consistent or intermittent — and did it recently start happening, or has it always been this way?
+- What environment, browser, or app version is this happening in?
 - Who is affected, and how broadly?
+- What must not break as a result of fixing this? (existing workflows, adjacent features, integrations)
 - Is this tied to a specific customer, company, or segment we should mention?
 - Is there a workaround?
 - What is explicitly known to be out of scope for this report?
@@ -118,13 +124,21 @@ In 2-4 sentences, summarize what is broken, who it affects, the main repro condi
 
 ### Actual behavior
 - What happens instead?
+- Include environment, browser, or app version if relevant.
+- Note whether it is consistent or intermittent, and whether it is a regression.
 
 ### Reproduction
-- Clear repro steps or triggering conditions.
+- Numbered repro steps or triggering conditions.
+- **Verified when:** state what a fixer should be able to do or see that confirms the bug is resolved (e.g., "following these steps no longer produces the error modal").
+
+### Invariants
+- What must not break as a result of fixing this?
+- List adjacent workflows, integrations, or behaviors that should remain unaffected.
+- Omit this section if nothing specific needs protecting.
 
 ### Known scope / boundaries
 - What is affected?
-- What is explicitly not part of this bug as currently understood?
+- What is explicitly not part of this bug as currently understood? For each item, add a short reason: `- Item — excluded because <reason>`.
 
 ### Evidence, workaround, and open questions
 - Links, screenshots, logs, or customer reports.
@@ -166,6 +180,7 @@ Ask only the missing questions, one at a time:
 - What is definitely in scope?
 - What is explicitly out of scope?
 - What is the smallest useful version?
+- What should a user or tester be able to do or see that proves this shipped successfully?
 - Is this tied to a specific customer, company, or segment we should mention?
 - Is there a short background note worth capturing?
 
@@ -188,18 +203,20 @@ In 2-4 sentences, summarize what is being requested, which user or workflow it i
 ### Feature / use case sections
 - Use concrete section titles such as `### Add Login with Google` or `### Export filtered results`.
 - Under each section, write a short paragraph covering who it is for, what changes, and why it matters to that workflow.
+- Name the screen, entry point, or surface the change lives on when that helps locate the scope (e.g., "on the Billing settings page" or "in the onboarding email flow").
 
 ### In scope
 - What is included in this request?
 - Which surfaces, flows, or constraints matter?
 
 ### Out of scope
-- What is explicitly not included?
+- What is explicitly not included? For each item, add a short reason: `- Item — excluded because <reason>`.
 - What adjacent ideas should not get pulled into this request?
 
-### Success
-- How will we know this request was fulfilled well enough?
-- Prefer user and workflow outcomes over business framing.
+### Acceptance criteria
+- Write observable, user-verifiable statements. Each criterion describes what a user can do or see after this ships.
+- Avoid metrics and aspirational outcomes. Prefer: "User can export filtered results as CSV from the Reports page" over "Improve export adoption".
+- Include one end-to-end verification step that proves the core use case works.
 
 ### Open questions
 - What still needs a decision or validation?

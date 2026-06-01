@@ -1,6 +1,6 @@
 ---
 name: one-initiative-brief
-description: Draft a structured initiative brief for roadmap-first planned work in One Horizon. Use when asked to "write an initiative", "draft an initiative brief", "plan this initiative", "turn this idea into an initiative", or "help me scope this roadmap work". This skill produces a design doc, not code. Requires One Horizon MCP.
+description: Draft a structured initiative brief for roadmap-first planned work in One Horizon. Use when asked to "write an initiative", "draft an initiative brief", "plan this initiative", "turn this idea into an initiative", or "help me scope this roadmap work". This skill produces a product design doc with observable acceptance criteria optimized for both human review and AI execution. Requires One Horizon MCP.
 ---
 
 # Initiative Brief
@@ -22,6 +22,9 @@ Turn a rough roadmap idea into a clear initiative brief, then either create the 
 - Stay focused on what the initiative should do from a product perspective, not how a developer should implement it.
 - Default to feature-level scoping unless the user clearly describes a broader product or company initiative.
 - Treat business goals as supporting context, not the backbone of the brief.
+- Write acceptance criteria as observable, user-verifiable statements: what the user can do or see after this ships.
+- Name user-facing surfaces (screen names, entry points, navigation paths) in feature sections so the scope is spatially grounded.
+- For each out-of-scope item, include a brief reason so the boundary holds when read without context.
 
 ## Use when
 
@@ -94,6 +97,7 @@ Stop asking discovery questions and draft the brief once you know:
 - what is in scope
 - what is out of scope
 - which product this belongs to, if that context exists
+- at least one observable success condition the user can verify
 
 Do not keep probing for strategy context once those fields are clear. Put remaining uncertainty in `### Open questions`.
 
@@ -110,6 +114,9 @@ Do not keep probing for strategy context once those fields are clear. Put remain
 - When referencing related initiatives, bugs, or other work items, use a URL or markdown link.
 - Do not force tables or diagrams into every brief. Use them only when they improve clarity.
 - If Mermaid is used, keep the syntax simple and readable.
+- In `### Acceptance criteria`, write observable user-facing statements ("user can do X on the Y screen"), not metrics or aspirational outcomes.
+- In `### Out of scope`, add a short reason after each item so the boundary is self-contained.
+- Add `### Invariants` when there are behaviors or contracts that must not break as a result of this initiative.
 
 ## Response posture
 
@@ -139,6 +146,7 @@ Do not keep probing for strategy context once those fields are clear. Put remain
    - What is definitely in scope for this phase?
    - What is explicitly out of scope?
    - What is the smallest version that is still useful?
+   - What should a user or tester be able to do or see that proves this shipped successfully?
    - Is there a business reason or goal we should capture in one short note?
 7. If the product area or customer/account context is implied but not explicit, ask only the missing taxonomy questions:
    - Which product or product area is this for?
@@ -212,6 +220,7 @@ In 2-4 sentences, summarize what this initiative is, which user or workflow it i
 - Break the initiative into concrete feature or use case sections when that makes the scope clearer.
 - Use descriptive section titles such as `### Add Login with Google` or `### Migrate admin-only login flow`.
 - Under each section, write a short paragraph covering who it is for, what changes, and why it matters to that workflow.
+- Name the screen, entry point, or surface the change lives on when that helps locate the scope (e.g., "on the Billing settings page" or "in the onboarding email flow").
 - If helpful, include a brief user-story sentence in the paragraph, but do not use a literal `### User story` heading.
 
 ### In scope
@@ -220,13 +229,18 @@ In 2-4 sentences, summarize what this initiative is, which user or workflow it i
 - What constraints matter for this phase?
 
 ### Out of scope
-- What is explicitly not included?
+- What is explicitly not included? For each item, add a short reason: `- Item — excluded because <reason>`.
 - What related ideas should not get pulled into this initiative?
 
-### Success
-- How will we know this worked?
-- What user signals, adoption signals, or qualitative outcomes should improve?
-- Only include business metrics if they are clearly relevant.
+### Acceptance criteria
+- Write observable, user-verifiable statements. Each criterion should describe what a user can do or see after this ships.
+- Avoid metrics and aspirational outcomes. Prefer: "User can log in via Google without re-entering credentials" over "Improve login conversion".
+- Include one end-to-end verification step that proves the core use case works.
+
+### Invariants
+- What must remain true throughout this initiative?
+- What existing behaviors or contracts must not break?
+- Omit this section if nothing specific needs protecting.
 
 ### Assumptions, risks, and open questions
 - What are we assuming?
