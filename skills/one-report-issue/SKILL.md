@@ -1,6 +1,6 @@
 ---
 name: one-report-issue
-description: Create a One Horizon bug or feature request when the user wants new issue intake and the work type is clear. Produces structured reports with observable acceptance criteria and regression constraints optimized for human review and AI execution. Prefer one-task-management for mixed or ambiguous operational requests. Requires One Horizon MCP.
+description: Create a One Horizon bug or feature request when work type is clear. Use for "log a bug", "file a feature request", or "report this issue". Prefer one-task-management for ambiguous requests. Requires One Horizon MCP.
 ---
 
 # Report Issue
@@ -9,153 +9,127 @@ Turn a rough defect report or product ask into a clear bug or feature request.
 
 ## Core rule
 
-- Understand the user-visible problem or request before proposing a fix.
-- Capture concrete behavior, affected workflow, and scope boundaries. Do not jump straight to implementation.
-- Keep business context brief and secondary unless it materially changes priority.
-- Default feature requests to feature-level scoping, not broad roadmap planning.
-- Capture product, customer, company, or component signals in the markdown description when they matter.
-- For each out-of-scope item, include a brief reason so the boundary holds when read without context.
+- Understand the user-visible problem before proposing a fix
+- Capture concrete behavior, workflow, and scope boundaries — not implementation
+- Keep business context brief unless it changes priority
+- Default feature requests to feature-level scoping, not roadmap planning
+- Put product, customer, company, or component signals in the markdown description when they matter
+- For each out-of-scope item, add a short reason so the boundary holds without chat context
 
-## Metadata rules
+## Metadata
 
-- `report-bug` and `report-feature-request` do not accept taxonomy label IDs.
-- Taxonomy tagging is currently supported for initiatives through `create-initiative` and `update-initiative`, not bug or feature request report tools.
-- If taxonomy context is important for a bug or feature request, include the clear product, company, customer, component, or segment in the markdown description.
+- `report-bug` and `report-feature-request` do not accept taxonomy label IDs
+- Taxonomy tagging works for initiatives via `create-initiative` / `update-initiative` only
+- If taxonomy context matters, name product, company, customer, component, or segment in the markdown description
 
-## Use when
+## Boundaries
 
-- The user wants to log a new bug.
-- The user wants to log a new feature request.
-- The work type is already clear enough to avoid a broader triage flow.
+Use when:
+- logging a new bug or feature request
+- work type is clear enough to skip broader triage
 
-## Do not use when
+Do not use when:
+- the request should be a roadmap initiative, personal follow-up, or operational task
+- the user wants to triage, assign, or update existing work
 
-- The request should become a roadmap initiative instead of a feature request.
-- The request is a personal follow-up or operational task.
-- The user wants to triage, assign, or update existing work rather than create a new item.
+## Conversation
 
-## Conversation rules
-
-- Ask one question at a time and stop after each answer.
-- Reuse what the user already said. Skip answered questions.
-- If the user says "just log it" or gives enough detail up front, fast-track the intake and create the bug or feature request.
-- Do not over-rotate on business goals. A short background note is usually enough.
+- Ask one question at a time; stop after each answer
+- Reuse what the user already said; skip answered questions
+- If the user says "just log it" or gives enough detail, fast-track and create the item
+- A short background note is enough — do not keep digging for business goals
 
 ## Execution order
 
-Follow this sequence to keep the interaction predictable:
+1. Confirm bug vs feature request
+2. Gather missing minimum context
+3. Check for duplicates or overlapping work
+4. Write the markdown description
+5. Confirm create fields are ready
+6. Create the item
 
-1. Confirm whether this is a bug or a feature request.
-2. Gather only the missing minimum context for that work type.
-3. Check for duplicates or overlapping work.
-4. Write the markdown description.
-5. Confirm the minimum create fields are ready.
-6. Create the bug or feature request.
+## Minimum intake
 
-## Minimum viable intake threshold
+Stop asking once you have the essentials. Put remaining uncertainty in `### Open questions`.
 
-Stop asking questions and create the item once you know the essentials.
-
-For bugs:
+Bugs:
 - what is broken
 - where it happens
 - expected vs actual behavior
-- enough repro detail to make the report actionable, or a clear note that repro is still unclear
-- at least one way to verify the fix works (the repro steps should pass after fix)
+- enough repro detail to act on, or a note that repro is unclear
+- at least one way to verify the fix
 
-For feature requests:
+Feature requests:
 - which user or workflow this improves
 - what should change
-- what is in scope
-- what is out of scope
+- in scope / out of scope
 - at least one observable success condition the user can verify
 
-Do not keep asking for business context once the issue is actionable. Put remaining uncertainty in `### Open questions`.
+## Output
 
-## Output guidance
-
-- Write a short markdown description before creating it.
-- Start with a 1-paragraph TLDR.
-- Prefer `###` headings for the main sections.
-- Use clear feature or workflow language in titles and descriptions.
-- If related issues or initiatives are relevant, reference them as markdown links when available.
+- Write markdown before creating the item
+- Start with a 1-paragraph TLDR; prefer `###` headings
+- Reference related issues or initiatives as markdown links when available
 
 ## Bug intake
 
-### What to learn
-
-Ask only the missing questions, one at a time:
+Ask only missing questions, one at a time:
 
 - What is broken for the user?
 - Which workflow, page, or feature is affected?
-- Which product or product area is this in?
-- What should happen?
-- What actually happens?
-- How do we reproduce it?
-- Is this consistent or intermittent — and did it recently start happening, or has it always been this way?
-- What environment, browser, or app version is this happening in?
+- Which product or product area?
+- Expected vs actual behavior?
+- How to reproduce?
+- Consistent or intermittent? Recent regression?
+- Environment, browser, or app version?
 - Who is affected, and how broadly?
-- What must not break as a result of fixing this? (existing workflows, adjacent features, integrations)
-- Is this tied to a specific customer, company, or segment we should mention?
-- Is there a workaround?
-- What is explicitly known to be out of scope for this report?
+- What must not break when fixing this?
+- Tied to a specific customer, company, or segment?
+- Workaround? Anything explicitly out of scope?
 
 ### Duplicate check
 
-1. Extract 3-5 meaningful keywords from the defect.
-2. Use `search-tasks` to look for likely matching existing work before creating a new bug.
-3. If a clear duplicate exists, say so and ask whether to add context there instead of creating a new bug.
+1. Extract 3-5 keywords from the defect
+2. `search-tasks` for likely matches before creating
+3. If a clear duplicate exists, ask whether to add context there instead
 
 ### Description format
 
 ```markdown
-Short TLDR paragraph:
-In 2-4 sentences, summarize what is broken, who it affects, the main repro condition, and the current impact.
+TLDR (2-4 sentences): what is broken, who it affects, main repro condition, current impact
 
 ### Background
-- In one short paragraph: what changed or what is happening now, and why this matters.
+One short paragraph on what changed and why it matters
 
 ### Affected flow / use case
-- Which user or workflow is hitting the issue?
-- Where in the product does it happen?
+- Which user or workflow?
+- Where in the product?
 
 ### Expected behavior
-- What should happen?
+What should happen?
 
 ### Actual behavior
-- What happens instead?
-- Include environment, browser, or app version if relevant.
-- Note whether it is consistent or intermittent, and whether it is a regression.
+What happens instead? Note environment, consistency, regression
 
 ### Reproduction
-- Numbered repro steps or triggering conditions.
-- **Verified when:** state what a fixer should be able to do or see that confirms the bug is resolved (e.g., "following these steps no longer produces the error modal").
+Numbered repro steps
+**Verified when:** what confirms the bug is resolved
 
 ### Invariants
-- What must not break as a result of fixing this?
-- List adjacent workflows, integrations, or behaviors that should remain unaffected.
-- Omit this section if nothing specific needs protecting.
+What must not break? Omit if nothing specific
 
 ### Known scope / boundaries
-- What is affected?
-- What is explicitly not part of this bug as currently understood? For each item, add a short reason: `- Item — excluded because <reason>`.
+What is affected? Out of scope: `- Item — excluded because <reason>`
 
 ### Evidence, workaround, and open questions
-- Links, screenshots, logs, or customer reports.
-- Any workaround if known.
-- Anything still unconfirmed.
+Links, screenshots, logs, workarounds, unconfirmed details
 ```
 
-### Create step
+### Create
 
-1. Resolve team or assignee metadata if needed.
-2. Include clear product, customer, company, component, or segment context in the markdown description when relevant.
-3. Before creation, confirm the minimum create fields are ready:
-   - title
-   - markdown description
-   - workspace
-   - any clear team/assignee metadata
-4. Call `report-bug` with a clear symptom-based title and the markdown description.
+1. Resolve team/assignee metadata if needed
+2. Confirm: title, markdown description, workspace, team/assignee metadata
+3. `report-bug` with symptom-based title
 
 ```json
 report-bug({
@@ -169,69 +143,53 @@ report-bug({
 
 ## Feature request intake
 
-### What to learn
+Ask only missing questions, one at a time:
 
-Ask only the missing questions, one at a time:
-
-- What user story or workflow are we trying to improve?
+- User story or workflow to improve?
 - Who is this for in this phase?
-- Which product or product area is this for?
+- Which product or product area?
 - What should they be able to do?
-- What is definitely in scope?
-- What is explicitly out of scope?
-- What is the smallest useful version?
-- What should a user or tester be able to do or see that proves this shipped successfully?
-- Is this tied to a specific customer, company, or segment we should mention?
-- Is there a short background note worth capturing?
+- In scope / out of scope?
+- Smallest useful version?
+- Observable proof this shipped successfully?
+- Tied to a customer, company, or segment?
+- Short background worth capturing?
 
 ### Related work check
 
-1. Extract 3-5 meaningful keywords from the request.
-2. Use `search-tasks` to look for overlapping feature requests or initiatives.
-3. If strong overlap exists, surface it and ask whether to add context there instead of creating a new request.
+1. Extract 3-5 keywords
+2. `search-tasks` for overlapping feature requests or initiatives
+3. If strong overlap exists, ask whether to add context there instead
 
 ### Description format
 
 ```markdown
-Short TLDR paragraph:
-In 2-4 sentences, summarize what is being requested, which user or workflow it improves, what this request includes, and the main boundary or constraint.
+TLDR (2-4 sentences): request, user/workflow, scope, main boundary
 
 ### Background
-- In one short paragraph: what is missing today, why this matters now, and what happens if nothing changes.
-- If there is a business reason, keep it brief and secondary.
+What is missing today, why now, what happens if nothing changes. Business reason brief and secondary.
 
 ### Feature / use case sections
-- Use concrete section titles such as `### Add Login with Google` or `### Export filtered results`.
-- Under each section, write a short paragraph covering who it is for, what changes, and why it matters to that workflow.
-- Name the screen, entry point, or surface the change lives on when that helps locate the scope (e.g., "on the Billing settings page" or "in the onboarding email flow").
+Concrete titles like `### Add Login with Google`. Short paragraph per section: who, what changes, why. Name screen or entry point when it helps locate scope.
 
 ### In scope
-- What is included in this request?
-- Which surfaces, flows, or constraints matter?
+Included surfaces, flows, constraints
 
 ### Out of scope
-- What is explicitly not included? For each item, add a short reason: `- Item — excluded because <reason>`.
-- What adjacent ideas should not get pulled into this request?
+`- Item — excluded because <reason>`. Adjacent ideas not pulled in.
 
 ### Acceptance criteria
-- Write observable, user-verifiable statements. Each criterion describes what a user can do or see after this ships.
-- Avoid metrics and aspirational outcomes. Prefer: "User can export filtered results as CSV from the Reports page" over "Improve export adoption".
-- Include one end-to-end verification step that proves the core use case works.
+Observable user-verifiable statements — not metrics. One end-to-end verification step.
 
 ### Open questions
-- What still needs a decision or validation?
+Decisions or validation still needed
 ```
 
-### Create step
+### Create
 
-1. Resolve team or assignee metadata if needed.
-2. Include clear product, customer, company, component, or segment context in the markdown description when relevant.
-3. Before creation, confirm the minimum create fields are ready:
-   - title
-   - markdown description
-   - workspace
-   - any clear team/assignee metadata
-4. Call `report-feature-request` with a capability-based title and the markdown description.
+1. Resolve team/assignee metadata if needed
+2. Confirm: title, markdown description, workspace, team/assignee metadata
+3. `report-feature-request` with capability-based title
 
 ```json
 report-feature-request({

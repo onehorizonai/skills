@@ -1,195 +1,141 @@
 ---
 name: one-initiative-brief
-description: Draft a structured initiative brief for roadmap-first planned work in One Horizon. Use when asked to "write an initiative", "draft an initiative brief", "plan this initiative", "turn this idea into an initiative", or "help me scope this roadmap work". This skill produces a product design doc with observable acceptance criteria optimized for both human review and AI execution. Requires One Horizon MCP.
+description: Draft a structured initiative brief for roadmap-first planned work in One Horizon. Use for "write an initiative", "draft an initiative brief", "plan this initiative", or "scope this roadmap work". Requires One Horizon MCP.
 ---
 
 # Initiative Brief
 
-Turn a rough roadmap idea into a clear initiative brief, then either create the initiative in One Horizon or finalize the draft on an initiative that already exists.
+Turn a rough roadmap idea into a clear initiative brief, then create it or finalize an existing draft.
 
 ## Core rule
 
-- Understand the problem before proposing solutions.
-- Produce a design doc, not code.
-- Decide the mode early and keep it stable through the conversation:
-  - `new initiative`: the initiative does not exist yet, so the flow ends in create
-  - `existing initiative draft`: the initiative already exists, so the flow ends in finalize/update, not create
-- Write the brief in markdown. Use tables and Mermaid diagrams when they make the design clearer.
-- Preserve all existing media already present in the current canonical markdown, including URL-backed images, videos, and embeds.
-- Treat existing media markdown as canonical document content, including patterns such as `![alt](https://...)`, `[video](https://...#one-video=1)`, `[youtube](https://...#one-youtube=1)`, and `[figma](https://...#one-figma=1)`.
-- Preserve each existing media source URL and marker exactly. Do not remove, replace, reposition, re-host, or normalize an existing media item unless the user explicitly asks to change that specific item.
-- When editing an existing initiative description, use `patch-document` with the initiative `taskId`; the server will resolve or create the linked content document automatically. Use `update-initiative` only for metadata.
-- Stay focused on what the initiative should do from a product perspective, not how a developer should implement it.
-- Default to feature-level scoping unless the user clearly describes a broader product or company initiative.
-- Treat business goals as supporting context, not the backbone of the brief.
-- Write acceptance criteria as observable, user-verifiable statements: what the user can do or see after this ships.
-- Name user-facing surfaces (screen names, entry points, navigation paths) in feature sections so the scope is spatially grounded.
-- For each out-of-scope item, include a brief reason so the boundary holds when read without context.
+- Understand the problem before proposing solutions; produce a design doc, not code
+- Decide mode early and keep it stable:
+  - `new initiative` → flow ends in create
+  - `existing initiative draft` → flow ends in finalize/update, not create
+- Write in markdown; use tables or Mermaid only when they clarify the design
+- Preserve existing media in canonical markdown exactly (`![alt](url)`, `[video](url#one-video=1)`, `[youtube](url#one-youtube=1)`, `[figma](url#one-figma=1)`) — do not remove, replace, or normalize unless the user asks
+- Edit existing descriptions with `patch-document` + initiative `taskId`; use `update-initiative` for metadata only
+- Product perspective only — not implementation, engineering tasks, or estimates
+- Default to feature-level scoping unless the user describes broader product/company work
+- Business goals are supporting context, not the backbone
+- Acceptance criteria: observable, user-verifiable ("user can do X on Y screen")
+- Name user-facing surfaces in feature sections
+- Out-of-scope items need a short reason so boundaries hold without chat context
 
-## Use when
+## Boundaries
 
-- The user is shaping roadmap-first planned work.
-- The initiative is still fuzzy and needs better background, user story, scope, non-goals, risk, or rollout clarity.
-- The user needs a brief others can review, align on, and execute from.
+Use when:
+- shaping roadmap-first planned work
+- initiative needs background, scope, non-goals, risk, or rollout clarity
+- user needs a brief others can review and execute from
 
-## Do not use when
+Do not use when:
+- brief is complete and user only wants the record created
+- request is a bug, ongoing work, or Todo
+- user wants a status update, not a new brief
 
-- The user already has a complete initiative brief and just wants the record created.
-- The request is really a bug, ongoing work, or a small Todo.
-- The user wants an initiative status update rather than a new brief.
+Other skills:
+- `one-create-task` — initiative already clear enough to create directly
+- `one-task-management` — operational lookup, assignment, tagging outside this flow
+- `one-initiative-summary` — reporting on existing initiatives
 
-## Relationship to other skills
+## Metadata
 
-- Use `one-initiative-brief` to diagnose, shape, and draft new roadmap work.
-- Use `one-create-task` only when the initiative is already clear enough to create directly.
-- Use `one-task-management` for operational task lookup, assignment, tagging, or direct creation outside this drafting flow.
-- Use `one-initiative-summary` for reporting on existing initiatives, not writing new ones.
+- Pull taxonomy before creation when product, customer, company, goal, or component signals exist
+- Prefer product labels first; attach goals, components, company/customer labels on high-confidence matches only
+- `list-taxonomy` only after scope is stable
+- Multiple plausible labels → ask, don't guess
+- Clear parent roadmap effort → set `parentInitiativeId`
+- Owner/parent in structured metadata — not `Owner:` lines in markdown unless requested
+- Related work → URLs or markdown links, not plain text labels
 
-## Initiative metadata rules
+## Conversation
 
-- Pull taxonomy before creation when product, customer, company, goal, or component signals are present.
-- Apply taxonomy labels when they are clearly present in the discussion and improve routing or reporting.
-- Prefer product labels first when the initiative obviously belongs to a product or product area.
-- Also apply other relevant taxonomy such as goals, components, and company/customer labels when the workspace supports them and the match is clear.
-- Use `list-taxonomy` only after the core scope is stable enough to know what should be tagged.
-- Attach labels only for exact or high-confidence matches.
-- If multiple labels are plausible for the same concept, ask a disambiguation question instead of guessing.
-- If this initiative clearly belongs under an existing roadmap effort, set `parentInitiativeId`.
-- Do not guess taxonomy or parentage from weak signals. Resolve them first.
-- Keep owner and parent linkage in structured initiative metadata. Do not add `Owner:` or `Related initiative:` lines to the markdown brief unless the user explicitly wants them in the document.
-- If related initiatives, bugs, or other work items are mentioned in the brief or surfaced during discovery, reference them as URLs or markdown links, not plain text labels.
-
-## Conversation rules
-
-- Ask one question at a time and stop after each question.
-- Reuse what the user already said. Skip answered questions.
-- If the user says "just do it", shows impatience, or already has a fully formed plan, fast-track the discovery questions. Still do premise challenge, alternatives, and the brief.
-- If the conversation shifts from builder mode to company mode because the user mentions customers, revenue, fundraising, or go-to-market pressure, raise the bar and ask harder evidence-driven questions.
-- During the diagnostic phases, take a position. Do not hedge with filler like "that could work" or "you might want to consider".
-- Do not drift into recommended implementation direction, engineering tasks, or effort estimates.
+- Open with what they want to build, who it is for, constraints, and ideas they already have
+- Interview relentlessly — one question at a time, reuse prior answers — until you have shared understanding; do not draft early
+- "Just do it" or fully formed plan → still cover missing design-discovery items and premise challenge before drafting
+- Company mode (customers, revenue, GTM) → harder evidence-driven questions
+- Take a position during discovery — no filler hedging
 
 ## Execution order
 
-Follow this sequence to keep the interaction predictable:
+1. Confirm initiative-shaped work (not bug, feature request, or Todo)
+2. Set mode: existing initiative/task ID/draft → `existing initiative draft`; else → `new initiative`
+3. Opening intake + design discovery until shared understanding (or N/A for non-interface work)
+4. Check related initiatives and parent linkage
+5. Resolve taxonomy after scope is stable
+6. Draft brief → resolve metadata gaps → after approval, follow mode end state
 
-1. Confirm this is initiative-shaped work, not a bug, feature request, or Todo.
-2. Decide the mode before drafting:
-   - If the user references an existing initiative, task ID, or current draft, treat it as `existing initiative draft`.
-   - Otherwise treat it as `new initiative`.
-3. Gather only the missing minimum context:
-   - user or workflow
-   - short background
-   - in scope
-   - out of scope
-   - smallest useful version
-4. Check for related initiatives and possible parent linkage.
-5. Resolve taxonomy only after the scope is stable.
-6. Draft the brief.
-7. Resolve any final metadata gaps.
-8. After approval, follow the matching end state for the chosen mode.
+## Minimum brief
 
-## Minimum viable brief threshold
+Draft only after design discovery is complete (or explicitly N/A for non-interface work) and premises are agreed.
 
-Stop asking discovery questions and draft the brief once you know:
+Required before draft:
+- user/workflow, JTBD, what they are trying to accomplish
+- problem and solution direction (solution can be partial or TBD)
+- what changes this phase; in/out scope
+- what success looks like — observable, user-verifiable
+- product (if known)
 
-- which user or workflow this is for
-- what changes in this phase
-- what is in scope
-- what is out of scope
-- which product this belongs to, if that context exists
-- at least one observable success condition the user can verify
+Put remaining uncertainty in `### Open questions`.
 
-Do not keep probing for strategy context once those fields are clear. Put remaining uncertainty in `### Open questions`.
+## Output
 
-## Output guidance
+- Markdown brief, no H1; TLDR paragraph first; `###` major sections, `####` sub-sections
+- Tables for tradeoffs/owners/phases; Mermaid for flows/rollout — only when they help
+- Related work as URLs or markdown links
+- `### Invariants` when behaviors or contracts must not break
 
-- The final deliverable is a markdown initiative brief.
-- Use plain prose for narrative sections.
-- Do not use an H1 in the generated brief.
-- Start with a single-paragraph TLDR before any section headings.
-- Prefer `###` for major sections and `####` for sub-sections.
-- Avoid heavy heading nesting and avoid overusing `##`.
-- Use tables when comparing product tradeoffs, owners, phases, or success metrics.
-- Use Mermaid diagrams when a flow, system relationship, rollout sequence, or decision path is easier to understand visually than in prose.
-- When referencing related initiatives, bugs, or other work items, use a URL or markdown link.
-- Do not force tables or diagrams into every brief. Use them only when they improve clarity.
-- If Mermaid is used, keep the syntax simple and readable.
-- In `### Acceptance criteria`, write observable user-facing statements ("user can do X on the Y screen"), not metrics or aspirational outcomes.
-- In `### Out of scope`, add a short reason after each item so the boundary is self-contained.
-- Add `### Invariants` when there are behaviors or contracts that must not break as a result of this initiative.
+## Phase 1: Context
 
-## Response posture
+1. `list-initiatives` (active statuses) + `list-completed-work` for relevant team/workspace
+2. Opening intake (one question at a time, skip what's already answered):
+   - What do you want to build?
+   - Who is it for?
+   - Constraints or requirements already fixed?
+   - Ideas or directions you already have?
+3. Product stage only when adoption changes scope/evidence/rollout (pre-product / has users / has paying customers); skip for internal or website content
+4. Background only if unclear: why now, what's not good enough today
+5. Scoping questions until answered: who, JTBD, what they are trying to accomplish, in/out scope, smallest useful version, proof of success, short business note
+6. Missing taxonomy: product area, customer/company/segment tag
 
-- Be an opinionated collaborator.
-- Push toward a concrete, reviewable version of the idea instead of safe phrasing.
-- Suggest adjacent or unexpected ideas only when they improve the brief.
-- Prefer plans that can ship in a visible slice before expanding the scope.
+## Design discovery
 
-## Phase 1: Context gathering
+Required for user-facing interfaces, screens, or flows. Skip only when work has no interface surface — note "N/A — no user-facing interface" in the brief.
 
-1. Load currently planned initiatives with `list-initiatives` using active statuses.
-2. Load recently completed work for the relevant team or workspace with `list-completed-work`.
-3. Ask this first: `What user story or workflow are we trying to improve?`
-4. Ask about product stage only when it is relevant to the initiative.
-   - Use it for product decisions where adoption stage changes scope, evidence, or rollout expectations.
-   - Skip it for clearly internal work or public-facing work such as website content where the question does not help.
-   - If needed, use:
-     - pre-product
-     - has users
-     - has paying customers
-5. Ask for a short background only when it is still unclear:
-   - Why does this matter right now?
-   - What is happening today that is not good enough?
-6. Ask only the missing scoping questions, one at a time:
-   - Who is this for in this phase?
-   - What should they be able to do after this ships?
-   - What is definitely in scope for this phase?
-   - What is explicitly out of scope?
-   - What is the smallest version that is still useful?
-   - What should a user or tester be able to do or see that proves this shipped successfully?
-   - Is there a business reason or goal we should capture in one short note?
-7. If the product area or customer/account context is implied but not explicit, ask only the missing taxonomy questions:
-   - Which product or product area is this for?
-   - Is this tied to a specific customer, company, or segment we should tag?
+Cover every item below before drafting. Keep asking until each is answered or explicitly deferred:
 
-## Phase 2: Related initiative discovery
+- Primary user, JTBD, what they are trying to accomplish
+- What success looks like for this interface
+- Hard constraints: devices, accessibility, performance budgets, brand guidelines
+- Content the interface will contain; what is placeholder vs real
 
-1. After the user states the problem, extract 3-5 meaningful keywords.
-2. Search existing initiatives with `search-tasks` using `categories: ["initiative"]`.
-3. For relevant hits, call `get-task-details`.
-4. If strong overlap exists, surface it:
-   - `FYI: Related initiative found: [{title}](<url>). Key overlap: {one-line relevance}.`
-5. Ask whether to build on the prior design or start fresh.
-6. If no relevant match exists, proceed silently.
-7. If one initiative is clearly the parent roadmap effort, propose linking the new initiative under it.
+## Phase 2: Related work
 
-## Phase 3: Landscape awareness
+1. Extract 3-5 keywords after user states the problem
+2. `search-tasks` with `categories: ["initiative"]`; `get-task-details` on hits
+3. Strong overlap → `FYI: Related initiative found: [{title}](<url>). Key overlap: {one-line}.` Ask build on prior or start fresh
+4. No match → proceed silently
+5. Clear parent → propose `parentInitiativeId`
 
-- Before any external search, ask for consent because generalized category terms may be sent to a search provider.
-- Use generalized search terms only. Do not search for the user's proprietary name or stealth framing.
-- If search is unavailable or the user declines, skip this phase and continue with in-distribution knowledge only.
-- Read 2-3 useful results and synthesize:
-  - Layer 1: what everyone already knows about this space
-  - Layer 2: what current search results and discourse are saying
-  - Layer 3: based on this conversation, whether the conventional approach is wrong here
-- If a useful insight appears, state it plainly:
-  - `Most teams do X because they assume Y. Here that assumption looks weak because Z, so this initiative should ...`
-- If no strong break from conventional wisdom exists, say so and build on the standard approach.
+## Phase 3: Landscape (optional)
+
+- Ask consent before external search (generalized terms only, not proprietary/stealth names)
+- Skip if unavailable or declined
+- Read 2-3 results; note standard approach vs what this conversation suggests
+- Useful insight → state plainly; otherwise build on the standard path
 
 ## Phase 4: Premise challenge
 
-Before proposing solutions, force agreement on the key premises.
+Get agreement before solutions:
 
-Check:
-- Is this the right problem?
-- What happens if we do nothing?
-- What existing workflows, habits, or product patterns already partially solve this today?
-- Is the user story clear enough to scope this as a feature or phase rather than a full product?
-- Are the in-scope and out-of-scope boundaries crisp enough to avoid ambiguity?
-- What should stay true for the user if this initiative succeeds?
-- If product stage is relevant and includes users or paying customers, does the evidence support this direction?
-
-Present premises like this and get agreement before moving on:
+- Right problem? What if we do nothing?
+- Existing workflows that partially solve this?
+- Scoped as feature/phase, not full product?
+- In/out boundaries crisp?
+- What must stay true for the user?
+- If users/paying customers exist, does evidence support this?
 
 ```text
 PREMISES:
@@ -198,85 +144,58 @@ PREMISES:
 3. <statement>: agree or disagree?
 ```
 
-If the user disagrees, revise the understanding and loop before continuing.
+Disagree → revise and loop.
 
-## Phase 5: Write the initiative brief
+## Phase 5: Brief template
 
-Keep one canonical markdown brief updated as the session progresses.
-
-Add supporting structure when useful:
-- A comparison table for product tradeoffs, scope boundaries, rollout phases, or success metrics
-- A Mermaid diagram for workflow, system flow, rollout sequence, or ownership handoff
+Keep one canonical markdown brief updated through the session.
 
 ```markdown
-Short TLDR paragraph:
-In 2-4 sentences, summarize what this initiative is, which user or workflow it improves, what this phase includes, and the main boundary or constraint. Write this like a fast orientation for a reviewer.
+TLDR (2-4 sentences): initiative, user/workflow, this phase, main boundary
+
+### Problem
+Who is affected, what is broken or missing today, why it matters now
+
+### Solution
+Proposed direction for this phase — partial or TBD is fine; say what is decided vs still open
 
 ### Background
-- In one short paragraph: what is changing, why now, and what happens if we do nothing?
-- If there is a business reason, keep it brief and secondary.
+What is changing, why now, cost of inaction. Business reason brief and secondary.
+
+### Design (user-facing work only)
+Primary user and JTBD; success for this interface; hard constraints; content (real vs placeholder). Omit if N/A.
 
 ### Feature / use case sections
-- Break the initiative into concrete feature or use case sections when that makes the scope clearer.
-- Use descriptive section titles such as `### Add Login with Google` or `### Migrate admin-only login flow`.
-- Under each section, write a short paragraph covering who it is for, what changes, and why it matters to that workflow.
-- Name the screen, entry point, or surface the change lives on when that helps locate the scope (e.g., "on the Billing settings page" or "in the onboarding email flow").
-- If helpful, include a brief user-story sentence in the paragraph, but do not use a literal `### User story` heading.
+Concrete titles like `### Add Login with Google`. Short paragraph each: who, what changes, why. Name screen/entry point when helpful. No `### User story` heading.
 
 ### In scope
-- What are we committing to in this phase?
-- Which behaviors, surfaces, or flows are included?
-- What constraints matter for this phase?
+Behaviors, surfaces, flows, constraints for this phase
 
 ### Out of scope
-- What is explicitly not included? For each item, add a short reason: `- Item — excluded because <reason>`.
-- What related ideas should not get pulled into this initiative?
+`- Item — excluded because <reason>`. Related ideas not pulled in.
 
 ### Acceptance criteria
-- Write observable, user-verifiable statements. Each criterion should describe what a user can do or see after this ships.
-- Avoid metrics and aspirational outcomes. Prefer: "User can log in via Google without re-entering credentials" over "Improve login conversion".
-- Include one end-to-end verification step that proves the core use case works.
+Observable user-verifiable statements — not metrics. One end-to-end verification step.
 
 ### Invariants
-- What must remain true throughout this initiative?
-- What existing behaviors or contracts must not break?
-- Omit this section if nothing specific needs protecting.
+What must remain true; omit if nothing specific
 
 ### Assumptions, risks, and open questions
-- What are we assuming?
-- What could block or weaken this?
-- What still needs a decision?
+Assumptions, blockers, open decisions
 
 ### Rollout / handoff
-- Is this a pilot, first release, or full rollout?
-- Who needs to be informed or enabled?
-- Who owns it after launch?
+Pilot vs first release vs full rollout; who to inform; post-launch owner
 ```
 
-## Finalize step
+## Finalize
 
-After the user reviews and approves the brief:
+After user approves:
 
-1. Resolve owner, team, taxonomy, and parent initiative metadata if needed.
-2. Use `one-find-team` for owner/team resolution.
-3. Use `list-taxonomy` to resolve product labels first, then attach matching customer/company and other relevant taxonomy labels when the match is clear.
-4. If the initiative belongs under an existing initiative, resolve and set `parentInitiativeId`.
-5. Keep the brief body focused on background, feature or use case scope, boundaries, risks, and rollout.
-6. If the initiative does not exist yet:
-   - confirm the minimum create fields are ready:
-     - title
-     - markdown brief
-     - workspace
-     - any clear owner/team metadata
-     - any clear taxonomy labels
-   - create the initiative with the brief markdown as the description
-7. If the initiative already exists:
-   - patch the existing initiative description with `patch-document`
-   - apply metadata changes with `update-initiative` only if needed
-8. Match the closing question to the situation:
-   - new initiative: ask whether the user is ready to create it
-   - existing initiative: ask whether the user is ready to finalize or update the existing initiative draft
-9. Do not ask `Are you ready to create the initiative?` when the chosen mode is `existing initiative draft`.
+1. Resolve owner, team, taxonomy, parent via `one-find-team` and `list-taxonomy`
+2. Brief body: background, scope, boundaries, risks, rollout only
+3. `new initiative` → confirm title, brief, workspace, owner/team, taxonomy → `create-initiative`
+4. `existing initiative draft` → `patch-document` for description; `update-initiative` for metadata only
+5. Closing question matches mode; never ask "ready to create?" in `existing initiative draft` mode
 
 ```json
 create-initiative({
@@ -291,8 +210,4 @@ create-initiative({
 })
 ```
 
-If the user later asks to revise the initiative description after creation:
-
-- Use `patch-document` with `workspaceId`, `taskId`, and precise `ops`.
-- Prefer `replace_text`, `insert_before`, `insert_after`, or `delete_text` over rewriting the entire description.
-- Use `update-initiative` only for metadata.
+Post-creation revisions: `patch-document` with precise `ops` (`replace_text`, `insert_before`, `insert_after`, `delete_text`); `update-initiative` for metadata only.
