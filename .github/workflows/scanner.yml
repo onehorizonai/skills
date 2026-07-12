@@ -15,4 +15,4 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0
-      - uses: hashgraph-online/hol-codex-plugin-scanner-action@0f78e6d99032ec198d23a41a8425080a658c07d1
+      - uses: hashgraph-online/hol-codex-plugin-scanner-action@cb619cfc0dd199692dce7274a6529be27d5e697b
