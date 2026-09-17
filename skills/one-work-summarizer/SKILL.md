@@ -5,24 +5,40 @@ description: Turn One Horizon activity into a concise update for a manager, team
 
 # Work Summarizer
 
-Create concise summaries from recap data.
+Turn One Horizon activity into a concise update for a manager, team, or stakeholder. For standup talking points use `one-standup-prep`; for ownership transfer use `one-handoff-notes`.
 
 ## Instructions
 
-1. Fetch One Horizon data with `my-work-recap`, `team-work-recap`, or `list-completed-work`.
-2. Call `work-summarizer`:
+### 1. Pick the scope and window
+
+Take the period from the request ("today", "this week", "last sprint") and convert it to `startDate` and `endDate`. `list-completed-work` defaults to the last 24 hours.
+
+### 2. Fetch the data
+
+The calls are independent, so run them in parallel. Personal summary:
 
 ```json
-work-summarizer({
-  "completedTasks": "<json-array>",
-  "plannedTasks": "<json-array>",
-  "initiatives": "<json-array>",
-  "blockers": "<json-array>",
-  "period": "this week",
-  "format": "bullet points",
-  "audience": "team"
-})
+list-completed-work({ "startDate": "<iso-start>", "endDate": "<iso-end>" })
 ```
+
+```json
+list-planned-work()
+```
+
+```json
+list-blockers()
+```
+
+For a team summary add `"teamId": "<teamId>"` to each call; resolve it with `list-my-teams`. Add `list-initiatives` when the audience cares about roadmap progress.
+
+### 3. Write the summary
+
+1. Focus on concrete outcomes and what changed.
+2. Group related items by topic or initiative.
+3. Include blocker context when there are blockers.
+4. Do not invent details that are not in the data.
+5. Respect the requested format. For a standup audience use: completed, in progress, blockers.
+
 ## Output style
 
 - Natural and conversational, like a developer talking to a coworker
