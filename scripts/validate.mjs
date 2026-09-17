@@ -88,8 +88,22 @@ function checkDocumentMcpContract() {
     "one-task-management: must continue recommending get-task-details for full task context"
   );
 
+  // Tools and prompts removed from the One Horizon MCP server. A skill that still calls one breaks
+  // for every installed user. Prompt names are matched as calls so skill names like
+  // `one-handoff-notes` do not trip them.
+  const retiredMcpCalls = [
+    /\bmy-work-recap\b/,
+    /\bteam-work-recap\b/,
+    /(?<!one-)\b(?:personal-standup-prep|team-standup-prep|work-summarizer|handoff-notes|initiative-summary|bug-triage-prep)(?:`|\(\{)/
+  ];
+
   for (const skillName of readdirSync(skillPath()).filter(name => !name.startsWith("."))) {
     const text = skillText(skillName);
+    check(
+      !retiredMcpCalls.some(pattern => pattern.test(text)),
+      `skills/${skillName}: calls no retired MCP tool or prompt`,
+      `skills/${skillName}: calls a retired MCP tool or prompt; use list-completed-work, list-planned-work, list-blockers, or list-initiatives`
+    );
     check(
       !findDocumentsFullContentAssumptions.some(pattern => pattern.test(text)),
       `skills/${skillName}: no full-content assumption for find-documents`,

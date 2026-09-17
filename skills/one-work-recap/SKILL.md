@@ -5,47 +5,53 @@ description: Recap shipped, planned, and blocked work in One Horizon for a perso
 
 # Work Recap
 
-Fetch consolidated recap data for a person or team.
+Recap shipped, planned, and blocked work for a person or a team. For standup talking points use `one-standup-prep`; for a written status report use `one-work-summarizer`.
 
 ## Instructions
 
-### Personal recap
+### 1. Pick the window
 
-Call `my-work-recap`:
+- `list-completed-work` defaults to the last 24 hours. Pass `startDate` and `endDate` as ISO 8601 date-times for anything longer, such as "this week".
+- Planned and blocked work are current state and take no dates.
 
-```json
-my-work-recap({ "includeInitiatives": true })
-```
+### 2. Fetch the three lists
 
-With date range:
+The calls are independent, so run them in parallel.
 
-```json
-my-work-recap({
-  "startDate": "2024-01-20T00:00:00Z",
-  "endDate": "2024-01-26T23:59:59Z",
-  "includeInitiatives": true
-})
-```
-
-### Team recap
-
-Call `team-work-recap`:
+Personal recap:
 
 ```json
-team-work-recap({ "teamId": "<teamId>", "includeInitiatives": true })
+list-completed-work({ "startDate": "<iso-start>", "endDate": "<iso-end>" })
 ```
-
-With date range:
 
 ```json
-team-work-recap({
-  "teamId": "<teamId>",
-  "startDate": "2024-01-20T00:00:00Z",
-  "endDate": "2024-01-26T23:59:59Z",
-  "includeInitiatives": true
-})
+list-planned-work()
 ```
 
-Recap order prioritizes roadmap work first, then bugs, then Todos.
+```json
+list-blockers()
+```
 
-Recap/list output may omit descriptions; call `get-task-details` for any task that needs deeper context.
+Team recap. Resolve `teamId` with `list-my-teams` when the user names a team; ask which team when there are several and none is named:
+
+```json
+list-completed-work({ "teamId": "<teamId>", "startDate": "<iso-start>", "endDate": "<iso-end>" })
+```
+
+```json
+list-planned-work({ "teamId": "<teamId>" })
+```
+
+```json
+list-blockers({ "teamId": "<teamId>" })
+```
+
+For one teammate, add `"userId": "<userId>"` to each team call. Get the `userId` from `find-team-member`.
+
+### 3. Present the recap
+
+- Use three sections in this order: **Shipped**, **Planned**, **Blocked**.
+- Within each section put roadmap initiatives first, then bugs, then Todos.
+- For a team recap, group each section by person.
+- Say so plainly when a section is empty. Do not pad it.
+- The lists are summaries without descriptions. Call `get-task-details` only for an item that needs more context.

@@ -5,35 +5,61 @@ description: Turn recent work into standup talking points for one person or a wh
 
 # Standup Prep
 
-Generate standup talking points for a person or team.
+Generate standup talking points for a person or team. For a longer written update use `one-work-summarizer`.
 
 ## Instructions
 
-### Personal standup
+### 1. Pick the window
 
-1. Fetch data with `my-work-recap`.
-2. Call `personal-standup-prep`:
+Default to "since last standup": the last 24 hours, or since Friday when today is Monday. Pass it to `list-completed-work` as `startDate` and `endDate`.
 
-```json
-personal-standup-prep({
-  "completedTasks": "<json-array>",
-  "plannedTasks": "<json-array>",
-  "initiatives": "<json-array>",
-  "blockers": "<json-array>",
-  "timeframe": "since last standup"
-})
-```
+### 2. Fetch the data
 
-### Team standup
+The calls are independent, so run them in parallel.
 
-1. Fetch data with `team-work-recap`.
-2. Build member updates.
-3. Call `team-standup-prep`:
+Personal standup:
 
 ```json
-team-standup-prep({
-  "teamMemberUpdates": "<json-array>",
-  "team_name": "Platform",
-  "timeframe": "yesterday"
-})
+list-completed-work({ "startDate": "<iso-start>", "endDate": "<iso-end>" })
 ```
+
+```json
+list-planned-work()
+```
+
+```json
+list-blockers()
+```
+
+Team standup. Resolve `teamId` with `list-my-teams`; ask which team when there are several and none is named:
+
+```json
+list-completed-work({ "teamId": "<teamId>", "startDate": "<iso-start>", "endDate": "<iso-end>" })
+```
+
+```json
+list-planned-work({ "teamId": "<teamId>" })
+```
+
+```json
+list-blockers({ "teamId": "<teamId>" })
+```
+
+### 3. Write the talking points
+
+Personal standup, in these sections:
+
+- **What I completed**
+- **What I'm working on**
+- **Initiatives I'm on**, only when the data includes initiatives
+- **Blockers**, or "None"
+
+Team standup, in these sections:
+
+1. Team progress overview
+2. Individual updates, grouped by person
+3. Initiative progress
+4. Blockers and dependencies
+5. Upcoming focus
+
+Style: specific and conversational, one or two sentences per point, no filler. Use only what the data shows; do not invent progress.

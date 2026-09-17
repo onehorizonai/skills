@@ -29,13 +29,6 @@ Use One Horizon as the source of truth. Do not fall back to git unless the user 
 For personal scope, fetch:
 
 ```json
-my-work-recap({
-  "startDate": "<iso-start>",
-  "endDate": "<iso-end>"
-})
-```
-
-```json
 list-completed-work({
   "startDate": "<iso-start>",
   "endDate": "<iso-end>"
@@ -54,14 +47,6 @@ For team scope:
 
 1. Resolve the team with `list-my-teams` or `find-team-member` if the user named a person.
 2. Fetch:
-
-```json
-team-work-recap({
-  "teamId": "<teamId>",
-  "startDate": "<iso-start>",
-  "endDate": "<iso-end>"
-})
-```
 
 ```json
 list-completed-work({
@@ -114,7 +99,7 @@ Build a summary table with the strongest available One Horizon signals:
 |---|---|
 | Completed items | Total completed work in the window |
 | Contributors | Distinct people with completed work |
-| Initiatives advanced | Completed items linked to initiatives or initiative work surfaced in recap |
+| Initiatives advanced | Completed items linked to initiatives or initiative work in the completed list |
 | Bugs fixed | Bug tasks or work explicitly marked `isBugFix` |
 | Planned still open | Current planned work not finished yet |
 | Current blockers | Open blocked items now |
@@ -131,7 +116,7 @@ Also derive:
 - Plan completion: completed work vs still-open planned work.
 - Hot areas: most common products, components, or goals from task labels/details.
 - Carryover: planned or blocked items that are still open at the end of the window.
-- Biggest ships: 1-3 highest-impact completed items by scope, size of description, linked initiative importance, or repeated mentions across recap data.
+- Biggest ships: 1-3 highest-impact completed items by scope, size of description, linked initiative importance, or repeated mentions across the lists.
 
 ### 4. Build team-aware analysis
 
