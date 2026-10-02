@@ -15,6 +15,9 @@ Turn a rough defect report or product ask into a clear bug or feature request.
 - Default feature requests to feature-level scoping, not roadmap planning
 - Put product, customer, company, or component signals in the markdown description when they matter
 - For each out-of-scope item, add a short reason so the boundary holds without chat context
+- Code fixes and features: goal and why first; point to the existing pattern or code area (the repo's conventions win); mark constraints required or suggested; name the repo's real validation commands
+- Repo accessible: skim `AGENTS.md`/`CONTRIBUTING`, package scripts, Makefile, or CI for those — don't add interview questions. No repo: tell the implementer to run the existing checks. Never invent commands or paths
+- Simple bugs stay short: drop sections that would be empty or say "none"
 
 ## Metadata
 
@@ -103,7 +106,7 @@ One short paragraph on what changed and why it matters
 
 ### Affected flow / use case
 - Which user or workflow?
-- Where in the product?
+- Where in the product? Code area if known (endpoint, component, file)
 
 ### Expected behavior
 What should happen?
@@ -113,13 +116,14 @@ What happens instead? Note environment, consistency, regression
 
 ### Reproduction
 Numbered repro steps
-**Verified when:** what confirms the bug is resolved
+**Verified when:** what confirms the bug is resolved — rerun the repro; code fixes also name the repo's checks and a regression test on the behavior
+**Report back:** code fixes only — root cause, what changed, checks run
 
 ### Invariants
-What must not break? Omit if nothing specific
+What must not break, including nearby edge cases? Omit if nothing specific
 
 ### Known scope / boundaries
-What is affected? Out of scope: `- Item — excluded because <reason>`
+What is affected? Out of scope: `- Item — excluded because <reason>`. Fix this bug only — no unrelated refactors
 
 ### Evidence, workaround, and open questions
 Links, screenshots, logs, workarounds, unconfirmed details
@@ -164,22 +168,22 @@ Ask only missing questions, one at a time:
 ### Description format
 
 ```markdown
-TLDR (2-4 sentences): request, user/workflow, scope, main boundary
+TLDR (2-4 sentences): goal and why, user/workflow, scope, main boundary
 
 ### Background
 What is missing today, why now, what happens if nothing changes. Business reason brief and secondary.
 
 ### Feature / use case sections
-Concrete titles like `### Add Login with Google`. Short paragraph per section: who, what changes, why. Name screen or entry point when it helps locate scope.
+Concrete titles like `### Add Login with Google`. Short paragraph per section: who, what changes, why. Name screen or entry point when it helps locate scope, and the existing pattern or component to build on.
 
 ### In scope
-Included surfaces, flows, constraints
+Included surfaces, flows, constraints (required vs suggested starting values). Lifecycle and edge cases that apply (loading, empty, error, permissions, cleanup, 0/1/many)
 
 ### Out of scope
-`- Item — excluded because <reason>`. Adjacent ideas not pulled in.
+`- Item — excluded because <reason>`. Adjacent ideas not pulled in. Code work: no unrelated refactors or dependency changes.
 
 ### Acceptance criteria
-Observable user-verifiable statements — not metrics. One end-to-end verification step.
+Observable user-verifiable statements — not business metrics; a performance budget needs how to measure it. One end-to-end verification step. Code work: the repo's validation commands, tests that check behavior not internals, and a report-back of what changed, checks run, and trade-offs.
 
 ### Open questions
 Decisions or validation still needed

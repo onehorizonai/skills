@@ -16,7 +16,8 @@ Turn a rough roadmap idea into a clear initiative brief, then create it or final
 - Write in markdown; use tables or Mermaid only when they clarify the design
 - Preserve existing media in canonical markdown exactly (`![alt](url)`, `[video](url#one-video=1)`, `[youtube](url#one-youtube=1)`, `[figma](url#one-figma=1)`) — do not remove, replace, or normalize unless the user asks
 - Edit existing descriptions with `patch-document` + initiative `taskId`; use `update-initiative` for metadata only
-- Product perspective only — not implementation, engineering tasks, or estimates
+- Outcomes and constraints, not implementation — no code, engineering task breakdowns, or estimates
+- Code work (a coding agent or developer will build it in a repo): goal and why first; the repo's conventions win over the brief; mark constraints required or suggested; name real validation commands. Skip for GTM, content, or other non-code work
 - Default to feature-level scoping unless the user describes broader product/company work
 - Business goals are supporting context, not the backbone
 - Acceptance criteria: observable, user-verifiable ("user can do X on Y screen")
@@ -86,6 +87,7 @@ Put remaining uncertainty in `### Open questions`.
 - Tables for tradeoffs/owners/phases; Mermaid for flows/rollout — only when they help
 - Related work as URLs or markdown links
 - `### Invariants` when behaviors or contracts must not break
+- Scale to the work: drop sections that would be empty, say "none", or repeat another
 
 ## Phase 1: Context
 
@@ -99,6 +101,7 @@ Put remaining uncertainty in `### Open questions`.
 4. Background only if unclear: why now, what's not good enough today
 5. Scoping questions until answered: who, JTBD, what they are trying to accomplish, in/out scope, smallest useful version, proof of success, short business note
 6. Missing taxonomy: product area, customer/company/segment tag
+7. Code work, repo accessible: skim `AGENTS.md`/`CONTRIBUTING`, package scripts, Makefile, or CI for the pattern to reuse and the real check commands — inspect, don't add interview questions. No repo: tell the implementer to find and run the existing checks. Never invent commands or paths
 
 ## Design discovery
 
@@ -151,13 +154,13 @@ Disagree → revise and loop.
 Keep one canonical markdown brief updated through the session.
 
 ```markdown
-TLDR (2-4 sentences): initiative, user/workflow, this phase, main boundary
+TLDR (2-4 sentences): goal and why, user/workflow, this phase, main boundary
 
 ### Problem
 Who is affected, what is broken or missing today, why it matters now
 
 ### Solution
-Proposed direction for this phase — partial or TBD is fine; say what is decided vs still open
+Proposed direction for this phase — partial or TBD is fine; say what is decided vs still open. Code work: name the existing pattern, component, or area to build on; mark values as required or suggested starting points
 
 ### Background
 What is changing, why now, cost of inaction. Business reason brief and secondary.
@@ -169,13 +172,13 @@ Primary user and JTBD; success for this interface; hard constraints; content (re
 Concrete titles like `### Add Login with Google`. Short paragraph each: who, what changes, why. Name screen/entry point when helpful. No `### User story` heading.
 
 ### In scope
-Behaviors, surfaces, flows, constraints for this phase
+Behaviors, surfaces, flows, constraints for this phase. Lifecycle and edge cases that apply (loading, empty, error, permissions, retry, cleanup, 0/1/many)
 
 ### Out of scope
-`- Item — excluded because <reason>`. Related ideas not pulled in.
+`- Item — excluded because <reason>`. Related ideas not pulled in. Code work: no unrelated refactors or dependency changes.
 
 ### Acceptance criteria
-Observable user-verifiable statements — not metrics. One end-to-end verification step.
+Observable user-verifiable statements — not business metrics; a performance budget belongs here only with how to measure it. One end-to-end verification step. Code work: the repo's validation commands, plus tests that check behavior, not internals.
 
 ### Invariants
 What must remain true; omit if nothing specific
@@ -184,7 +187,7 @@ What must remain true; omit if nothing specific
 Assumptions, blockers, open decisions
 
 ### Rollout / handoff
-Pilot vs first release vs full rollout; who to inform; post-launch owner
+Pilot vs first release vs full rollout; who to inform; post-launch owner. Code work: ask the implementer to report back what changed, checks run, and trade-offs
 ```
 
 ## Finalize
@@ -192,7 +195,7 @@ Pilot vs first release vs full rollout; who to inform; post-launch owner
 After user approves:
 
 1. Resolve owner, team, taxonomy, parent via `one-find-team` and `list-taxonomy`
-2. Brief body: background, scope, boundaries, risks, rollout only
+2. Brief body follows the Phase 5 template; owner, team, taxonomy, and parent stay in metadata
 3. `new initiative` → confirm title, brief, workspace, owner/team, taxonomy → `create-initiative`
 4. `existing initiative draft` → `patch-document` for description; `update-initiative` for metadata only
 5. Closing question matches mode; never ask "ready to create?" in `existing initiative draft` mode
