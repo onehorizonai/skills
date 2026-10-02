@@ -15,9 +15,9 @@ Turn a rough defect report or product ask into a clear bug or feature request.
 - Default feature requests to feature-level scoping, not roadmap planning
 - Put product, customer, company, or component signals in the markdown description when they matter
 - For each out-of-scope item, add a short reason so the boundary holds without chat context
-- Code fixes and features: goal and why first; point to the existing pattern or code area (the repo's conventions win); mark constraints required or suggested; name the repo's real validation commands
-- Repo accessible: skim `AGENTS.md`/`CONTRIBUTING`, package scripts, Makefile, or CI for those — don't add interview questions. No repo: tell the implementer to run the existing checks. Never invent commands or paths
-- Simple bugs stay short: drop sections that would be empty or say "none"
+- Code fixes and features: goal and why first (for a bug, the expected behavior); point to the code area and existing pattern, not helper call chains or a fix recipe; the repo's conventions decide how it's built; mark constraints required or suggested; name the repo's real validation commands
+- Repo accessible: skim agent/contributor docs (`AGENTS.md`, `CONTRIBUTING`), package scripts, or CI for the area, pattern, and checks — enough to point, not to find the root cause or design the fix. Use repo-relative paths. Don't add interview questions. No repo: tell the implementer to run the existing checks. Never invent commands or paths
+- Simple bugs stay short (aim for ~20 lines): drop sections that would be empty or say "none"
 
 ## Metadata
 
@@ -53,7 +53,7 @@ Do not use when:
 
 ## Minimum intake
 
-Stop asking once you have the essentials. Put remaining uncertainty in `### Open questions`.
+Stop asking once you have the essentials. Put remaining uncertainty in the template's open-questions section.
 
 Bugs:
 - what is broken
@@ -99,7 +99,7 @@ Ask only missing questions, one at a time:
 ### Description format
 
 ```markdown
-TLDR (2-4 sentences): what is broken, who it affects, main repro condition, current impact
+TLDR (2-4 sentences): what is broken and what should happen instead, who it affects, main repro condition, current impact
 
 ### Background
 One short paragraph on what changed and why it matters
@@ -117,7 +117,7 @@ What happens instead? Note environment, consistency, regression
 ### Reproduction
 Numbered repro steps
 **Verified when:** what confirms the bug is resolved — rerun the repro; code fixes also name the repo's checks and a regression test on the behavior
-**Report back:** code fixes only — root cause, what changed, checks run
+**Report back:** code fixes only — root cause, what changed, checks run (pre-existing failures called out)
 
 ### Invariants
 What must not break, including nearby edge cases? Omit if nothing specific
@@ -183,7 +183,7 @@ Included surfaces, flows, constraints (required vs suggested starting values). L
 `- Item — excluded because <reason>`. Adjacent ideas not pulled in. Code work: no unrelated refactors or dependency changes.
 
 ### Acceptance criteria
-Observable user-verifiable statements — not business metrics; a performance budget needs how to measure it. One end-to-end verification step. Code work: the repo's validation commands, tests that check behavior not internals, and a report-back of what changed, checks run, and trade-offs.
+Observable user-verifiable statements — not business metrics; a performance budget needs how to measure it. One end-to-end verification step. Code work: the repo's validation commands, tests that check behavior not internals, and a report-back of what changed, checks run (pre-existing failures called out), and trade-offs.
 
 ### Open questions
 Decisions or validation still needed

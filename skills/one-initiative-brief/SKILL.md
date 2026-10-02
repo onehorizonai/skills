@@ -17,7 +17,8 @@ Turn a rough roadmap idea into a clear initiative brief, then create it or final
 - Preserve existing media in canonical markdown exactly (`![alt](url)`, `[video](url#one-video=1)`, `[youtube](url#one-youtube=1)`, `[figma](url#one-figma=1)`) — do not remove, replace, or normalize unless the user asks
 - Edit existing descriptions with `patch-document` + initiative `taskId`; use `update-initiative` for metadata only
 - Outcomes and constraints, not implementation — no code, engineering task breakdowns, or estimates
-- Code work (a coding agent or developer will build it in a repo): goal and why first; the repo's conventions win over the brief; mark constraints required or suggested; name real validation commands. Skip for GTM, content, or other non-code work
+- Code work (a coding agent or developer will build it in a repo): goal and why first; point to areas and patterns, not helper call chains or fix recipes; the repo's conventions decide how it's built; mark constraints required or suggested; name real validation commands. Skip for GTM, content, or other non-code work
+- Request contradicts a documented design choice in the repo → raise it as a premise, don't silently pick a side
 - Default to feature-level scoping unless the user describes broader product/company work
 - Business goals are supporting context, not the backbone
 - Acceptance criteria: observable, user-verifiable ("user can do X on Y screen")
@@ -79,7 +80,7 @@ Required before draft:
 - what success looks like — observable, user-verifiable
 - product (if known)
 
-Put remaining uncertainty in `### Open questions`.
+Put remaining uncertainty in the template's open-questions section.
 
 ## Output
 
@@ -101,11 +102,11 @@ Put remaining uncertainty in `### Open questions`.
 4. Background only if unclear: why now, what's not good enough today
 5. Scoping questions until answered: who, JTBD, what they are trying to accomplish, in/out scope, smallest useful version, proof of success, short business note
 6. Missing taxonomy: product area, customer/company/segment tag
-7. Code work, repo accessible: skim `AGENTS.md`/`CONTRIBUTING`, package scripts, Makefile, or CI for the pattern to reuse and the real check commands — inspect, don't add interview questions. No repo: tell the implementer to find and run the existing checks. Never invent commands or paths
+7. Code work, repo accessible: skim agent/contributor docs (`AGENTS.md`, `CONTRIBUTING`), package scripts, Makefile, or CI — inspect, don't add interview questions. Find what already exists, the area and pattern to build on, and the real check commands; stop there — root cause and design are the implementer's job. Use repo-relative paths. No repo: tell the implementer to find and run the existing checks. Never invent commands or paths
 
 ## Design discovery
 
-Required for user-facing interfaces, screens, or flows. Skip only when work has no interface surface — note "N/A — no user-facing interface" in the brief.
+Required for user-facing interfaces, screens, or flows. Skip only when work has no interface surface — then omit the Design section.
 
 Cover every item below before drafting. Keep asking until each is answered or explicitly deferred:
 
@@ -160,7 +161,7 @@ TLDR (2-4 sentences): goal and why, user/workflow, this phase, main boundary
 Who is affected, what is broken or missing today, why it matters now
 
 ### Solution
-Proposed direction for this phase — partial or TBD is fine; say what is decided vs still open. Code work: name the existing pattern, component, or area to build on; mark values as required or suggested starting points
+Proposed direction for this phase — partial or TBD is fine; say what is decided vs still open. Code work: in a few lines, name the existing pattern, component, or area to build on; mark values as required or suggested starting points
 
 ### Background
 What is changing, why now, cost of inaction. Business reason brief and secondary.
@@ -187,7 +188,7 @@ What must remain true; omit if nothing specific
 Assumptions, blockers, open decisions
 
 ### Rollout / handoff
-Pilot vs first release vs full rollout; who to inform; post-launch owner. Code work: ask the implementer to report back what changed, checks run, and trade-offs
+Pilot vs first release vs full rollout; who to inform; post-launch owner. Code work: ask the implementer to report back what changed, checks run (pre-existing failures called out), and trade-offs
 ```
 
 ## Finalize
