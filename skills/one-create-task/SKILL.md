@@ -14,10 +14,7 @@ Create a new Todo or roadmap initiative.
 - Do not use this skill to guess between initiative, bug, ongoing work, and Todo from a vague request. Use `one-task-management` for that.
 - Do not use Todos as a substitute for roadmap work.
 - If the user needs help writing or structuring the initiative first, use `one-initiative-brief`.
-
-## Descriptions for code work
-
-When a coding agent or developer will build it: state the goal and why, the existing pattern or area to reuse (the repo's conventions win), and done-when with the repo's real check commands. Never invent commands or paths. Keep Todos to a few lines; a fuller initiative follows the `one-initiative-brief` template.
+- If a coding agent or developer will build it, the description states the goal and why, the existing pattern or area to reuse (the repo's conventions win), and done-when with the repo's real check commands — never invented. Keep Todos to a few lines; a fuller initiative follows the `one-initiative-brief` template.
 
 ## Instructions
 
@@ -28,7 +25,7 @@ Call `create-todo` for personal follow-up work. Use `initiativeId` to link it ba
 ```json
 create-todo({
   "title": "Implement HubSpot OAuth callback handler",
-  "description": "Store HubSpot tokens after OAuth so lead sync can run. Reuse the existing OAuth callback pattern. Done when tokens persist after connect and the repo's checks pass.",
+  "description": "Store HubSpot tokens after OAuth so lead sync can run. Reuse the existing OAuth callback pattern. Done when tokens persist after connect and `<repo test command>` passes.",
   "status": "Planned",
   "topic": "Auth",
   "workspaceId": "<workspaceId>",
