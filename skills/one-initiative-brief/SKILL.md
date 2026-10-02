@@ -102,7 +102,7 @@ Put remaining uncertainty in the template's open-questions section.
 4. Background only if unclear: why now, what's not good enough today
 5. Scoping questions until answered: who, JTBD, what they are trying to accomplish, in/out scope, smallest useful version, proof of success, short business note
 6. Missing taxonomy: product area, customer/company/segment tag
-7. Code work, repo accessible: skim agent/contributor docs (`AGENTS.md`, `CONTRIBUTING`), package scripts, Makefile, or CI — inspect, don't add interview questions. Find what already exists, the area and pattern to build on, and the real check commands; stop there — root cause and design are the implementer's job. Use repo-relative paths. No repo: tell the implementer to find and run the existing checks. Never invent commands or paths
+7. Code work, repo accessible: skim agent/contributor docs (`AGENTS.md`, `CONTRIBUTING`), package scripts, Makefile, or CI — inspect, don't add interview questions. Find what already exists, the area and pattern to build on, and the real check commands; stop there — root cause and design are the implementer's job. Use repo-relative paths, not local checkout paths. No repo: tell the implementer to find and run the existing checks. Never invent commands or paths
 
 ## Design discovery
 

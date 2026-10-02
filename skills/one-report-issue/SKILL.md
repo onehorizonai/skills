@@ -16,8 +16,8 @@ Turn a rough defect report or product ask into a clear bug or feature request.
 - Put product, customer, company, or component signals in the markdown description when they matter
 - For each out-of-scope item, add a short reason so the boundary holds without chat context
 - Code fixes and features: goal and why first (for a bug, the expected behavior); point to the code area and existing pattern, not helper call chains or a fix recipe; the repo's conventions decide how it's built; mark constraints required or suggested; name the repo's real validation commands
-- Repo accessible: skim agent/contributor docs (`AGENTS.md`, `CONTRIBUTING`), package scripts, or CI for the area, pattern, and checks — enough to point, not to find the root cause or design the fix. Use repo-relative paths. Don't add interview questions. No repo: tell the implementer to run the existing checks. Never invent commands or paths
-- Simple bugs stay short (aim for ~20 lines): drop sections that would be empty or say "none"
+- Repo accessible: skim agent/contributor docs (`AGENTS.md`, `CONTRIBUTING`), package scripts, or CI for the area, pattern, and checks — enough to point, not to find the root cause or design the fix. Use repo-relative paths, not local checkout paths. Don't add interview questions. No repo: tell the implementer to run the existing checks. Never invent commands or paths
+- Simple bugs stay short (aim for ~30 lines): drop sections that would be empty or say "none"
 
 ## Metadata
 
