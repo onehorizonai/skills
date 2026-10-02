@@ -126,7 +126,8 @@ get-document({
 1. Infer whether the request is an initiative, bug, ongoing work case, Todo, or feature request.
 2. Resolve assignees, teams, and taxonomy only when needed.
 3. If it is ongoing work and there is no direct create path in scope, do not force it into an initiative or Todo without confirming intent.
-4. Create the item with the matching tool.
+4. If a coding agent or developer will build it, write the description for them: goal and why, the existing pattern or area to reuse (the repo's conventions win), and done-when with the repo's real check commands — never invented. Keep simple Bugs and Todos to a few lines; use the `one-report-issue` formats for fuller bugs and feature requests.
+5. Create the item with the matching tool.
 
 ## Classification cues
 
