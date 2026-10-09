@@ -5,103 +5,32 @@ description: Turn open bugs into prioritized triage notes. Use when asked "prepa
 
 # Bug Triage Prep
 
-Turn a list of open bugs into triage notes with enough evidence to decide priority and next action.
+Use as few output tokens as possible while completing the task correctly. Write in plain English. Apply this to documents, progress messages, and final replies.
 
-## Core rule
+Prioritize existing open bugs with enough evidence to decide next action. Use other skills for new bug intake or broader status reports; stop if there are no bugs.
 
-- Focus on the affected user workflow, repro quality, scope boundaries, and next decision.
-- Keep business framing brief. The main question is whether the bug is real, broad, severe, and actionable.
-- Separate confirmed facts from assumptions.
-- Do more than restate bug titles. Add triage judgment.
+## Instructions
 
-## Use when
+1. Fetch `list-bugs` with active statuses unless the user requests a narrower slice. Use `get-task-details` when summaries are too thin for responsible triage.
+2. Assess user impact, customer reach, repro reliability, scope boundaries, workaround, and evidence quality (logs, screenshots, support reports, exact steps).
+3. Identify likely duplicate clusters and order by urgency, not alphabetically. Separate facts from assumptions and add judgment beyond the titles.
+4. Start with a brief set summary, then consistent compact notes with linked bug-title `###` headings.
 
-- The user needs triage prep for bug review.
-- The team wants a prioritized defect summary.
-- Open bugs need better evidence before assignment or escalation.
+## Per-bug notes
 
-## Do not use when
+Include a short overview of the failure, affected users, repro, and priority; then background; repro/evidence; known scope and unaffected/unconfirmed areas; impact/workaround; recommendation and next action; open questions. Prefer `###` headings. Keep business framing brief.
 
-- The user wants to create a new bug instead of triaging existing ones.
-- The user needs a full status report across initiatives and tasks.
-- There are no bugs to review.
+Priority:
 
-## Triage dimensions
+- Highest: core workflow blocked, broad reach, or no workaround
+- High: serious pain with solid evidence, short of a total blocker
+- Medium: real issue with narrower scope, partial workaround, or weaker evidence
+- Low: edge case, unclear repro, cosmetic issue, or low impact
 
-Assess each bug using concrete signals:
+State confidence for each recommendation:
 
-- User impact: what the user cannot do or what breaks in the workflow.
-- Customer reach: how many users, customers, or segments are likely affected.
-- Repro reliability: always, intermittent, or unclear.
-- Scope boundary: where it happens and where it does not.
-- Workaround: whether users can still complete the job some other way.
-- Evidence quality: logs, screenshots, support reports, or exact repro steps.
+- High: strong repro/evidence, clear impact, little ambiguity
+- Medium: likely real, but repro, reach, or scope remains unclear
+- Low: weak evidence, unclear repro, or likely duplicate/noise
 
-## Workflow
-
-1. Fetch bugs with `list-bugs`.
-2. Use active statuses unless the user asks for a narrower slice.
-3. Enrich bugs with `get-task-details` when the title or summary is too thin to triage responsibly.
-4. If multiple bugs describe the same failure mode, call that out as a likely duplicate cluster.
-5. Order the notes by triage urgency, not alphabetically.
-6. Use the same note structure for every bug so the output is easy to scan and compare.
-
-## Output guidance
-
-- Start with a short triage summary for the whole set.
-- Then write one note per bug.
-- Prefer `###` headings for bug titles.
-- Use markdown links for related work items when available.
-- Keep each note compact but decision-ready.
-
-## Per-bug note format
-
-```markdown
-### <bug title>
-
-Short TLDR paragraph:
-In 2-4 sentences, summarize what is broken, who is affected, how reliable the repro is, and why this bug should or should not be prioritized now.
-
-### Background
-- One short paragraph on the affected workflow and what is happening today.
-
-### Repro and evidence
-- Best known repro steps or trigger conditions.
-- Evidence quality: confirmed, partial, or unclear.
-
-### Known scope / boundaries
-- Where this bug shows up.
-- What appears unaffected or still unconfirmed.
-
-### Impact and workaround
-- What the user cannot do.
-- Whether a workaround exists.
-
-### Triage recommendation
-- Suggested priority with a short reason.
-- Suggested next action such as investigate, assign, merge with duplicate, wait for more evidence, or close.
-
-### Open questions
-- What is still missing to make a confident call?
-```
-
-## Priority posture
-
-Use direct language:
-
-- `Highest priority`: blocks a core workflow, has broad reach, or has no workaround.
-- `High priority`: serious user pain with solid evidence, but not a total blocker.
-- `Medium priority`: real issue, narrower scope, partial workaround, or weaker evidence.
-- `Low priority`: edge case, unclear repro, cosmetic issue, or low user impact.
-
-If confidence is low, say that clearly instead of pretending the triage is settled.
-
-## Confidence rule
-
-For every triage recommendation, be explicit about confidence:
-
-- `High confidence`: strong repro or evidence, clear impact, little ambiguity.
-- `Medium confidence`: likely real, but one of repro, reach, or scope is still fuzzy.
-- `Low confidence`: weak evidence, unclear repro, or likely duplicate/noise.
-
-Do not present a shaky recommendation as definitive.
+Do not present uncertain recommendations as settled. Next actions may be investigate, assign, merge duplicates, gather evidence, or close.

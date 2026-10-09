@@ -5,13 +5,15 @@ description: Turn initiative data into a concise status update. Use when asked "
 
 # Initiative Summary
 
+Use as few output tokens as possible while completing the task correctly. Write in plain English. Apply this to documents, progress messages, and final replies.
+
 Summarize initiative progress for status updates.
 
 ## Instructions
 
-1. Fetch initiatives with `list-initiatives`. It defaults to active statuses across every workspace; narrow it with `teamIds`, `assigneeIds`, or `statuses` when the user asks about a team, a person, or a stage.
-2. The list returns summaries without descriptions. Call `get-task-details` only for initiatives that are blocked, at risk, or that the user asked about by name.
-3. Write the summary. For each initiative include current status, progress highlights, owner, next steps, and blockers. Call out high-risk items and dependencies clearly, and put them first.
-4. Match the audience: a few lines per initiative for executives, more delivery detail for the team. Use the format the user asked for.
+1. Fetch `list-initiatives`: active statuses across all workspaces by default. Filter `teamIds`, `assigneeIds`, or `statuses` for the requested scope.
+2. Lists omit descriptions. Use `get-task-details` for blocked, at-risk, or named initiatives only.
+3. Put high-risk items and dependencies first. Include each initiative's status, progress, owner, next steps, and blockers.
+4. Follow the requested format and audience: brief for executives, relevant delivery detail for teams.
 
-Use only what the data shows. Do not infer progress from a title.
+Use only the data; do not infer progress from titles.

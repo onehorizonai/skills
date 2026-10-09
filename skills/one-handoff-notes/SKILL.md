@@ -5,45 +5,15 @@ description: Turn current work into handoff notes a teammate can continue from. 
 
 # Handoff Notes
 
-Generate handoff notes for vacations, transitions, and ownership changes.
+Use as few output tokens as possible while completing the task correctly. Write in plain English. Apply this to documents, progress messages, and final replies.
+
+Prepare ownership notes for vacations or transitions.
 
 ## Instructions
 
-### 1. Clarify the handoff
+1. Use the supplied handoff type, duration, and focus areas. Ask only when duration or recipient changes the notes.
+2. Get your `userId` with `who-am-i`. In parallel, fetch `list-completed-work` (14 days by default, with `startDate`/`endDate`), `list-planned-work`, `list-blockers`, and `list-initiatives` filtered by your `assigneeIds`.
+3. Call `get-task-details` for in-progress or blocked items so the handoff includes descriptions and comment context.
+4. Write: current status; in progress; initiative status and ownership; upcoming priorities; risks, blockers, dependencies; key contacts and resources.
 
-Use what the user gave you: the type (vacation, transition), the duration, and any focus areas. Ask only when the duration or the recipient changes what you would write.
-
-### 2. Fetch the current ownership
-
-The calls are independent, so run them in parallel. Use a completed window long enough to show recent context, 14 days by default:
-
-```json
-list-completed-work({ "startDate": "<iso-start>", "endDate": "<iso-end>" })
-```
-
-```json
-list-planned-work()
-```
-
-```json
-list-blockers()
-```
-
-```json
-list-initiatives({ "assigneeIds": ["<my-userId>"] })
-```
-
-Get your own `userId` from `who-am-i`. Call `get-task-details` for in-progress or blocked items, because the person taking over needs the description and the comment thread, not just the title.
-
-### 3. Write the notes
-
-Use this structure:
-
-1. Current status
-2. In progress
-3. Initiative status and ownership
-4. Upcoming priorities
-5. Risks, blockers, dependencies
-6. Key contacts and resources
-
-Style: clear headings and actionable next steps. Link each work item. Prioritize the user's focus areas. Do not write generic statements that are not backed by the data.
+Use clear headings, linked work items, and actionable next steps. Prioritize the requested focus areas and include only supported facts.
