@@ -11,6 +11,7 @@ Create a Todo or roadmap initiative when scope and work type are clear. Use `one
 
 ## Instructions
 
+- For developer/coding-agent work, state the goal and why, existing area/pattern to reuse, and done-when with real repo check commands; never invent them. Repo conventions win. Keep Todos to a few lines; use `one-initiative-brief` for fuller initiatives.
 - Use `create-initiative` for planned product work tied to roadmap goals, companies, components, or team progress. It supports title, description, status, workspace, assignees, teams, `parentInitiativeId`, and `taxonomyLabelIds`.
 - Use `create-todo` for simple personal follow-up, not as a substitute for roadmap work. It supports title, description, status, topic, and workspace.
 - Set `initiativeId` on a Todo representing a delivered initiative slice; this creates a `PART_OF` relation.

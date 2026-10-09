@@ -25,8 +25,9 @@ For "create a task", infer roadmap relevance, defect language, recurrence, and v
 2. Find work with `search-tasks`, or use `one-list-work` for active, completed, or blocked lists. If multiple matches remain, show the best matches and ask which to update. Infer work type first; ask only when mutation would otherwise be risky.
 3. For full task context, call `get-task-details` before acting when summaries are insufficient.
 4. For documents, `find-documents` with top-level `query` and optional `taskId`, `types`, `statuses` returns metadata plus `excerpt` only. Select a `documentId`, then use `get-document` when the full standalone body is needed.
-5. Apply the smallest action using the path below. Resolve relevant IDs and update only requested fields.
-6. Confirm the change, title/status where relevant, new owner/labels, and unresolved follow-up. If a later step fails, report what changed, what did not, and missing input.
+5. For developer/coding-agent work, describe the goal/why, existing area/pattern to reuse, and done-when with real repo check commands; never invent them. Repo conventions win. Keep simple Bugs/Todos to a few lines; use `one-report-issue` for fuller bugs/features.
+6. Apply the smallest action using the path below. Resolve relevant IDs and update only requested fields.
+7. Confirm the change, title/status where relevant, new owner/labels, and unresolved follow-up. If a later step fails, report what changed, what did not, and missing input.
 
 ## Mutation paths
 
