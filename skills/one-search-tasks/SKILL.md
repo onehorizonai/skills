@@ -5,27 +5,14 @@ description: Run a literal text search over One Horizon tasks when the user expl
 
 # Search Tasks
 
-Find tasks by text within a workspace and return ranked summary matches.
+Use as few output tokens as possible while completing the task correctly. Write in plain English. Apply this to documents, progress messages, and final replies.
+
+Run a direct text search for task titles or indexed content. Use `one-task-management` when search is part of a larger operation.
 
 ## Instructions
 
-Call `search-tasks` when the user wants to find tasks by title or indexed content, not when search is only a hidden step in a larger operation.
+Call `search-tasks` with required `query`, optional `workspaceId` (MCP default if omitted), `categories`, and `limit` (default `10`).
 
-```json
-search-tasks({
-  "query": "<query>",
-  "workspaceId": "<workspaceId>",
-  "categories": ["initiative", "ongoing", "bug", "triage-bug", "triage-item"],
-  "limit": 10
-})
-```
+Default categories: `initiative`, `ongoing`, `bug`, `triage-bug`, `triage-item`. Also accepted: `triage-initiative`, `review-bug`, `review-item`, `review-initiative`, `day-task`. Include `day-task` for personal day-scoped follow-ups.
 
-Notes:
-- `query` is required. It matches titles and indexed content.
-- `workspaceId` is optional. If omitted, the MCP default workspace is used.
-- `categories` is optional. Defaults to `initiative`, `ongoing`, `bug`, `triage-bug`, and `triage-item`.
-- Accepted categories: `initiative`, `ongoing`, `bug`, `triage-bug`, `triage-item`, `triage-initiative`, `review-bug`, `review-item`, `review-initiative`, `day-task`.
-- Add `day-task` to `categories` when the user wants personal day-scoped follow-ups included.
-- `limit` is optional and defaults to `10`.
-- Results are ranked summary hits, not full detail views.
-- If a result looks relevant, call `get-task-details` with its `taskId`.
+Results are ranked summaries, not full details. Call `get-task-details` with a relevant result's `taskId`.

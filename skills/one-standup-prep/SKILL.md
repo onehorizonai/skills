@@ -5,61 +5,15 @@ description: Turn recent work into standup talking points for one person or a wh
 
 # Standup Prep
 
-Generate standup talking points for a person or team. For a longer written update use `one-work-summarizer`.
+Use as few output tokens as possible while completing the task correctly. Write in plain English. Apply this to documents, progress messages, and final replies.
+
+Prepare personal or team talking points. Use `one-work-summarizer` for a longer written update.
 
 ## Instructions
 
-### 1. Pick the window
+1. Default to since last standup: 24 hours, or since Friday on Monday. Pass ISO `startDate` and `endDate` to `list-completed-work`.
+2. In parallel, fetch `list-completed-work`, `list-planned-work`, and `list-blockers`. For teams, resolve `teamId` with `list-my-teams` and add it to each call. Ask which team if several exist and none is named.
+3. Personal sections: **What I completed**, **What I'm working on**, **Initiatives I'm on** (only if present), **Blockers** (or "None").
+4. Team sections: team progress overview; individual updates by person; initiative progress; blockers and dependencies; upcoming focus.
 
-Default to "since last standup": the last 24 hours, or since Friday when today is Monday. Pass it to `list-completed-work` as `startDate` and `endDate`.
-
-### 2. Fetch the data
-
-The calls are independent, so run them in parallel.
-
-Personal standup:
-
-```json
-list-completed-work({ "startDate": "<iso-start>", "endDate": "<iso-end>" })
-```
-
-```json
-list-planned-work()
-```
-
-```json
-list-blockers()
-```
-
-Team standup. Resolve `teamId` with `list-my-teams`; ask which team when there are several and none is named:
-
-```json
-list-completed-work({ "teamId": "<teamId>", "startDate": "<iso-start>", "endDate": "<iso-end>" })
-```
-
-```json
-list-planned-work({ "teamId": "<teamId>" })
-```
-
-```json
-list-blockers({ "teamId": "<teamId>" })
-```
-
-### 3. Write the talking points
-
-Personal standup, in these sections:
-
-- **What I completed**
-- **What I'm working on**
-- **Initiatives I'm on**, only when the data includes initiatives
-- **Blockers**, or "None"
-
-Team standup, in these sections:
-
-1. Team progress overview
-2. Individual updates, grouped by person
-3. Initiative progress
-4. Blockers and dependencies
-5. Upcoming focus
-
-Style: specific and conversational, one or two sentences per point, no filler. Use only what the data shows; do not invent progress.
+Use specific, conversational points without filler or invented progress.

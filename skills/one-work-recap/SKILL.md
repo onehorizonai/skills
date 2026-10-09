@@ -5,53 +5,15 @@ description: Recap shipped, planned, and blocked work in One Horizon for a perso
 
 # Work Recap
 
-Recap shipped, planned, and blocked work for a person or a team. For standup talking points use `one-standup-prep`; for a written status report use `one-work-summarizer`.
+Use as few output tokens as possible while completing the task correctly. Write in plain English. Apply this to documents, progress messages, and final replies.
+
+Recap shipped, planned, and blocked work. Use `one-standup-prep` for talking points or `one-work-summarizer` for a status report.
 
 ## Instructions
 
-### 1. Pick the window
+1. `list-completed-work` defaults to 24 hours; pass ISO `startDate`/`endDate` for longer windows. Planned and blocked lists reflect current state and take no dates.
+2. Fetch `list-completed-work`, `list-planned-work`, and `list-blockers` in parallel.
+3. For teams, resolve `teamId` with `list-my-teams` and add it to each call; ask if several teams exist and none is named. For one teammate, resolve `userId` with `find-team-member` and add it to each team call.
+4. Present **Shipped**, **Planned**, **Blocked**, in that order. Put initiatives before bugs before Todos; group team sections by person. State empty sections plainly.
 
-- `list-completed-work` defaults to the last 24 hours. Pass `startDate` and `endDate` as ISO 8601 date-times for anything longer, such as "this week".
-- Planned and blocked work are current state and take no dates.
-
-### 2. Fetch the three lists
-
-The calls are independent, so run them in parallel.
-
-Personal recap:
-
-```json
-list-completed-work({ "startDate": "<iso-start>", "endDate": "<iso-end>" })
-```
-
-```json
-list-planned-work()
-```
-
-```json
-list-blockers()
-```
-
-Team recap. Resolve `teamId` with `list-my-teams` when the user names a team; ask which team when there are several and none is named:
-
-```json
-list-completed-work({ "teamId": "<teamId>", "startDate": "<iso-start>", "endDate": "<iso-end>" })
-```
-
-```json
-list-planned-work({ "teamId": "<teamId>" })
-```
-
-```json
-list-blockers({ "teamId": "<teamId>" })
-```
-
-For one teammate, add `"userId": "<userId>"` to each team call. Get the `userId` from `find-team-member`.
-
-### 3. Present the recap
-
-- Use three sections in this order: **Shipped**, **Planned**, **Blocked**.
-- Within each section put roadmap initiatives first, then bugs, then Todos.
-- For a team recap, group each section by person.
-- Say so plainly when a section is empty. Do not pad it.
-- The lists are summaries without descriptions. Call `get-task-details` only for an item that needs more context.
+Lists omit descriptions. Use `get-task-details` only when an item needs more context.

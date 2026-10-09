@@ -5,182 +5,55 @@ description: 'Run the full loop from planned work or reported bugs to implementa
 
 # Work Item Delivery Loop
 
-Run work execution with explicit sequencing and One Horizon write-back.
+Use as few output tokens as possible while completing the task correctly. Write in plain English. Apply this to documents, progress messages, and final replies.
 
-## Operating rules
+Deliver planned work or fixes through implementation, validation, and One Horizon write-back.
 
-- Always fetch before editing: list -> details -> implement -> write-back.
-- Never mark work complete without validation evidence.
-- If initiative matching is ambiguous, ask for confirmation.
-- A run is incomplete until MCP write-back is done.
-- Never modify task descriptions to record progress. Use `add-task-comment` instead.
-- When editing an initiative description, use `patch-document` with `workspaceId`, `taskId` set to the initiative ID, and precise `ops`; the server resolves or creates the linked content document automatically.
-- Prefer `replace_text`, `insert_before`, `insert_after`, and `delete_text` over rewriting the entire description.
-- Use `update-initiative` only for initiative metadata: `title`, `status`, `assigneeIds`, `teamIds`, `taxonomyLabelIds`, and `parentInitiativeId`.
-- If both initiative description and metadata change, do `patch-document(taskId=initiativeId, ...)` first, then `update-initiative(...)`. If refreshed full details are needed after editing, call `get-task-details`.
-- If a patch fails because the target or anchor is stale or missing, call `get-task-details`, then retry with corrected ops.
-- Always pass `"source": "skill"` when calling `add-task-comment` so comments are tagged with their origin.
-- Use `Changes/Why` comments only when real delivery happened: bug fix, completed Todo, or completed initiative work.
-- For research/planning/triage-only updates, add an `Update` comment instead.
-- For prompts like "implement this bug" or "work on this initiative", use every relevant One Horizon tool and companion skill before writing back.
-- Always follow skill/tool rules end-to-end: context fetch, detailed task lookup, implementation, validation, write-back, and initiative linking.
-- If implementation work was requested, do not post a status-only write-back; add a comment with what changed and why.
-- Stop before marking work complete: every completed bug, Todo, or initiative must have a corresponding MCP write-back update in the same run.
-- Continuous write-back: after each completed delivery chunk, update the related bug, Todo, or initiative immediately.
+## Instructions
 
-## Work type heuristic
+1. Identify the target with `list-planned-work`, `list-initiatives`, or `list-bugs`; fetch `get-task-details` before implementation. Confirm ambiguous initiative matches.
+2. Use relevant tools and companion skills (`one-bug-triage-prep`, `one-initiative-summary`, recap/summarizer) before coding or write-back. Use text `Goals`, `Products`, `Skills` and metadata `goals`, `products`, `skills` to verify scope/linkage.
+3. Implement, then validate with relevant checks. Never mark work complete without validation evidence.
+4. After each delivered chunk, immediately use `update-bug`, `update-todo`, `update-initiative`, or completed `create-todo`, then comment. Do not stop at a status-only update after implementation. A run remains incomplete until write-back and requested initiative links are done.
 
-- Multi-day or roadmap-relevant planned work -> initiative
-- Recurring, owner-driven work without a defined end date, such as code reviews -> ongoing work when the workspace uses it
-- Unplanned defect fix -> bug
-- Small personal or private follow-up -> Todo
-- Completed implementation slice tied to an initiative -> completed Todo linked to the initiative is valid write-back
+In plan mode or when asked for a plan, explicitly include discovery, full details, implementation, validation, MCP status/comment write-back, and requested initiative links. Include per-bug implementation/write-back for batch fixes and matching/confirmation for initiatives. Do not skip required steps.
 
-## Standard flow
+## Work types
 
-1. Identify target from user prompt.
-2. Fetch candidate tasks (`list-planned-work`, `list-initiatives`, or `list-bugs`).
-3. Resolve exact IDs with `get-task-details`.
-4. Implement code changes.
-5. Run validation/tests.
-6. Write MCP updates (`update-*` or `create-todo`) and add comments via `add-task-comment`.
-7. Apply initiative links when requested.
+Use initiatives for multi-day/roadmap planned work, bugs for unplanned defects, ongoing work for recurring owner-driven operations where supported, and Todos for small personal follow-ups. A completed initiative slice may be a completed Todo linked to its initiative.
 
-## Plan mode rule
+## Specific flows
 
-If the agent is in plan mode, or the user asks for a plan, include workflow tasks from this skill in the plan explicitly.
+- **Fix all bugs assigned to me:** resolve user/team with `list-my-teams`; list active bugs filtered to the current assignee. For each: details → implement → validate → `update-bug` → comment with root cause, code changes, and current status. If not fixed, still update its current status and comment with the blocker. Stop if none match.
+- **Implement an initiative:** list active initiatives; rank by title, then taxonomy/team; present top matches and confirm the selected target. Fetch details and verify label/scope fit. After implementation, immediately `create-todo` with `status: "Completed"`, `initiativeId`, workspace, and delivery description. Update initiative progress/status as appropriate and comment.
+- **Connect to initiatives:** resolve each with `list-initiatives`, confirm ambiguity, then apply relation-capable tools. For Todos, set the primary `initiativeId` and use relations for additional links.
 
-Required plan items:
-1. Discover candidate tasks with list tools.
-2. Resolve selected IDs and full context with `get-task-details`.
-3. Implement the code changes.
-4. Validate changes with tests/checks.
-5. Write back to One Horizon (`update-*` or `create-todo`) and add a comment with progress notes.
-6. Apply initiative links if requested.
+## Description and metadata edits
 
-For "Fix all bugs assigned to me", include per-bug execution/write-back steps.
-For initiative implementation prompts, include initiative matching + confirmation before coding.
+- Record progress in comments, never descriptions.
+- Patch initiative descriptions with `patch-document`, `workspaceId`, initiative `taskId`, and precise `ops`: `replace_text`, `insert_before`, `insert_after`, `delete_text`. The server resolves or creates the linked document.
+- Use `update-initiative` for metadata only: `title`, `status`, `assigneeIds`, `teamIds`, `taxonomyLabelIds`, `parentInitiativeId`. If both change, patch first, then update metadata.
+- On stale/missing patch targets or anchors, fetch details and retry with corrected operations. Fetch again after mutation only if refreshed full content is needed.
 
-## Implementation request rule
+## Write-back
 
-When a user asks to implement a bug, initiative, or Todo, run the full flow and do not treat it as a status-only update.
+Always use `source: "skill"` for `add-task-comment`.
 
-Required sequence:
-1. Use discovery/list tools to find targets (`list-bugs`, `list-initiatives`, `list-planned-work`).
-2. Use `get-task-details` for each selected task before implementation.
-3. Use related companion skills where relevant (`one-bug-triage-prep`, `one-initiative-summary`, recap/summarizer skills) before coding or writing updates.
-4. Implement and validate code changes.
-5. Update task status via `update-*` or `create-todo`, then add a comment via `add-task-comment` after each completed chunk.
-6. Apply requested initiative links.
-
-If any required step is skipped, the run is incomplete.
-If implementation happened, the write-back must include a `**Changes**` block with both "What changed" and "Why".
-
-## Workflow rule: "Fix all bugs assigned to me"
-
-Use this exact sequence:
-
-1. Call `list-my-teams` to resolve user/team context.
-2. Call `list-bugs` filtered to current user assignee and active statuses.
-3. For each bug:
-   - Call `get-task-details`.
-   - Implement fix.
-   - Validate fix with relevant tests/checks.
-   - Call `update-bug` with latest status, then `add-task-comment` with fix notes.
-4. If a bug is not fixed, still call `update-bug` with status and `add-task-comment` with blocker details.
-
-Required `add-task-comment` content after `update-bug`:
-- root cause
-- code changes made
-- current status
-
-## Workflow rule: "Implement <initiative keyword>" (example: "Implement HubSpot lead sync")
-
-Use this exact sequence:
-
-1. Call `list-initiatives` with active statuses.
-2. Rank candidates by title match, then taxonomy/team match.
-3. Present top matches and confirm selected initiative.
-4. Call `get-task-details` for selected initiative, then use `Goals`, `Products`, and `Skills` in text plus `goals`, `products`, and `skills` metadata to verify fit.
-5. Implement requested code.
-6. Create an implementation Todo with `create-todo` using `status: "Completed"` and `initiativeId` as soon as implementation is done.
-7. Call `update-initiative` if status/progress should advance.
-
-If the initiative description also needs edits:
-
-1. Call `patch-document` with `workspaceId`, `taskId`, and targeted `ops`.
-2. Call `update-initiative` only for metadata changes.
-3. If a patch fails because the target or anchor is stale or missing, call `get-task-details` and retry with corrected ops.
-4. Call `get-task-details` after the mutations if you need the refreshed initiative body.
-
-`create-todo` write-back shape:
-
-```json
-create-todo({
-  "title": "Implemented HubSpot lead sync integration",
-  "description": "Added OAuth flow, sync job, and mapping logic. Validated with integration tests.",
-  "status": "Completed",
-  "topic": "Integrations",
-  "initiativeId": "<initiativeId>",
-  "workspaceId": "<workspaceId>"
-})
-```
-
-## Workflow rule: "Connect this to initiative A / B / C"
-
-1. Resolve each initiative via `list-initiatives`.
-2. Confirm ambiguous matches.
-3. Apply links using relation-capable tooling.
-4. If creating a Todo, set primary `initiativeId` and add extra links with relation tooling.
-
-## Prompting pattern for changes
-
-When reporting progress back to the user, use this structure:
-
-1. `Target`: which task is being processed
-2. `Action`: what was changed
-3. `Write-back`: which MCP tool was called and what was updated
-4. `Links`: initiative IDs connected
-
-Use `add-task-comment` for all progress notes. Never modify task descriptions.
-
-Delivery comment (code shipped / fix completed / task completed):
+Delivered work:
 
 ```markdown
 **Changes**
-- What changed: <short summary>
+- What changed: <delivered work>
 - Why: <root cause or goal>
 ```
 
-Research or planning comment (no external implementation delivered):
+Research/planning/triage without delivery:
 
 ```markdown
 ## Update
-- Summary: <what was researched/decided/triaged>
+- Summary: <finding or decision>
 ```
 
-## Failure handling
+Report the target, action, MCP write-back, and linked initiative IDs briefly. If validation fails, keep work incomplete and write its current status/blocker. Missing task or label context requires details before proceeding.
 
-- Missing work details: call `get-task-details` before proceeding.
-- Missing label context: use `get-task-details` output (`Goals`, `Products`, `Skills`, plus `goals`, `products`, and `skills` metadata) before deciding initiative linkage.
-- No bug match for assignee: report none found and stop.
-- Multiple initiative matches: require confirmation before coding.
-- Validation fails: do not mark complete; write back current status + blocker.
-
-## Stop before complete check
-
-Before declaring completion to the user, verify all completed tasks were updated in One Horizon:
-
-1. Completed bug -> `update-bug` called with final status + `add-task-comment` with `**Changes**`.
-2. Completed Todo -> `update-todo` called with final status + `add-task-comment` with `**Changes**`, or `create-todo` created as `Completed` + comment.
-3. Completed initiative work -> `update-initiative` called with status + `add-task-comment` with progress notes.
-
-If any completed item is missing write-back, stop and perform the update first.
-
-## Completion gate
-
-A run is complete only when all are true:
-
-1. Code changes implemented, or explicitly marked blocked.
-2. MCP updates written back for every completed bug, Todo, or initiative.
-3. Initiative links applied if requested.
+Before declaring completion, ensure every completed bug/Todo/initiative has its status update (or completed Todo creation) and delivery comment in this run, and every requested initiative link is applied. Work must be implemented or explicitly blocked; perform missing write-back before finishing.

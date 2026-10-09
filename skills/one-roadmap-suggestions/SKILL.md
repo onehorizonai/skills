@@ -5,88 +5,35 @@ description: Suggest One Horizon roadmap improvements by reviewing initiatives, 
 
 # Roadmap Suggestions
 
-Review a One Horizon workspace and suggest practical improvements to roadmap structure, sequencing, and scope.
+Use as few output tokens as possible while completing the task correctly. Write in plain English. Apply this to documents, progress messages, and final replies.
 
-## Core rules
+Recommend practical changes to roadmap hierarchy, work types, coverage, sequencing, and tagging. Suggest only; mutate only when explicitly requested.
 
-- Default to suggestions only. Do not mutate roadmap items unless the user explicitly asks you to apply changes.
-- Ground every recommendation in current workspace data, not generic startup advice.
-- Prefer 3-5 well-supported suggestions over an exhaustive dump unless the user asks for a full audit.
-- If the roadmap is sparse, use planned work, blockers, bugs, and taxonomy to propose a starter roadmap.
-- Do not invent missing initiatives from weak signals. If the evidence is thin, label it as a hypothesis.
-- Do not recommend a work-type conversion unless you can explain why the current type is wrong and which type fits better.
+## Instructions
 
-## Gather context
-
-1. Call `list-initiatives` with active statuses and `includeHierarchy: true`.
-2. Call `list-planned-work` with `includeInitiatives: true`.
-3. Call `list-bugs` for active bugs when defect pressure may imply missing roadmap investment.
-4. Call `list-blockers` with `includeInitiatives: true`.
-5. Call `list-taxonomy` when the workspace uses goals, products, companies, or components, or when category-like initiatives may really be taxonomy.
-6. If a recommendation depends on a specific item, call `get-task-details` before suggesting a reframe.
-7. Use `search-tasks` when you need to confirm a repeated theme across the workspace.
+1. Fetch active `list-initiatives` with `includeHierarchy: true`, `list-planned-work` and `list-blockers` with `includeInitiatives: true`.
+2. Fetch active `list-bugs` when defect pressure suggests missing investment. Use `list-taxonomy` when goals/products/companies/components exist or category-like initiatives may be labels.
+3. Use `get-task-details` before item-dependent reframing and `search-tasks` to confirm repeated themes.
+4. Prefer 3-5 supported suggestions unless a full audit is requested. Sparse roadmaps may need a starter roadmap derived from planned work, blockers, bugs, and taxonomy.
 
 ## Decision rubric
 
-Before giving a recommendation, classify it into exactly one of these buckets:
+Classify each recommendation into exactly one bucket:
 
-- `Hierarchy`: parent-child reshaping, merge, dedupe, or split.
-- `Work type`: initiative vs taxonomy vs ongoing work vs bug vs feature request vs Todo.
-- `Coverage`: missing roadmap investment or missing foundational work.
-- `Sequencing`: roadmap order is likely wrong or incomplete.
-- `Tagging`: taxonomy is missing or misused.
+- Hierarchy: reshape tightly related flat lists or mismatched children; merge overlapping scope/outcomes; split multiple products, goals, or delivery tracks.
+- Work type: taxonomy for reusable grouping labels; ongoing for recurring work without an end state; bug/feature request for issue intake; Todo for small private follow-up, never roadmap work. Explain why the current type is wrong and the replacement fits.
+- Coverage: missing investment supported by clusters of blockers, bugs, or planned work.
+- Sequencing: dependent work precedes missing foundations such as auth, testing, onboarding, or integrations.
+- Tagging: missing/misused taxonomy or grouping relative to existing labels.
 
-Only surface a recommendation when at least one of these is true:
+Surface only recommendations with two supporting signals, one strong contradictory `get-task-details` signal, or a repeated mismatch across related tasks. Label weaker ideas as hypotheses rather than inventing initiatives.
 
-- There are at least 2 supporting signals across initiatives, planned work, blockers, bugs, or taxonomy.
-- There is 1 strong signal from `get-task-details` that clearly contradicts the current roadmap shape.
-- The same gap or mismatch appears in multiple related tasks.
+## Response
 
-## Heuristics
+Brief summary of roadmap quality/maturity and its main pattern; then suggestions with type, exact change, concrete evidence, why, and High/Medium/Low confidence. Include missing initiative titles only for clear gaps, hypotheses only for useful weak signals. Ask which subset to apply.
 
-### Hierarchy
+Use specific titles, skip roadmap theory, and suggest only small useful changes if the roadmap is coherent. State missing evidence when confidence is insufficient.
 
-- Suggest parent and child reshaping when there are flat lists of tightly related initiatives, mismatched children, or child items that are really standalone efforts.
-- Suggest merging or deduplicating initiatives with overlapping titles, scope, or outcomes.
-- Suggest splitting initiatives that bundle multiple products, goals, or delivery tracks.
+## Applying requested changes
 
-### Work type
-
-- Suggest taxonomy when the item behaves like a reusable label or grouping concept such as a product area, customer, market, or goal rather than a deliverable.
-- Suggest ongoing work when the item is recurring and owner-driven with no clear end state.
-- Suggest a bug or feature request when the item is really issue intake rather than planned roadmap work.
-- Suggest a Todo only for small private follow-up work, not roadmap items.
-
-### Coverage and maturity
-
-- Suggest missing initiatives when blockers, bugs, or planned work cluster around the same gap.
-- Suggest sequencing changes when later work depends on missing foundations such as auth, testing, onboarding, or integrations.
-- Call out where the roadmap is under-tagged or under-grouped relative to existing taxonomy.
-
-## Response shape
-
-- `Summary`: 2-4 sentences on the current roadmap quality, maturity, and biggest pattern.
-- `Suggestions`: for each recommendation, use this format:
-  - `Type`: one bucket from the decision rubric
-  - `Change`: the exact change to make
-  - `Evidence`: the concrete tasks, blockers, bugs, taxonomy, or hierarchy pattern that support it
-  - `Why`: why this improves the roadmap
-  - `Confidence`: `High`, `Medium`, or `Low`
-- `Missing initiatives`: include only when there are clear gaps, with concrete initiative titles.
-- `Hypotheses`: include only low-confidence ideas that may be useful but are not well supported yet.
-- `Next step`: ask whether to apply any subset using One Horizon tools.
-
-## Quality bar
-
-- Be direct. Do not pad the answer with roadmap theory.
-- Prefer specific initiative titles over abstract categories.
-- If the workspace already looks coherent, say so and suggest only the smallest useful changes.
-- If there is not enough evidence for a confident recommendation, say what is missing.
-
-## If the user wants changes applied
-
-- Use `update-initiative` for hierarchy, title, status, team, assignee, or taxonomy changes.
-- Use `create-initiative` for new roadmap items.
-- Use `create-todo` only when the recommendation is really a private follow-up.
-- Add a task comment when you materially reframe an existing initiative so the reasoning is visible.
-- Never rewrite descriptions just to log progress.
+Use `update-initiative` for hierarchy/title/status/team/assignee/taxonomy, `create-initiative` for new roadmap work, and `create-todo` only for private follow-up. Comment on material reframing; never rewrite descriptions to log progress.

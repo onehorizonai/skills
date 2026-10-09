@@ -5,36 +5,12 @@ description: Fetch the full details for one known One Horizon task when the task
 
 # Get Task Details
 
-Fetch full details for one task ID.
+Use as few output tokens as possible while completing the task correctly. Write in plain English. Apply this to documents, progress messages, and final replies.
+
+Fetch full context for a known task. Use `one-task-management` when this is part of a larger operation.
 
 ## Instructions
 
-Call `get-task-details` with `taskId`.
+Call `get-task-details` with required `taskId` and optional `workspaceId`. It supports Todos, initiatives, and bugs.
 
-```json
-get-task-details({
-  "taskId": "<taskId>",
-  "workspaceId": "<workspaceId>"
-})
-```
-
-Notes:
-- `taskId` is required.
-- `workspaceId` is optional.
-- Supports task type mapping for Todos, initiatives, and bugs.
-
-## Output notes
-
-`get-task-details` always includes typed label formatting in text output:
-- `Goals: ...`
-- `Products: ...`
-- `Skills: ...`
-
-Interpret `Products` broadly as product lines, feature areas, or service names.
-
-Structured metadata includes:
-- `goals`
-- `products`
-- `skills`
-
-Use these fields when matching roadmap labels, validating scope, or preparing summaries.
+The text includes typed `Goals`, `Products`, and `Skills`; structured metadata includes `goals`, `products`, and `skills`. Use them to match roadmap labels, validate scope, or summarize work. Products may be product lines, feature areas, or services.

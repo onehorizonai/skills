@@ -5,202 +5,55 @@ description: Create a One Horizon bug or feature request when work type is clear
 
 # Report Issue
 
-Turn a rough defect report or product ask into a clear bug or feature request.
+Use as few output tokens as possible while completing the task correctly. Write in plain English. Apply this to documents, progress messages, and final replies.
 
-## Core rule
+Turn a defect or product ask into a bug or feature request. Use `one-task-management` for ambiguous, operational, or existing-work requests; use other skills for roadmap initiatives or personal follow-ups.
 
-- Understand the user-visible problem before proposing a fix
-- Capture concrete behavior, workflow, and scope boundaries — not implementation
-- Keep business context brief unless it changes priority
-- Default feature requests to feature-level scoping, not roadmap planning
-- Put product, customer, company, or component signals in the markdown description when they matter
-- For each out-of-scope item, add a short reason so the boundary holds without chat context
-- Code fixes and features: goal and why first (for a bug, the expected behavior); point to the code area and existing pattern, not helper call chains or a fix recipe; the repo's conventions decide how it's built; mark constraints required or suggested; name the repo's real validation commands
-- Repo accessible: skim agent/contributor docs (`AGENTS.md`, `CONTRIBUTING`), package scripts, or CI for the area, pattern, and checks — enough to point, not to find the root cause or design the fix. Use repo-relative paths, not local checkout paths. Don't add interview questions. No repo: tell the implementer to run the existing checks. Never invent commands or paths
-- Simple bugs stay short (aim for ~30 lines): drop sections that would be empty or say "none"
+## Code work
 
-## Metadata
+- For code fixes/features, lead with goal/why (expected behavior for bugs), point to existing areas/patterns rather than helper call chains or fix recipes, mark constraints required or suggested, and name real repo checks. Repo conventions decide implementation.
+- With repo access, skim `AGENTS.md`, `CONTRIBUTING`, package scripts, or CI for areas/patterns/checks; add no interview questions and leave root cause/fix design to the implementer. Use repo-relative paths. Without access, tell the implementer to run existing checks. Never invent commands or paths.
+- Keep simple bugs short (about 30 lines); omit empty or "none" sections.
 
-- `report-bug` and `report-feature-request` do not accept taxonomy label IDs
-- Taxonomy tagging works for initiatives via `create-initiative` / `update-initiative` only
-- If taxonomy context matters, name product, company, customer, component, or segment in the markdown description
+## Instructions
 
-## Boundaries
+1. Confirm bug versus feature request. Understand the user-visible problem before proposing fixes; describe behavior, workflow, and scope rather than implementation.
+2. Ask missing questions one at a time, stopping for answers and reusing prior context. Fast-track creation when told "just log it" or enough detail exists. Keep business context brief unless it affects priority.
+3. Search for duplicates/overlap with 3-5 keywords via `search-tasks`. For clear duplicates or strong overlap, ask whether to add context there instead.
+4. Write markdown with a brief TLDR and `###` headings, linking related work. Put remaining uncertainty in the description's open-questions section and give a reason for each out-of-scope item.
+5. Resolve needed team/assignee IDs; confirm title, description, workspace, and metadata. Create using the matching tool below.
 
-Use when:
-- logging a new bug or feature request
-- work type is clear enough to skip broader triage
+`report-bug` and `report-feature-request` do not accept taxonomy IDs. If relevant, name products, customers, companies, components, or segments in the description; taxonomy tagging is for initiatives through `create-initiative`/`update-initiative` only.
 
-Do not use when:
-- the request should be a roadmap initiative, personal follow-up, or operational task
-- the user wants to triage, assign, or update existing work
+## Bugs
 
-## Conversation
+Minimum: what's broken, where, expected versus actual, actionable repro (or explicitly unclear), and a way to verify the fix. Ask as needed about product/flow, consistency/regression, environment/browser/version, affected users/reach, invariants, customer context, workaround, and exclusions.
 
-- Ask one question at a time; stop after each answer
-- Reuse what the user already said; skip answered questions
-- If the user says "just log it" or gives enough detail, fast-track and create the item
-- A short background note is enough — do not keep digging for business goals
+Description sections:
 
-## Execution order
+- TLDR: failure and expected behavior, affected users, repro trigger, impact
+- Background: what changed and why it matters
+- Affected flow / use case: user/workflow, product location, and code area (endpoint/component/file) if known
+- Expected behavior; Actual behavior (environment, consistency, regression)
+- Reproduction: numbered steps and **Verified when:** rerun the repro; code fixes also name repo checks and a behavior regression test. **Report back:** for code, root cause, changes, and checks including pre-existing failures
+- Invariants, including nearby edge cases, if specific
+- Known scope / boundaries: exclusions with reasons; fix only this bug, no unrelated refactors
+- Evidence, workaround, and open questions
 
-1. Confirm bug vs feature request
-2. Gather missing minimum context
-3. Check for duplicates or overlapping work
-4. Write the markdown description
-5. Confirm create fields are ready
-6. Create the item
+Call `report-bug` with a symptom-based title, markdown `description`, `workspaceId`, and needed `teamIds`/`assigneeIds`.
 
-## Minimum intake
+## Feature requests
 
-Stop asking once you have the essentials. Put remaining uncertainty in the template's open-questions section.
+Default to feature-level scope. Minimum: user/workflow, desired change, in/out scope, and observable user-verifiable success. Ask as needed about product, phase audience, smallest useful version, customer context, and brief background.
 
-Bugs:
-- what is broken
-- where it happens
-- expected vs actual behavior
-- enough repro detail to act on, or a note that repro is unclear
-- at least one way to verify the fix
+Description sections:
 
-Feature requests:
-- which user or workflow this improves
-- what should change
-- in scope / out of scope
-- at least one observable success condition the user can verify
+- TLDR: goal/why, user/workflow, scope, main boundary
+- Background: missing behavior, why now, cost of inaction; business context secondary
+- Concrete feature / use case headings: who, what changes, why, screen/entry point where helpful, existing pattern/component to reuse
+- In scope: surfaces, flows, required versus suggested constraints; applicable loading/empty/error/permission/cleanup and 0/1/many cases
+- Out of scope: excluded ideas/reasons; no unrelated refactors/dependency changes for code work
+- Acceptance criteria: observable user behavior, not business metrics; performance budgets need measurement methods. One end-to-end verification step; for code, real repo checks, behavior tests rather than internals, and a report of changes, checks (including pre-existing failures), and trade-offs
+- Open questions
 
-## Output
-
-- Write markdown before creating the item
-- Start with a 1-paragraph TLDR; prefer `###` headings
-- Reference related issues or initiatives as markdown links when available
-
-## Bug intake
-
-Ask only missing questions, one at a time:
-
-- What is broken for the user?
-- Which workflow, page, or feature is affected?
-- Which product or product area?
-- Expected vs actual behavior?
-- How to reproduce?
-- Consistent or intermittent? Recent regression?
-- Environment, browser, or app version?
-- Who is affected, and how broadly?
-- What must not break when fixing this?
-- Tied to a specific customer, company, or segment?
-- Workaround? Anything explicitly out of scope?
-
-### Duplicate check
-
-1. Extract 3-5 keywords from the defect
-2. `search-tasks` for likely matches before creating
-3. If a clear duplicate exists, ask whether to add context there instead
-
-### Description format
-
-```markdown
-TLDR (2-4 sentences): what is broken and what should happen instead, who it affects, main repro condition, current impact
-
-### Background
-One short paragraph on what changed and why it matters
-
-### Affected flow / use case
-- Which user or workflow?
-- Where in the product? Code area if known (endpoint, component, file)
-
-### Expected behavior
-What should happen?
-
-### Actual behavior
-What happens instead? Note environment, consistency, regression
-
-### Reproduction
-Numbered repro steps
-**Verified when:** what confirms the bug is resolved — rerun the repro; code fixes also name the repo's checks and a regression test on the behavior
-**Report back:** code fixes only — root cause, what changed, checks run (pre-existing failures called out)
-
-### Invariants
-What must not break, including nearby edge cases? Omit if nothing specific
-
-### Known scope / boundaries
-What is affected? Out of scope: `- Item — excluded because <reason>`. Fix this bug only — no unrelated refactors
-
-### Evidence, workaround, and open questions
-Links, screenshots, logs, workarounds, unconfirmed details
-```
-
-### Create
-
-1. Resolve team/assignee metadata if needed
-2. Confirm: title, markdown description, workspace, team/assignee metadata
-3. `report-bug` with symptom-based title
-
-```json
-report-bug({
-  "title": "Checkout fails when coupon and gift card are combined",
-  "description": "<full bug description in markdown>",
-  "workspaceId": "<workspaceId>",
-  "teamIds": ["<teamId>"],
-  "assigneeIds": ["<userId>"]
-})
-```
-
-## Feature request intake
-
-Ask only missing questions, one at a time:
-
-- User story or workflow to improve?
-- Who is this for in this phase?
-- Which product or product area?
-- What should they be able to do?
-- In scope / out of scope?
-- Smallest useful version?
-- Observable proof this shipped successfully?
-- Tied to a customer, company, or segment?
-- Short background worth capturing?
-
-### Related work check
-
-1. Extract 3-5 keywords
-2. `search-tasks` for overlapping feature requests or initiatives
-3. If strong overlap exists, ask whether to add context there instead
-
-### Description format
-
-```markdown
-TLDR (2-4 sentences): goal and why, user/workflow, scope, main boundary
-
-### Background
-What is missing today, why now, what happens if nothing changes. Business reason brief and secondary.
-
-### Feature / use case sections
-Concrete titles like `### Add Login with Google`. Short paragraph per section: who, what changes, why. Name screen or entry point when it helps locate scope, and the existing pattern or component to build on.
-
-### In scope
-Included surfaces, flows, constraints (required vs suggested starting values). Lifecycle and edge cases that apply (loading, empty, error, permissions, cleanup, 0/1/many)
-
-### Out of scope
-`- Item — excluded because <reason>`. Adjacent ideas not pulled in. Code work: no unrelated refactors or dependency changes.
-
-### Acceptance criteria
-Observable user-verifiable statements — not business metrics; a performance budget needs how to measure it. One end-to-end verification step. Code work: the repo's validation commands, tests that check behavior not internals, and a report-back of what changed, checks run (pre-existing failures called out), and trade-offs.
-
-### Open questions
-Decisions or validation still needed
-```
-
-### Create
-
-1. Resolve team/assignee metadata if needed
-2. Confirm: title, markdown description, workspace, team/assignee metadata
-3. `report-feature-request` with capability-based title
-
-```json
-report-feature-request({
-  "title": "Allow per-pipeline HubSpot sync toggles",
-  "description": "<full feature request description in markdown>",
-  "workspaceId": "<workspaceId>",
-  "teamIds": ["<teamId>"],
-  "assigneeIds": ["<userId>"]
-})
-```
+Call `report-feature-request` with a capability-based title, markdown `description`, `workspaceId`, and needed `teamIds`/`assigneeIds`.

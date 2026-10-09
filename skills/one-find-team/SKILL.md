@@ -5,42 +5,13 @@ description: Resolve One Horizon team, member, workspace, and identity context. 
 
 # Find Team
 
-Resolve team structure, member IDs, workspace IDs, and current user identity for later One Horizon calls.
+Use as few output tokens as possible while completing the task correctly. Write in plain English. Apply this to documents, progress messages, and final replies.
 
-## List teams and members
+Resolve teams, members, workspaces, and identity for One Horizon calls. Use `one-task-management` when lookup is part of a larger operation.
 
-```json
-list-my-teams()
-```
+## Instructions
 
-Optional workspace filter:
-
-```json
-list-my-teams({ "workspaceId": "<workspaceId>" })
-```
-
-## Find a specific person
-
-```json
-find-team-member({ "query": "Jane" })
-```
-
-Pass the returned `userId` and `teamId` to `one-list-work`, `one-work-recap`, and other team-scoped skills.
-
-## List workspaces
-
-Call this when the user has multiple workspaces or `workspaceId` is unknown. The result marks the default MCP workspace.
-
-```json
-list-workspaces()
-```
-
-Pass the returned `workspaceId` to tools that require one. The workspace marked `[default]` is used when no `workspaceId` is specified.
-
-## Who am I
-
-Call this to get the current user's ID, name, email, and role, for example when another tool needs `createdBy` or `assigneeIds`.
-
-```json
-who-am-i()
-```
+- `list-my-teams`: teams and members; optionally filter by `workspaceId`.
+- `find-team-member({ "query": "<name>" })`: find a person. Use returned `userId` and `teamId` in `one-list-work`, `one-work-recap`, or other team-scoped calls.
+- `list-workspaces`: use when the workspace is unknown or there are several. The `[default]` workspace is used when `workspaceId` is omitted; pass the ID when required.
+- `who-am-i`: current user's ID, name, email, and role; use for fields such as `createdBy` or `assigneeIds`.

@@ -5,81 +5,18 @@ description: List planned, shipped, blocked, and open work across One Horizon in
 
 # List Work
 
-Query work in One Horizon. Choose the MCP tool that matches the user's question.
+Use as few output tokens as possible while completing the task correctly. Write in plain English. Apply this to documents, progress messages, and final replies.
+
+Choose the tool matching the user's work question. List descriptions are trimmed; use `get-task-details` for full context.
 
 ## Instructions
 
-Descriptions are trimmed in list output. Use `get-task-details` for full context on any task.
+| Work | Tool and scope |
+|---|---|
+| Planned | `list-planned-work`; optional `teamId`, `userId`, `includeInitiatives: true`. Broad view of initiatives, ongoing work, and linked follow-ups, depending on workspace |
+| Completed | `list-completed-work`; pass ISO `startDate`, `endDate`, and `includeInitiatives: true` |
+| Blocked | `list-blockers`; optional `teamId`, `includeInitiatives: true` |
+| Roadmap | `list-initiatives`; optional `workspaceId`, `statuses`, `includeHierarchy: true` |
+| Bugs | `list-bugs`; optional `workspaceId`, `statuses`, `teamIds`, `assigneeIds` |
 
-### Planned work
-
-Call `list-planned-work`:
-
-```json
-list-planned-work()
-```
-
-Team or member scope:
-
-```json
-list-planned-work({ "teamId": "<teamId>", "userId": "<userId>", "includeInitiatives": true })
-```
-
-Planned work is the broad view. It can include roadmap initiatives, ongoing work, and linked follow-up items depending on the workspace.
-
-### Completed work
-
-Call `list-completed-work`:
-
-```json
-list-completed-work({
-  "startDate": "2024-01-20T00:00:00Z",
-  "endDate": "2024-01-26T23:59:59Z",
-  "includeInitiatives": true
-})
-```
-
-### Blockers
-
-Call `list-blockers`:
-
-```json
-list-blockers({ "includeInitiatives": true })
-```
-
-Team scope:
-
-```json
-list-blockers({ "teamId": "<teamId>", "includeInitiatives": true })
-```
-
-### Initiatives
-
-Call `list-initiatives`:
-
-```json
-list-initiatives({
-  "workspaceId": "<workspaceId>",
-  "statuses": ["Open", "Planned", "In Progress", "In Review"],
-  "includeHierarchy": true
-})
-```
-
-If `statuses` is omitted, defaults to active statuses (Open, Planned, In Progress, In Review).
-
-Call this when the user is asking specifically about roadmap work rather than the broader planned-work view.
-
-### Bugs
-
-Call `list-bugs`:
-
-```json
-list-bugs({
-  "workspaceId": "<workspaceId>",
-  "statuses": ["Open", "Planned", "In Progress", "In Review"],
-  "teamIds": ["<teamId>"],
-  "assigneeIds": ["<userId>"]
-})
-```
-
-If `statuses` is omitted, defaults to `Idea`, `Open`, `Planned`, `In Progress`, and `In Review`.
+Initiative statuses default to `Open`, `Planned`, `In Progress`, `In Review`; bug defaults also include `Idea`. Use initiatives for roadmap-specific questions and planned work for the broader view.
